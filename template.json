@@ -10,7 +10,9 @@
       "ts-jest": "*",
       "ts-loader": "*",
       "ts-node": "*",
-      "typescript": "*"
+      "typescript": "*",
+      "eslint": "*",
+      "eslint-webpack-plugin": "*"
     }
   }
 }
