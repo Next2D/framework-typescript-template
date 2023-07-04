@@ -14,7 +14,7 @@ export class HomeViewModel extends ViewModel
      * @method
      * @public
      */
-    unbind (view: View)
+    unbind (view: View): void
     {
         console.log(view);
     }
@@ -25,7 +25,7 @@ export class HomeViewModel extends ViewModel
      * @method
      * @public
      */
-    bind (view: View)
+    bind (view: View): Promise<View>
     {
         return this
             .factory(view)

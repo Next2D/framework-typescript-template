@@ -14,7 +14,7 @@ export class TopViewModel extends ViewModel
      * @method
      * @public
      */
-    unbind (view: View)
+    unbind (view: View): void
     {
         console.log(view);
     }
