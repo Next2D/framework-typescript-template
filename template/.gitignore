@@ -6,6 +6,6 @@ coverage
 .idea
 Thumbs.db
 
-src/Packages.js
-src/config/Config.js
+src/Packages.ts
+src/config/Config.ts
 electron.index.json
