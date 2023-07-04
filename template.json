@@ -1,0 +1,16 @@
+{
+  "package": {
+    "dependencies": {
+      "@babel/core": "*",
+      "@babel/plugin-transform-modules-commonjs": "*",
+      "@babel/preset-env": "*",
+      "@types/jest": "*",
+      "@typescript-eslint/eslint-plugin": "*",
+      "@typescript-eslint/parser": "*",
+      "ts-jest": "*",
+      "ts-loader": "*",
+      "ts-node": "*",
+      "typescript": "*"
+    }
+  }
+}

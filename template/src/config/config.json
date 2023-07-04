@@ -1,0 +1,43 @@
+{
+  "local": {
+    "api": {
+      "endPoint": "/"
+    },
+    "content": {
+      "endPoint": "/"
+    }
+  },
+  "dev": {
+    "api": {
+      "endPoint": "/"
+    },
+    "content": {
+      "endPoint": "/"
+    }
+  },
+  "stg": {
+    "api": {
+      "endPoint": "/"
+    },
+    "content": {
+      "endPoint": "/"
+    }
+  },
+  "prd": {
+    "api": {
+      "endPoint": "https://next2d-tutorial.s3.ap-northeast-1.amazonaws.com/mock/"
+    },
+    "content": {
+      "endPoint": "https://next2d-tutorial.s3.ap-northeast-1.amazonaws.com/mock/"
+    }
+  },
+  "all": {
+    "spa": true,
+    "loading": {
+      "callback": "Loading"
+    },
+    "gotoView": {
+      "callback": ["domain.callback.Background"]
+    }
+  }
+}
