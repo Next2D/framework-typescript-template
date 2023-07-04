@@ -1,5 +1,5 @@
 import { Application } from "@next2d/framework";
-import { ConfigImpl } from "@next2d/framework/dist/interface/ConfigImpl";
+import type { ConfigImpl } from "@next2d/framework";
 
 /**
  * @class
