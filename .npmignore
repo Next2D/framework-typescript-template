@@ -2,6 +2,6 @@
 template/dist
 template/node_modules
 template/package.json
-template/src/Packages.js
-template/src/config/Config.js
+template/src/Packages.ts
+template/src/config/Config.ts
 template/electron.index.json

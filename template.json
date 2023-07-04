@@ -1,6 +1,7 @@
 {
   "package": {
     "dependencies": {
+      "@next2d/webpack-typescript-auto-loader-plugin": "*",
       "@babel/core": "*",
       "@babel/plugin-transform-modules-commonjs": "*",
       "@babel/preset-env": "*",
