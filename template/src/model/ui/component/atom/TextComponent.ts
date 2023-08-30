@@ -1,7 +1,5 @@
-import type {
-    TextField,
-    TextFormat
-} from "@next2d/text";
+import { TextField } from "@next2d/display";
+import type { TextFormat } from "@next2d/text";
 
 /**
  * @class
@@ -21,8 +19,6 @@ export class TextComponent
         props: any = null,
         format: any = null
     ): TextField {
-
-        const { TextField } = next2d.text;
 
         const textField: TextField = new TextField();
 

@@ -6,7 +6,7 @@ import { TextComponent } from "@/model/ui/component/atom/TextComponent";
 import { response } from "@next2d/framework";
 import { MouseEvent } from "@next2d/events";
 import type { TopContent } from "@/model/application/content/TopContent";
-import type { TextField } from "@next2d/text";
+import type { TextField } from "@next2d/display";
 
 /**
  * @class
