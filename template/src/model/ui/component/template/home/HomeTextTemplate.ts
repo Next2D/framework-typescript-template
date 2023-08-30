@@ -2,7 +2,7 @@
 import { config } from "@/config/Config";
 import { TextComponent } from "@/model/ui/component/atom/TextComponent";
 import { response } from "@next2d/framework";
-import type { TextField } from "@next2d/text";
+import type { TextField } from "@next2d/display";
 import type { HomeContent } from "@/model/application/content/HomeContent";
 
 /**
