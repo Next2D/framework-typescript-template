@@ -1,4 +1,4 @@
-import { app } from "@/index";
+import { app } from "@next2d/framework";
 
 /**
  * @class
@@ -10,7 +10,7 @@ export class TopButtonMouseUpEvent
      * @method
      * @public
      */
-    execute ()
+    execute (): void
     {
         app.gotoView("home");
     }

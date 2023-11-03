@@ -1,19 +1,10 @@
 {
   "package": {
     "dependencies": {
-      "@next2d/webpack-typescript-auto-loader-plugin": "*",
-      "@babel/core": "*",
-      "@babel/plugin-transform-modules-commonjs": "*",
-      "@babel/preset-env": "*",
-      "@types/jest": "*",
       "@typescript-eslint/eslint-plugin": "*",
       "@typescript-eslint/parser": "*",
-      "ts-jest": "*",
-      "ts-loader": "*",
-      "ts-node": "*",
       "typescript": "*",
-      "eslint": "*",
-      "eslint-webpack-plugin": "*"
+      "eslint": "*"
     }
   }
 }

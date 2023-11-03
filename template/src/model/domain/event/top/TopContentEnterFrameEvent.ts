@@ -15,7 +15,7 @@ export class TopContentEnterFrameEvent
      * @method
      * @public
      */
-    execute (event: Event)
+    execute (event: Event): void
     {
         const content: EventDispatcherImpl<MovieClip> = event.currentTarget;
 

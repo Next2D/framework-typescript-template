@@ -57,7 +57,7 @@ export class Background
      * @method
      * @public
      */
-    execute ()
+    execute (): void
     {
         const stage = context.root.stage;
         if (stage && !stage.hasEventListener(Event.RESIZE)) {

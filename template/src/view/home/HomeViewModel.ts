@@ -1,6 +1,8 @@
 import { View, ViewModel } from "@next2d/framework";
 import { HomeButtonTemplate } from "@/model/ui/component/template/home/HomeButtonTemplate";
 import { HomeTextTemplate } from "@/model/ui/component/template/home/HomeTextTemplate";
+import type { HomeContent } from "@/model/application/content/HomeContent";
+import type { TextField } from "@next2d/display";
 
 /**
  * @class
@@ -29,20 +31,20 @@ export class HomeViewModel extends ViewModel
     {
         return this
             .factory(view)
-            .then((view) =>
+            .then((view): Promise<View> =>
             {
                 /**
                  * アニメーションをNoCodeToolのJSONから生成
                  * Generate animation from NoCodeTool's JSON
                  */
-                const homeContent = new HomeButtonTemplate().factory();
+                const homeContent: HomeContent = new HomeButtonTemplate().factory();
                 view.addChild(homeContent);
 
                 /**
                  * Hello, Worldのテキストを生成
                  * Generate Hello, World text
                  */
-                const homeTextField = new HomeTextTemplate().factory(homeContent);
+                const homeTextField: TextField = new HomeTextTemplate().factory(homeContent);
                 view.addChild(homeTextField);
 
                 return Promise.resolve(view);

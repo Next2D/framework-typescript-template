@@ -6,7 +6,8 @@ import { TextComponent } from "@/model/ui/component/atom/TextComponent";
 import { response } from "@next2d/framework";
 import { MouseEvent } from "@next2d/events";
 import type { TopContent } from "@/model/application/content/TopContent";
-import type { TextField } from "@next2d/display";
+import type { TextField, MovieClip } from "@next2d/display";
+import type { ParentImpl } from "@next2d/interface";
 
 /**
  * @class
@@ -30,17 +31,17 @@ export class TopButtonTemplate
 
     /**
      * @param  {TopContent} top_content
-     * @return {Sprite}
+     * @return {MovieClip}
      * @method
      * @public
      */
-    factory (top_content: TopContent)
+    factory (top_content: TopContent): ParentImpl<MovieClip>
     {
-        const button   = ButtonComponent.factory();
+        const button: ParentImpl<MovieClip> = ButtonComponent.factory();
         button.name    = "button";
         button.visible = false;
 
-        button.addEventListener(MouseEvent.MOUSE_UP, () =>
+        button.addEventListener(MouseEvent.MOUSE_UP, (): void =>
         {
             /**
              * @see domain/event/top/TopButtonMouseUpEvent.js

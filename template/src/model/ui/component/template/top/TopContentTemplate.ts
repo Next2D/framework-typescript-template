@@ -28,7 +28,7 @@ export class TopContentTemplate
      * @method
      * @public
      */
-    factory ()
+    factory (): TopContent
     {
         /**
          * ロゴアニメーションをNoCodeToolのJSONから生成

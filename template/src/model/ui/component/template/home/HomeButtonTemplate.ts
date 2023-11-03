@@ -5,6 +5,7 @@ import { HomeContent } from "@/model/application/content/HomeContent";
 import { HomeButtonMouseDownEvent } from "@/model/domain/event/home/HomeButtonMouseDownEvent";
 import { HomeButtonMouseUpEvent } from "@/model/domain/event/home/HomeButtonMouseUpEvent";
 import type { Event } from "@next2d/events";
+import { MouseEvent } from "@next2d/events";
 
 /**
  * @class
@@ -48,7 +49,6 @@ export class HomeButtonTemplate
         homeContent.scaleX = 2;
         homeContent.scaleY = 2;
 
-        const { MouseEvent } = next2d.events;
         homeContent.addEventListener(MouseEvent.MOUSE_DOWN, (event: Event) =>
         {
             this._$homeButtonMouseDownEvent.execute(event);
