@@ -16,7 +16,9 @@ export default defineConfig({
             }
         }
     },
-    "plugins": [autoLoader(env())],
+    "plugins": [
+        autoLoader(env())
+    ],
     "server": {
         "open": "index.html",
         "port": port,
@@ -35,9 +37,9 @@ export default defineConfig({
         "alias": {
             "@": path.resolve(__dirname, "./src")
         }
-    },
-    "test": {
-        "globals": true,
-        "environment": "jsdom"
     }
+    // "test": {
+    //     "globals": true,
+    //     "environment": "jsdom"
+    // }
 });
