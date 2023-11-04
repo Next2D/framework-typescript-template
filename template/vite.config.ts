@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import path from "path";
 import env from "@next2d/env";
-import autoLoader from "@next2d/vite-typescript-auto-loader-plugin";
+import autoLoader from "@next2d/vite-auto-loader-plugin";
 
 const port: number = 5173;
 export default defineConfig({
@@ -35,11 +35,12 @@ export default defineConfig({
     },
     "resolve": {
         "alias": {
-            "@": path.resolve(__dirname, "./src")
+            "@": path.resolve(process.cwd(), "./src")
         }
+    },
+    "test": {
+        "globals": true,
+        "environment": "jsdom",
+        "include": ["src/**/*.test.ts"]
     }
-    // "test": {
-    //     "globals": true,
-    //     "environment": "jsdom"
-    // }
 });
