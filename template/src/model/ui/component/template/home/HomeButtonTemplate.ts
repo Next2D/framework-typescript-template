@@ -2,63 +2,30 @@
 import { config } from "@/config/Config";
 import { ButtonComponent } from "@/model/ui/component/atom/ButtonComponent";
 import { HomeContent } from "@/model/application/content/HomeContent";
-import { HomeButtonMouseDownEvent } from "@/model/domain/event/home/HomeButtonMouseDownEvent";
-import { HomeButtonMouseUpEvent } from "@/model/domain/event/home/HomeButtonMouseUpEvent";
-import type { Event } from "@next2d/events";
+import { execute as homeButtonMouseDownEvent } from "@/model/domain/event/home/HomeButtonMouseDownEvent";
+import { execute as homeButtonMouseUpEvent } from "@/model/domain/event/home/HomeButtonMouseUpEvent";
 import { MouseEvent } from "@next2d/events";
 
 /**
- * @class
+ * @description Home画面のキャラクターを生成
+ *              Generate characters for the Home screen
+ *
+ * @return {HomeContent}
+ * @method
+ * @public
  */
-export class HomeButtonTemplate
+export const execute = (): HomeContent =>
 {
-    private _$homeButtonMouseDownEvent: HomeButtonMouseDownEvent;
-    private _$homeButtonMouseUpEvent: HomeButtonMouseUpEvent;
+    const homeContent: HomeContent = ButtonComponent.factory(new HomeContent());
 
-    /**
-     * @constructor
-     * @public
-     */
-    constructor ()
-    {
-        /**
-         * @type {HomeButtonMouseDownEvent}
-         * @private
-         */
-        this._$homeButtonMouseDownEvent = new HomeButtonMouseDownEvent();
+    homeContent.x = config.stage.width  / 2 - 4;
+    homeContent.y = config.stage.height / 2;
 
-        /**
-         * @type {HomeButtonMouseUpEvent}
-         * @private
-         */
-        this._$homeButtonMouseUpEvent = new HomeButtonMouseUpEvent();
-    }
+    homeContent.scaleX = 2;
+    homeContent.scaleY = 2;
 
-    /**
-     * @return {HomeContent}
-     * @method
-     * @public
-     */
-    factory (): HomeContent
-    {
-        const homeContent: HomeContent = ButtonComponent.factory(new HomeContent());
+    homeContent.addEventListener(MouseEvent.MOUSE_DOWN, homeButtonMouseDownEvent);
+    homeContent.addEventListener(MouseEvent.MOUSE_UP, homeButtonMouseUpEvent);
 
-        homeContent.x = config.stage.width  / 2 - 4;
-        homeContent.y = config.stage.height / 2;
-
-        homeContent.scaleX = 2;
-        homeContent.scaleY = 2;
-
-        homeContent.addEventListener(MouseEvent.MOUSE_DOWN, (event: Event) =>
-        {
-            this._$homeButtonMouseDownEvent.execute(event);
-        });
-
-        homeContent.addEventListener(MouseEvent.MOUSE_UP, (event: Event) =>
-        {
-            this._$homeButtonMouseUpEvent.execute(event);
-        });
-
-        return homeContent;
-    }
-}
+    return homeContent;
+};

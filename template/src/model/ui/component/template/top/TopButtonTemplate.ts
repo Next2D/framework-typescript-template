@@ -1,8 +1,8 @@
 // @ts-ignore
 import { config } from "@/config/Config";
 import { ButtonComponent } from "@/model/ui/component/atom/ButtonComponent";
-import { TopButtonMouseUpEvent } from "@/model/domain/event/top/TopButtonMouseUpEvent";
-import { TextComponent } from "@/model/ui/component/atom/TextComponent";
+import { execute as topButtonMouseUpEvent } from "@/model/domain/event/top/TopButtonMouseUpEvent";
+import { execute as textComponent } from "@/model/ui/component/atom/TextComponent";
 import { response } from "@next2d/framework";
 import { MouseEvent } from "@next2d/events";
 import type { TopContent } from "@/model/application/content/TopContent";
@@ -10,59 +10,37 @@ import type { TextField, MovieClip } from "@next2d/display";
 import type { ParentImpl } from "@next2d/interface";
 
 /**
- * @class
+ * @description Topページのボタンを生成
+ *              Generate Top page button
+ *
+ * @return {MovieClip}
+ * @method
+ * @public
  */
-export class TopButtonTemplate
+export const execute = (top_content: TopContent): ParentImpl<MovieClip> =>
 {
-    private _$buttonComponentMouseUpEvent: TopButtonMouseUpEvent;
+    const button: ParentImpl<MovieClip> = ButtonComponent.factory();
+    button.name    = "button";
+    button.visible = false;
 
     /**
-     * @constructor
-     * @public
+     * @see domain/event/top/TopButtonMouseUpEvent.js
+     * ドメイン層から専用のイベントを起動
+     * Launch dedicated events from the domain layer
      */
-    constructor ()
-    {
-        /**
-         * @type {TopButtonMouseUpEvent}
-         * @private
-         */
-        this._$buttonComponentMouseUpEvent = new TopButtonMouseUpEvent();
-    }
+    button.addEventListener(MouseEvent.MOUSE_UP, topButtonMouseUpEvent);
 
-    /**
-     * @param  {TopContent} top_content
-     * @return {MovieClip}
-     * @method
-     * @public
-     */
-    factory (top_content: TopContent): ParentImpl<MovieClip>
-    {
-        const button: ParentImpl<MovieClip> = ButtonComponent.factory();
-        button.name    = "button";
-        button.visible = false;
-
-        button.addEventListener(MouseEvent.MOUSE_UP, (): void =>
+    const textField: TextField = textComponent(
+        response.get("TopText").word,
         {
-            /**
-             * @see domain/event/top/TopButtonMouseUpEvent.js
-             * ドメイン層から専用のイベントを起動
-             * Launch dedicated events from the domain layer
-             */
-            this._$buttonComponentMouseUpEvent.execute();
-        });
+            "autoSize": "center"
+        }
+    );
 
-        const textField: TextField = TextComponent.factory(
-            response.get("TopText").word,
-            {
-                "autoSize": "center"
-            }
-        );
+    textField.x = config.stage.width / 2 - textField.width / 2;
+    textField.y = top_content.y + top_content.height / 2 + textField.height;
 
-        textField.x = config.stage.width / 2 - textField.width / 2;
-        textField.y = top_content.y + top_content.height / 2 + textField.height;
+    button.addChild(textField);
 
-        button.addChild(textField);
-
-        return button;
-    }
-}
+    return button;
+};

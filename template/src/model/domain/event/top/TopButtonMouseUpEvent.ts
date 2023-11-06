@@ -3,15 +3,7 @@ import { app } from "@next2d/framework";
 /**
  * @class
  */
-export class TopButtonMouseUpEvent
+export const execute = (): void =>
 {
-    /**
-     * @return {void}
-     * @method
-     * @public
-     */
-    execute (): void
-    {
-        app.gotoView("home");
-    }
-}
+    app.gotoView("home");
+};

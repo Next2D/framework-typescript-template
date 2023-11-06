@@ -5,33 +5,29 @@ import type { MovieClip } from "@next2d/display";
 import type { View } from "@next2d/framework";
 
 /**
- * @class
+ * @description Topページのロゴのイベント処理関数
+ *              Event processing function for Top page logo
+ *
+ * @return {void}
+ * @method
+ * @public
  */
-export class TopContentEnterFrameEvent
+export const execute = (event: Event): void =>
 {
+    const content: EventDispatcherImpl<MovieClip> = event.currentTarget;
+
     /**
-     * @param  {Event} event
-     * @return {void}
-     * @method
-     * @public
+     * 最終フレームになったらイベントを終了してボタンを表示
      */
-    execute (event: Event): void
-    {
-        const content: EventDispatcherImpl<MovieClip> = event.currentTarget;
+    if (content.currentFrame === content.totalFrames) {
 
-        /**
-         * 最終フレームになったらイベントを終了してボタンを表示
-         */
-        if (content.currentFrame === content.totalFrames) {
+        content.removeEventListener(Event.ENTER_FRAME, event.listener);
 
-            content.removeEventListener(Event.ENTER_FRAME, event.listener);
-
-            const view: View | null = context.view;
-            if (!view) {
-                return ;
-            }
-            // @ts-ignore
-            view.button.visible = true;
+        const view: View | null = context.view;
+        if (!view) {
+            return ;
         }
+        // @ts-ignore
+        view.button.visible = true;
     }
-}
+};
