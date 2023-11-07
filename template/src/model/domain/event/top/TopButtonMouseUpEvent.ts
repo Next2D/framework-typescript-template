@@ -1,17 +1,9 @@
-import { app } from "@/index";
+import { app } from "@next2d/framework";
 
 /**
  * @class
  */
-export class TopButtonMouseUpEvent
+export const execute = (): void =>
 {
-    /**
-     * @return {void}
-     * @method
-     * @public
-     */
-    execute ()
-    {
-        app.gotoView("home");
-    }
-}
+    app.gotoView("home");
+};
