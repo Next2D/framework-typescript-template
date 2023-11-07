@@ -1,6 +1,4 @@
 import { TopContent } from "@/model/application/content/TopContent";
-import { execute as topContentEnterFrameEvent } from "@/model/domain/event/top/TopContentEnterFrameEvent";
-import { Event } from "@next2d/events";
 import { config } from "@/config/Config";
 
 /**
@@ -22,7 +20,5 @@ export const execute = (): TopContent =>
     topContent.x = config.stage.width  / 2;
     topContent.y = config.stage.height / 2;
 
-    topContent.addEventListener(Event.ENTER_FRAME, topContentEnterFrameEvent);
-
     return topContent;
-}
+};

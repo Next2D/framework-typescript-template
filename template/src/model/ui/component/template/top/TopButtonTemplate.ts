@@ -20,8 +20,6 @@ import type { ParentImpl } from "@next2d/interface";
 export const execute = (top_content: TopContent): ParentImpl<MovieClip> =>
 {
     const button: ParentImpl<MovieClip> = ButtonComponent.factory();
-    button.name    = "button";
-    button.visible = false;
 
     /**
      * @see domain/event/top/TopButtonMouseUpEvent.js
