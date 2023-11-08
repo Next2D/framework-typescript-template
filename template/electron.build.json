@@ -1,0 +1,45 @@
+{
+    "appId": "app.example.appId",
+    "productName": "Example-Product-Name",
+    "directories": {
+        "output": "dist"
+    },
+    "copyright": "Copyright ©2023 Example-Product-Name",
+    "extraMetadata": {
+        "version": "0.0.1",
+        "main": "electron.js"
+    },
+    "files": [
+        "!file/*",
+        "!mock/*",
+        "!src/*",
+        "!icon/*",
+        "!ios/*",
+        "!android/*",
+        "!**/.vscode/*",
+        "!**/.github/*",
+        "!.eslintignore",
+        "!.eslintrc.json",
+        "!.gitattributes",
+        "!.gitignore",
+        "!capacitor.config.json",
+        "!electron.build.json",
+        "!index.html",
+        "!README.md",
+        "!tsconfig.eslint.json",
+        "!tsconfig.json",
+        "!vite.config.ts"
+    ],
+    "mac": {
+        "target": "dmg",
+        "icon": "icon/macos/icon.icns"
+    },
+    "win": {
+        "target": "portable",
+        "icon": "icon/windows/icon.png"
+    },
+    "linux": {
+        "target": "deb",
+        "icon": "icon/linux/icon.png"
+    }
+}
