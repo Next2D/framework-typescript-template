@@ -4,16 +4,18 @@
     "directories": {
         "output": "dist"
     },
+    "asar": false,
     "copyright": "Copyright ©2023 Example-Product-Name",
     "extraMetadata": {
         "version": "0.0.1",
         "main": "electron.js"
     },
     "files": [
+        "!@types/*",
         "!file/*",
+        "!icon/*",
         "!mock/*",
         "!src/*",
-        "!icon/*",
         "!ios/*",
         "!android/*",
         "!**/.vscode/*",

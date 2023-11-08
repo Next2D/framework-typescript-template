@@ -1,7 +1,7 @@
 {
   "appId": "app.example.appId",
   "appName": "Example-Product-Name",
-  "webDir": "dist/ios/prd/",
+  "webDir": "dist/android/prd/",
   "bundledWebRuntime": false,
   "plugins": {
     "SplashScreen": {
