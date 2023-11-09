@@ -4,7 +4,6 @@
   "description": "Next2D Framework TypeScript template.",
   "author": "Toshiyuki Ienaga <ienaga@tvon.jp>",
   "license": "MIT",
-  "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "start": "vite",
@@ -29,7 +28,7 @@
     "@capacitor/ios": "^5.5.1",
     "@next2d/framework": "^2.0.1",
     "@next2d/player": "^1.18.9",
-    "@next2d/vite-auto-loader-plugin": "^0.0.8",
+    "@next2d/vite-auto-loader-plugin": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "electron": "^27.0.4",

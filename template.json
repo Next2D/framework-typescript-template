@@ -4,12 +4,7 @@
       "@typescript-eslint/eslint-plugin": "*",
       "@typescript-eslint/parser": "*",
       "typescript": "*",
-      "eslint": "*",
-      "electron": "*",
-      "@capacitor/cli": "*",
-      "@capacitor/core": "*",
-      "@capacitor/ios": "*",
-      "@capacitor/android": "*"
+      "eslint": "*"
     }
   }
 }
