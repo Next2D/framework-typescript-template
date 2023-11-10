@@ -2,11 +2,10 @@
   "name": "@next2d/framework-typescript-template",
   "version": "0.0.1",
   "description": "Next2D Framework TypeScript template.",
-  "author": "Toshiyuki Ienaga <ienaga@tvon.jp>",
-  "license": "MIT",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "electron-forge start",
     "preview:ios": "npx @next2d/builder --platform ios --preview",
     "preview:android": "npx @next2d/builder --platform android --preview",
     "preview:macos": "npx @next2d/builder --platform macos --preview",
@@ -19,7 +18,9 @@
     "build": "npx @next2d/builder",
     "lint": "eslint src/**/*.ts",
     "test": "npx vitest",
-    "generate": "npx @next2d/view-generator"
+    "generate": "npx @next2d/view-generator",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "devDependencies": {
     "@capacitor/android": "^5.5.1",

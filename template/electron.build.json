@@ -1,40 +1,48 @@
 {
     "appId": "app.example.appId",
-    "productName": "Example-Product-Name",
     "directories": {
         "output": "dist"
     },
-    "asar": false,
-    "copyright": "Copyright ©2023 Example-Product-Name",
+    "copyright": "Copyright ©2023 ExampleProductName",
     "extraMetadata": {
-        "version": "0.0.1",
-        "main": "electron.js"
+        "name": "ExampleProductName",
+        "author": "You'r name.",
+        "main": "electron.js",
+        "type": "commonjs"
     },
     "files": [
+        "!node_modules/@next2d/",
+        "!node_modules/@eslint/",
+        "!node_modules/@jest/",
+        "!node_modules/@vitest/",
+        "!node_modules/@ionic/",
+        "!node_modules/@capacitor/",
+        "!node_modules/vite/",
+        "!node_modules/vite-node/",
+        "!node_modules/vitest/",
+        "!package.json",
         "node_modules/",
-        "electron.index.json",
-        "package.json",
         "electron.js",
-        "!node_modules/@next2d",
-        "!node_modules/@eslint",
-        "!node_modules/@jest",
-        "!node_modules/@vitest",
-        "!node_modules/@ionic",
-        "!node_modules/@capacitor",
-        "!node_modules/vite",
-        "!node_modules/vite-node",
-        "!node_modules/vitest"
+        "electron.index.json"
     ],
     "mac": {
-        "target": "dmg",
+        "target": [{
+            "target": "zip",
+            "arch": ["universal"]
+        }],
+        "category": "Games",
         "icon": "icon/macos/icon.icns"
     },
     "win": {
-        "target": "portable",
+        "target": [{
+            "target": "nsis",
+            "arch": ["x64"]
+        }],
         "icon": "icon/windows/icon.png"
     },
     "linux": {
-        "target": "deb",
+        "target": "zip",
+        "category": "Games",
         "icon": "icon/linux/icon.png"
     }
 }
