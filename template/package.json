@@ -18,9 +18,7 @@
     "build": "npx @next2d/builder",
     "lint": "eslint src/**/*.ts",
     "test": "npx vitest",
-    "generate": "npx @next2d/view-generator",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "generate": "npx @next2d/view-generator"
   },
   "devDependencies": {
     "@capacitor/android": "^5.5.1",
