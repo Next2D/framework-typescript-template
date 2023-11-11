@@ -26,3 +26,4 @@ dist-ssr
 src/Packages.ts
 src/config/Config.ts
 electron.index.json
+out/

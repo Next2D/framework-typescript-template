@@ -1,11 +1,14 @@
+/// <reference types="vitest" />
+
 import { defineConfig } from "vite";
 import path from "path";
-import env from "@next2d/env";
 import autoLoader from "@next2d/vite-auto-loader-plugin";
 
 const port: number = 5173;
 export default defineConfig({
+    "base": "./",
     "build": {
+        "outDir": "dist",
         "target": "esnext",
         "modulePreload": {
             "polyfill": false
@@ -17,7 +20,7 @@ export default defineConfig({
         }
     },
     "plugins": [
-        autoLoader(env())
+        autoLoader()
     ],
     "server": {
         "open": "index.html",
