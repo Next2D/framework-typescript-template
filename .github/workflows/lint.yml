@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm install
+        working-directory: ./template
       - run: npx eslint ./src/**/*.ts
         working-directory: ./template
 
@@ -26,5 +27,6 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm install
+        working-directory: ./template
       - run: npx eslint ./src/**/*.ts
         working-directory: ./template
