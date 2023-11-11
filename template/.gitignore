@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-src/Packages.ts
-src/config/Config.ts
+src/Packages.*
+src/config/Config.*
 electron.index.json
