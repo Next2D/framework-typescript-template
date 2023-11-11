@@ -26,3 +26,4 @@ dist-ssr
 src/Packages.*
 src/config/Config.*
 electron.index.json
+electron/resources/*

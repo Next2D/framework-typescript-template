@@ -2,12 +2,6 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "1";
 
 const { app, screen, BrowserWindow } = require("electron");
 
-/**
- * 自動生成ファイルの読み込み
- * Loading of auto-generated files
- */
-const config = require("./electron.index.json");
-
 app.commandLine.appendSwitch("disable-http-cache");
 
 const createWindow = () =>
@@ -18,6 +12,7 @@ const createWindow = () =>
     const browserWindow = new BrowserWindow({
         "width": width,
         "height": height,
+        "titleBarStyle": "hidden",
         "webPreferences": {
             "nodeIntegration": false
         }
@@ -28,7 +23,7 @@ const createWindow = () =>
      */
     // browserWindow.webContents.openDevTools();
 
-    browserWindow.loadFile(config.path);
+    browserWindow.loadFile("./resources/index.html");
 };
 
 app

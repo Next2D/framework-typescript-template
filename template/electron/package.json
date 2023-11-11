@@ -1,0 +1,16 @@
+{
+    "name": "example-product-name",
+    "version": "0.0.1",
+    "description": "A divine garden adventure",
+    "main": "index.js",
+    "config": {
+        "forge": {
+            "packagerConfig": {
+                "icon": "./icons"
+            }
+        }
+    },
+    "devDependencies": {
+        "electron": "^27.0.4"
+    }
+}
