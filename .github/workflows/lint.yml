@@ -18,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v3
       - run: cd template
       - run: npm install
+      - run: ls -al
       - run: npx eslint ./src/**/*.ts
 
   windows-browser-test:
@@ -27,4 +28,5 @@ jobs:
       - uses: actions/setup-node@v3
       - run: cd template
       - run: npm install
+      - run: ls -al
       - run: npx eslint ./src/**/*.ts
