@@ -14,7 +14,7 @@ const createWindow = () =>
 {
     const browserWindow = new BrowserWindow({
         "fullscreen": true,
-        "autoHideMenuBar": true,
+        "autoHideMenuBar": false,
         "webPreferences": {
             "nodeIntegration": false
         }

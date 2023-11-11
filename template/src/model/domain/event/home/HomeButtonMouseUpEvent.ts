@@ -3,19 +3,15 @@ import type { EventDispatcherImpl } from "@next2d/interface";
 import type { Sprite } from "@next2d/display";
 
 /**
- * @class
+ * @description Home画面のキャラクターの移動処理を終了
+ *              Terminates the process of moving the character on the Home screen.
+ *
+ * @param {Event} event
+ * @method
+ * @public
  */
-export class HomeButtonMouseUpEvent
+export const execute = (event: Event): void =>
 {
-    /**
-     * @param  {Event} event
-     * @return {void}
-     * @method
-     * @public
-     */
-    execute (event: Event): void
-    {
-        const sprite: EventDispatcherImpl<Sprite> = event.currentTarget;
-        sprite.stopDrag();
-    }
-}
+    const sprite: EventDispatcherImpl<Sprite> = event.currentTarget;
+    sprite.stopDrag();
+};

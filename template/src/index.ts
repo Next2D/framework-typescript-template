@@ -1,42 +1,37 @@
 "use strict";
 
-import "@next2d/framework";
-
-import { App } from "@/App";
+import { app } from "@next2d/framework";
 // @ts-ignore
 import { config } from "@/config/Config";
 // @ts-ignore
 import { packages } from "@/Packages";
 
-const app: App = new App(config, packages);
-if (document.readyState === "loading") {
-
-    const initialize = (event: Event) =>
-    {
-        if (!event.target) {
-            return ;
-        }
-
-        event.target.removeEventListener("DOMContentLoaded", initialize);
-        app
-            .run()
-            .then(() =>
-            {
-                app.gotoView();
-            });
-    };
-
-    window.addEventListener("DOMContentLoaded", initialize);
-
-} else {
+/**
+ * @return {void}
+ * @method
+ * @private
+ */
+const boot = (event: Event | null = null): void =>
+{
+    if (event && event.target) {
+        event.target.removeEventListener("DOMContentLoaded", boot);
+    }
 
     app
+        .initialize(config, packages)
         .run()
-        .then(() =>
+        .then((): void =>
         {
             app.gotoView();
         });
+};
+
+if (document.readyState === "loading") {
+
+    window.addEventListener("DOMContentLoaded", boot);
+
+} else {
+
+    boot();
 
 }
-
-export { app };

@@ -2,64 +2,58 @@ import { TextField } from "@next2d/display";
 import type { TextFormat } from "@next2d/text";
 
 /**
- * @class
+ * @param  {string} text
+ * @param  {object} [props=null]
+ * @param  {object} [format=null]
+ * @return {TextField}
+ * @method
+ * @public
  */
-export class TextComponent
-{
-    /**
-     * @param  {string} text
-     * @param  {object} [props=null]
-     * @param  {object} [format=null]
-     * @return {TextField}
-     * @method
-     * @static
-     */
-    static factory (
-        text: string = "",
-        props: any = null,
-        format: any = null
-    ): TextField {
+export const execute = (
+    text: string = "",
+    props: any = null,
+    format: any = null
+): TextField => {
 
-        const textField: TextField = new TextField();
+    const textField: TextField = new TextField();
 
-        if (props) {
+    if (props) {
 
-            const keys: string[] = Object.keys(props);
-            for (let idx: number = 0; idx < keys.length; idx++) {
+        const keys: string[] = Object.keys(props);
+        for (let idx: number = 0; idx < keys.length; idx++) {
 
-                const name: string = keys[idx];
+            const name: string = keys[idx];
 
-                if (!(name in textField)) {
-                    continue;
-                }
-
-                // @ts-ignore
-                textField[name] = props[name];
-            }
-        }
-
-        if (format) {
-
-            const textFormat: TextFormat = textField.defaultTextFormat;
-
-            const keys: string[] = Object.keys(format);
-            for (let idx: number = 0; idx < keys.length; idx++) {
-
-                const name = keys[idx];
-
-                if (!(name in textFormat)) {
-                    continue;
-                }
-
-                // @ts-ignore
-                textFormat[name] = format[name];
+            if (!(name in textField)) {
+                continue;
             }
 
-            textField.defaultTextFormat = textFormat;
+            // @ts-ignore
+            textField[name] = props[name];
         }
-
-        textField.text = text;
-
-        return textField;
     }
-}
+
+    if (format) {
+
+        const textFormat: TextFormat = textField.defaultTextFormat;
+
+        const keys: string[] = Object.keys(format);
+        for (let idx: number = 0; idx < keys.length; idx++) {
+
+            const name = keys[idx];
+
+            if (!(name in textFormat)) {
+                continue;
+            }
+
+            // @ts-ignore
+            textFormat[name] = format[name];
+        }
+
+        textField.defaultTextFormat = textFormat;
+    }
+
+    textField.text = text;
+
+    return textField;
+};
