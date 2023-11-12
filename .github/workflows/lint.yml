@@ -16,11 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - run: cd template && npm install && npx eslint ./src/**/*.ts
+      - run: |
+          npm install
+          npx eslint ./src/**/*.ts
+        working-directory: ./template
 
   windows-browser-test:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - run: cd template && npm install && npx eslint ./src/**/*.ts
+      - run: |
+          npm install
+          npx eslint ./src/**/*.ts
+        working-directory: ./template
