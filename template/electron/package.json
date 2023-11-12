@@ -1,28 +1,14 @@
 {
     "name": "example-product-name",
     "version": "0.0.1",
-    "description": "A divine garden adventure",
+    "description": "Your Production Description",
     "main": "index.js",
     "config": {
         "forge": {
             "packagerConfig": {
-                "asar": true,
-                "icon": "./icons"
-            },
-            "makers": [
-                {
-                    "platforms": ["mas"],
-                    "config": {
-                        "icon": "../icon/macos/icon.icns"
-                    }
-                },
-                {
-                    "platforms": ["win32"],
-                    "config": {
-                        "icon": "../icon/windows/icon.png"
-                    }
-                }
-            ]
+                "icon": "./electron/icons/icon.icns",
+                "asar": true
+            }
         }
     },
     "devDependencies": {

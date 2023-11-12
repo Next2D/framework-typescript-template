@@ -1,4 +1,3 @@
 **/node_modules/*
-src/Packages.ts
-src/config/Config.ts
-electron.index.json
+src/Packages.*
+src/config/Config.*
