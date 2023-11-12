@@ -28,7 +28,6 @@
     "@next2d/vite-auto-loader-plugin": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
-    "electron": "^27.0.4",
     "eslint": "^8.53.0",
     "jsdom": "^22.1.0",
     "typescript": "^5.2.2",
