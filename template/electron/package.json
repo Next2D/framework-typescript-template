@@ -6,8 +6,23 @@
     "config": {
         "forge": {
             "packagerConfig": {
+                "asar": true,
                 "icon": "./icons"
-            }
+            },
+            "makers": [
+                {
+                    "platforms": ["mas"],
+                    "config": {
+                        "icon": "../icon/macos/icon.icns"
+                    }
+                },
+                {
+                    "platforms": ["win32"],
+                    "config": {
+                        "icon": "../icon/windows/icon.png"
+                    }
+                }
+            ]
         }
     },
     "devDependencies": {
