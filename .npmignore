@@ -3,5 +3,4 @@
 .gitignore
 template/ios
 template/android
-template/node_modules
 template/package.json
