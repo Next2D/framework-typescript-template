@@ -1,10 +1,7 @@
 .github
 .gitattributes
 .gitignore
-template/dist
 template/ios
 template/android
 template/node_modules
 template/package.json
-template/src/Packages.ts
-template/src/config/Config.ts
