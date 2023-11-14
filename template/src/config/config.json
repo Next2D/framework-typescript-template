@@ -32,6 +32,7 @@
     }
   },
   "all": {
+    "defaultTop": "top",
     "spa": true,
     "loading": {
       "callback": "Loading"
