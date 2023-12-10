@@ -7,6 +7,9 @@ import autoLoader from "@next2d/vite-auto-loader-plugin";
 const port: number = 5173;
 export default defineConfig({
     "base": "./",
+    "optimizeDeps": {
+        "disabled": true
+    },
     "build": {
         "outDir": "dist",
         "target": "esnext",
