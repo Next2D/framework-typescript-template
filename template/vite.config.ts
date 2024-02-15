@@ -4,7 +4,6 @@ import { defineConfig } from "vite";
 import path from "path";
 import autoLoader from "@next2d/vite-auto-loader-plugin";
 
-const port: number = 5173;
 export default defineConfig({
     "base": "./",
     "optimizeDeps": {
@@ -27,14 +26,14 @@ export default defineConfig({
     ],
     "server": {
         "open": "index.html",
-        "port": port,
+        "port": 5173,
         "proxy": {
             "/content": {
-                "target": `http://localhost:${port}`,
+                "target": "http://localhost:5173",
                 "rewrite": (path) => path.replace(/^\/content/, "/mock/content")
             },
             "/api": {
-                "target": `http://localhost:${port}`,
+                "target": "http://localhost:5173",
                 "rewrite": (path) => path.replace(/^\/api/, "/mock/api")
             }
         }
