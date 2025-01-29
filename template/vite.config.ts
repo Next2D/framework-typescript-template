@@ -6,9 +6,6 @@ import autoLoader from "@next2d/vite-auto-loader-plugin";
 
 export default defineConfig({
     "base": "./",
-    "optimizeDeps": {
-        "disabled": true
-    },
     "build": {
         "outDir": "dist",
         "target": "esnext",
@@ -46,6 +43,11 @@ export default defineConfig({
     "test": {
         "globals": true,
         "environment": "jsdom",
+        "setupFiles": [
+            "test.setup.ts",
+            "@vitest/web-worker",
+            "vitest-webgl-canvas-mock"
+        ],
         "include": ["src/**/*.test.ts"]
     }
 });
