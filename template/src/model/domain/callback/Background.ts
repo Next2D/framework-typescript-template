@@ -1,15 +1,14 @@
-// @ts-ignore
 import { config } from "@/config/Config";
-import { context } from "@next2d/framework";
-import { Shape, Stage } from "@next2d/display";
+import { app } from "@next2d/framework";
+import { Shape, stage } from "@next2d/display";
 import { Event } from "@next2d/events";
 import { Matrix } from "@next2d/geom";
-import { $currentPlayer } from "@next2d/util";
-import type { Player } from "@next2d/core";
-import type { View } from "@next2d/framework";
 
+/**
+ * @type {Shape}
+ * @private
+ */
 const shape: Shape = new Shape();
-shape.name = "background";
 
 /**
  * @description 背景のグラデーション描画をセット
@@ -51,22 +50,20 @@ const drawGradient = (): void =>
  */
 const changeScale = (): void =>
 {
-    const width: number  = config.stage.width;
-    const height: number = config.stage.height;
-    const player: Player = $currentPlayer();
+    const width  = config.stage.width;
+    const height = config.stage.height;
+    const scale  = stage.rendererScale;
 
-    const tx: number = player.x;
+    const tx = (stage.rendererWidth  - stage.stageWidth * scale) / 2;
     if (tx) {
-        const scaleX: number = player.scaleX;
-        shape.scaleX = (width + tx * 2 / scaleX) / width;
-        shape.x = -tx / scaleX;
+        shape.scaleX = (width + tx * 2 / scale) / width;
+        shape.x = -tx / scale;
     }
 
-    const ty: number = player.y;
+    const ty = (stage.rendererHeight - stage.stageHeight * scale) / 2;
     if (ty) {
-        const scaleY: number = player.scaleY;
-        shape.scaleY = (height + ty * 2 / scaleY) / height;
-        shape.y = -ty / scaleY;
+        shape.scaleY = (height + ty * 2 / scale) / height;
+        shape.y = -ty / scale;
     }
 };
 
@@ -85,12 +82,12 @@ export class Background
      */
     execute (): void
     {
-        const view: View | null = context.view;
+        const context = app.getContext();
+        const view = context.view;
         if (!view) {
             return ;
         }
 
-        const stage: Stage | null = context.root.stage;
         if (stage && !stage.hasEventListener(Event.RESIZE)) {
             stage.addEventListener(Event.RESIZE, () =>
             {

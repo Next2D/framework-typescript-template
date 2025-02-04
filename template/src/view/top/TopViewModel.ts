@@ -1,9 +1,6 @@
 import { View, ViewModel } from "@next2d/framework";
 import { execute as topContentTemplate } from "@/model/ui/component/template/top/TopContentTemplate";
 import { execute as topButtonTemplate } from "@/model/ui/component/template/top/TopButtonTemplate";
-import type { TopContent } from "@/model/application/content/TopContent";
-import type { MovieClip } from "@next2d/display";
-import type { ParentImpl } from "@next2d/interface";
 
 /**
  * @class
@@ -13,42 +10,36 @@ export class TopViewModel extends ViewModel
 {
     /**
      * @param  {View} view
-     * @return {void}
+     * @return {Promise<View>}
      * @method
      * @public
      */
-    unbind (view: View): void
+    async unbind (view: View): Promise<View>
     {
-        console.log(view);
+        return super.unbind(view);
     }
 
     /**
      * @param  {View} view
-     * @return {Promise}
+     * @return {Promise<void>}
      * @method
      * @public
      */
-    bind (view: View): Promise<View>
+    async bind (view: View): Promise<void>
     {
-        return this
-            .factory(view)
-            .then((view): Promise<View> =>
-            {
-                /**
-                 * ロゴアニメーションをAnimation ToolのJSONから生成
-                 * Logo animation generated from Animation Tool JSON
-                 */
-                const topContent: TopContent = topContentTemplate();
-                view.addChild(topContentTemplate());
+        super.unbind(view);
 
-                /**
-                 * ボタンエリアを生成
-                 * Generate button area
-                 */
-                const button: ParentImpl<MovieClip> = topButtonTemplate(topContent);
-                view.addChild(button);
+        /**
+         * ロゴアニメーションをAnimation ToolのJSONから生成
+         * Logo animation generated from Animation Tool JSON
+         */
+        const topContent = topContentTemplate();
+        view.addChild(topContent);
 
-                return Promise.resolve(view);
-            });
+        /**
+         * ボタンエリアを生成
+         * Generate button area
+         */
+        view.addChild(topButtonTemplate(topContent));
     }
 }

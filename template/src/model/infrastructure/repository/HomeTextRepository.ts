@@ -10,16 +10,9 @@ export class HomeTextRepository
      * @return {Promise}
      * @static
      */
-    static get (): Promise<any>
+    static async get (): Promise<any>
     {
-        return fetch(`${config.api.endPoint}api/home.json`)
-            .then((response: Response) =>
-            {
-                return response.json();
-            })
-            .catch((error) =>
-            {
-                console.error(error);
-            });
+        const response = await fetch(`${config.api.endPoint}api/home.json`);
+        return response.json();
     }
 }

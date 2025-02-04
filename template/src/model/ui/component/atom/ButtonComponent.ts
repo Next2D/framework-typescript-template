@@ -1,5 +1,4 @@
 import { MovieClip } from "@next2d/display";
-import type { ParentImpl } from "@next2d/interface";
 
 /**
  * @class
@@ -11,11 +10,11 @@ export class ButtonComponent
      * @method
      * @static
      */
-    static factory (content: ParentImpl<any> | null = null): ParentImpl<any>
+    static factory <D extends MovieClip> (content: D | null = null): D
     {
         const button = content || new MovieClip();
         button.buttonMode = true;
 
-        return button;
+        return button as D;
     }
 }

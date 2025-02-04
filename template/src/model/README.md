@@ -42,16 +42,16 @@ application
 └── content
 ```
 
-`content`ディレクトリにはNoCode Toolで作成されたアニメーションを動的に生成するためのクラスが格納されてます。  
+`content`ディレクトリにはAnimation Toolで作成されたアニメーションを動的に生成するためのクラスが格納されてます。  
 `service`ディレクトリを作成して、`domain`へのアクセスを行う責務を担う事も良いかもしれません。  
 
-The `content` directory contains classes for dynamically generating animations created by the NoCode Tool.  
+The `content` directory contains classes for dynamically generating animations created by the Animation Tool.  
 It may be a good idea to create a `service` directory to be responsible for accessing the `domain`.  
 
-#### Example of cooperation with NoCode Tool
+#### Example of cooperation with Animation Tool
 
-`namespace`にNoCode Toolのシンボルに設定した名前を追記する事で動的生成が可能になります。  
-Dynamic generation is enabled by appending the name set for the NoCode Tool symbol in the `namespace` field.  
+`namespace`にAnimation Toolのシンボルに設定した名前を追記する事で動的生成が可能になります。  
+Dynamic generation is enabled by appending the name set for the Animation Tool symbol in the `namespace` field.  
 
 ```javascript
 import { MovieClipContent } from "@next2d/framework";
@@ -68,7 +68,7 @@ export class TopContent extends MovieClipContent
      */
     get namespace ()
     {
-        return "TopContent"; // NoCode Toolのsymbolで設定した名前を追記
+        return "TopContent"; // Animation Toolのsymbolで設定した名前を追記
     }
 }
 ```

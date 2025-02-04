@@ -1,8 +1,8 @@
 // @ts-ignore
 import { config } from "@/config/Config";
 import { execute as textComponent } from "@/model/ui/component/atom/TextComponent";
-import { response } from "@next2d/framework";
-import type { TextField } from "@next2d/display";
+import { app } from "@next2d/framework";
+import type { TextField } from "@next2d/text";
 import type { HomeContent } from "@/model/application/content/HomeContent";
 
 /**
@@ -15,8 +15,10 @@ import type { HomeContent } from "@/model/application/content/HomeContent";
  */
 export const execute = (home_content: HomeContent): TextField =>
 {
+    const response = app.getResponse();
+
     // Hello, World.
-    const textField: TextField = textComponent(
+    const textField = textComponent(
         response.get("HomeText").word,
         {
             "autoSize": "center",

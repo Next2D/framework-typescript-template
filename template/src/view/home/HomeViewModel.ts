@@ -1,8 +1,6 @@
 import { View, ViewModel } from "@next2d/framework";
 import { execute as homeButtonTemplate } from "@/model/ui/component/template/home/HomeButtonTemplate";
 import { execute as homeTextTemplate } from "@/model/ui/component/template/home/HomeTextTemplate";
-import type { HomeContent } from "@/model/application/content/HomeContent";
-import type { TextField } from "@next2d/display";
 
 /**
  * @class
@@ -12,42 +10,34 @@ export class HomeViewModel extends ViewModel
 {
     /**
      * @param  {View} view
-     * @return {void}
+     * @return {Promise<View>}
      * @method
      * @public
      */
-    unbind (view: View): void
+    async unbind (view: View): Promise<View>
     {
-        console.log(view);
+        return super.unbind(view);
     }
 
     /**
      * @param  {View} view
-     * @return {Promise}
+     * @return {Promise<void>}
      * @method
      * @public
      */
-    bind (view: View): Promise<View>
+    async bind (view: View): Promise<void>
     {
-        return this
-            .factory(view)
-            .then((view): Promise<View> =>
-            {
-                /**
-                 * アニメーションをNoCodeToolのJSONから生成
-                 * Generate animation from NoCodeTool's JSON
-                 */
-                const homeContent: HomeContent = homeButtonTemplate();
-                view.addChild(homeContent);
+        /**
+         * アニメーションをAnimation ToolのJSONから生成
+         * Generate animation from Animation Tool's JSON
+         */
+        const homeContent = homeButtonTemplate();
+        view.addChild(homeButtonTemplate());
 
-                /**
-                 * Hello, Worldのテキストを生成
-                 * Generate Hello, World text
-                 */
-                const homeTextField: TextField = homeTextTemplate(homeContent);
-                view.addChild(homeTextField);
-
-                return Promise.resolve(view);
-            });
+        /**
+         * Hello, Worldのテキストを生成
+         * Generate Hello, World text
+         */
+        view.addChild(homeTextTemplate(homeContent));
     }
 }

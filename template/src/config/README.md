@@ -28,13 +28,13 @@ JSON file for setting the display area.
 
 初期は`local`、`dev`、`stg`、`prd`、`all`、と区切られており、`all`以外は任意の環境名です。  
 開発環境に合わせて変更、もしくは追加が可能です。  
-リリースするプラットフォーム毎にそれぞれAPIのエンドポイントが異なるなど、環境変数として利用が可能です。  
+リリースするプラットフォーム毎にAPIのエンドポイントが異なるなど、環境変数として利用が可能です。  
 
 Initially, the names are separated as `local`, `dev`, `stg`, `prd`, `all`, and any environment name except for `all`.  
 You can change or add to them according to your development environment.  
 It can be used as an environment variable, for example, for different API endpoints for each platform to be released.
 
-### config.json all
+### config.json > all
 
 `all`はその名の通り、どの環境でも書き出される共通変数となります。  
 `all`で機能に影響のある設定項目は以下の項目となります。  
@@ -49,7 +49,7 @@ The following items are available in `all` that affect functionality.
 | `loading.callback`  | string          | Loading                 | 画面遷移の準備が完了するまでの間、ローディング画面を表示するかどうかを設定します。コールバックとして設定されたクラスのstart関数とend関数を呼び出します。 <br> Sets whether or not the loading screen is displayed until the preparation for screen transition is completed. Calls the start and end functions of the class set as the callback. |
 | `gotoView.callback` | string or array | ["callback.Background"] | gotoView関数が終了した後にコールバックするクラスを指定できます。 <br> You can specify the class to be called back after the gotoView function exits.                                                                                                                                                |
 
-### config.json platform
+### config.json > platform
 
 `platform`の値は書き出し時に自動で生成されます。  
 値は、`macos`、`windows`、`ios`、`android`、`web`の固定値となります。  
@@ -91,7 +91,7 @@ Context is set to the QuestListView class.
 | `requests`  | array    | null    | Viewにアクセスする前に、指定した先にリクエストを送信します。受け取った情報は、nameをキーに`response`にセットされます。 <br> Before accessing the View, a request is sent to the specified destination. The information received is set in `response` with name as the key.  |
 
 
-### requests
+### routing.json > requests
 
 requests配列の設定は以下の項目が利用可能です。  
 

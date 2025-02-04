@@ -94,8 +94,8 @@ export class TopViewModel extends ViewModel
             .then((view) =>
             {
                 /**
-                 * ロゴアニメーションをNoCodeToolのJSONから生成
-                 * Logo animation generated from NoCodeTool's JSON
+                 * ロゴアニメーションをAnimation ToolのJSONから生成
+                 * Logo animation generated from Animation Tool's JSON
                  */
                 const topContent = new TopContentTemplate().factory();
                 view.addChild(topContent);

@@ -7,23 +7,18 @@ import { config } from "@/config/Config";
 import { packages } from "@/Packages";
 
 /**
- * @return {void}
+ * @return {Promise<void>}
  * @method
  * @private
  */
-const boot = (event: Event | null = null): void =>
+const boot = async (event: Event | null = null): Promise<void> =>
 {
     if (event && event.target) {
         event.target.removeEventListener("DOMContentLoaded", boot);
     }
 
-    app
-        .initialize(config, packages)
-        .run()
-        .then((): void =>
-        {
-            app.gotoView();
-        });
+    await app.initialize(config, packages).run();
+    app.gotoView();
 };
 
 if (document.readyState === "loading") {

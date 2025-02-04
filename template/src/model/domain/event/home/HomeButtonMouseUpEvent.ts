@@ -1,5 +1,4 @@
 import type { Event } from "@next2d/events";
-import type { EventDispatcherImpl } from "@next2d/interface";
 import type { Sprite } from "@next2d/display";
 
 /**
@@ -12,6 +11,6 @@ import type { Sprite } from "@next2d/display";
  */
 export const execute = (event: Event): void =>
 {
-    const sprite: EventDispatcherImpl<Sprite> = event.currentTarget;
+    const sprite = event.currentTarget as Sprite;
     sprite.stopDrag();
 };

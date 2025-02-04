@@ -12,8 +12,8 @@ import { config } from "@/config/Config";
 export const execute = (): TopContent =>
 {
     /**
-     * ロゴアニメーションをNoCodeToolのJSONから生成
-     * Logo animation generated from NoCodeTool's JSON
+     * ロゴアニメーションをAnimation ToolのJSONから生成
+     * Logo animation generated from Animation Tool's JSON
      */
     const topContent = new TopContent();
 
