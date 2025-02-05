@@ -20,10 +20,10 @@ const shape: Shape = new Shape();
  */
 const drawGradient = (): void =>
 {
-    const width: number  = config.stage.width;
-    const height: number = config.stage.height;
+    const width  = config.stage.width;
+    const height = config.stage.height;
 
-    const matrix: Matrix = new Matrix();
+    const matrix = new Matrix();
     matrix.createGradientBox(width, height, Math.PI / 2);
 
     shape
@@ -73,6 +73,21 @@ const changeScale = (): void =>
 export class Background
 {
     /**
+     * @type {Shape}
+     * @public
+     */
+    public readonly shape: Shape;
+
+    /**
+     * @constructor
+     * @public
+     */
+    constructor ()
+    {
+        this.shape = new Shape();
+    }
+
+    /**
      * @description 背景のShapeを表示されるviewにセット
      *              Set the background shape to the view to be displayed
      *
@@ -92,12 +107,13 @@ export class Background
             stage.addEventListener(Event.RESIZE, () =>
             {
                 changeScale();
+                drawGradient();
             });
         }
 
         if (config.stage.width !== shape.width) {
-            drawGradient();
             changeScale();
+            drawGradient();
         }
 
         view.addChildAt(shape, 0);

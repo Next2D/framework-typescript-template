@@ -18,13 +18,11 @@ export const execute = (home_content: HomeContent): TextField =>
     const response = app.getResponse();
 
     // Hello, World.
-    const textField = textComponent(
-        response.get("HomeText").word,
-        {
-            "autoSize": "center",
-            "type": "input"
-        }
-    );
+    const text = response.has("HomeText") ? response.get("HomeText").word : "";
+    const textField = textComponent(text, {
+        "autoSize": "center",
+        "type": "input"
+    });
 
     textField.x = config.stage.width / 2 - textField.width / 2;
     textField.y = home_content.y + home_content.height / 2 + textField.height;

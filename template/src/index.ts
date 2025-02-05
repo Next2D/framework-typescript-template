@@ -18,7 +18,7 @@ const boot = async (event: Event | null = null): Promise<void> =>
     }
 
     await app.initialize(config, packages).run();
-    app.gotoView();
+    await app.gotoView("top");
 };
 
 if (document.readyState === "loading") {

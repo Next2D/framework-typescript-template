@@ -3,7 +3,7 @@ import { app } from "@next2d/framework";
 /**
  * @class
  */
-export const execute = (): void =>
+export const execute = async (): Promise<void> =>
 {
-    app.gotoView("home");
+    await app.gotoView("home");
 };

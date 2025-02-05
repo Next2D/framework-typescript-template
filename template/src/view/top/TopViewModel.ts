@@ -27,8 +27,6 @@ export class TopViewModel extends ViewModel
      */
     async bind (view: View): Promise<void>
     {
-        super.unbind(view);
-
         /**
          * ロゴアニメーションをAnimation ToolのJSONから生成
          * Logo animation generated from Animation Tool JSON

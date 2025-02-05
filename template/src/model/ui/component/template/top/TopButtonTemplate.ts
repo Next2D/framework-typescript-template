@@ -16,9 +16,21 @@ import type { MovieClip } from "@next2d/display";
  * @method
  * @public
  */
-export const execute = (top_content: TopContent): ParentImpl<MovieClip> =>
+export const execute = <D extends MovieClip> (top_content: TopContent): D =>
 {
-    const button = ButtonComponent.factory() as MovieClip;
+    const response = app.getResponse();
+
+    const text = response.has("TopText") ? response.get("TopText").word : "";
+    const textField = textComponent(text, {
+        "border": true,
+        "autoSize": "left"
+    });
+
+    textField.x = config.stage.width / 2 - textField.width / 2;
+    textField.y = top_content.y + top_content.height / 2 + textField.height;
+
+    const button = ButtonComponent.factory();
+    button.addChild(textField);
 
     /**
      * @see domain/event/top/TopButtonMouseUpEvent.js
@@ -27,18 +39,5 @@ export const execute = (top_content: TopContent): ParentImpl<MovieClip> =>
      */
     button.addEventListener(PointerEvent.POINTER_UP, topButtonMouseUpEvent);
 
-    const response = app.getResponse();
-    const textField = textComponent(
-        response.get("TopText").word,
-        {
-            "autoSize": "center"
-        }
-    );
-
-    textField.x = config.stage.width / 2 - textField.width / 2;
-    textField.y = top_content.y + top_content.height / 2 + textField.height;
-
-    button.addChild(textField);
-
-    return button;
+    return button as D;
 };
