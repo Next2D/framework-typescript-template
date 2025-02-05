@@ -1,4 +1,4 @@
-import { Next2D } from "@next2d/core";
+import type { Next2D } from "@next2d/core";
 
 declare global {
 

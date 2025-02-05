@@ -11,7 +11,7 @@
             }
         }
     },
-    "devDependencies": {
-        "electron": "^27.0.4"
+    "dependencies": {
+        "electron": "*"
     }
 }

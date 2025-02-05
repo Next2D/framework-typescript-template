@@ -20,7 +20,8 @@ export const execute = (home_content: HomeContent): TextField =>
     // Hello, World.
     const text = response.has("HomeText") ? response.get("HomeText").word : "";
     const textField = textComponent(text, {
-        "autoSize": "center",
+        "autoSize": "left",
+        "border": true,
         "type": "input"
     });
 

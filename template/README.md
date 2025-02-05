@@ -33,6 +33,8 @@ Generate the necessary View and ViewModel classes from the routing JSON file.
 
 Launches the test runner.
 
+## Build
+
 ### `npm run build:web`
 ### `npm run build:steam:windows`
 ### `npm run build:steam:macos`
