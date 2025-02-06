@@ -1,4 +1,3 @@
-// @ts-ignore
 import { config } from "@/config/Config";
 import { execute as textComponent } from "@/model/ui/component/atom/TextComponent";
 import { app } from "@next2d/framework";

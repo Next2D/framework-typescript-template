@@ -1,12 +1,11 @@
-// @ts-ignore
+import type { TopContent } from "@/model/application/content/TopContent";
+import type { MovieClip } from "@next2d/display";
 import { config } from "@/config/Config";
 import { ButtonComponent } from "@/model/ui/component/atom/ButtonComponent";
 import { execute as topButtonMouseUpEvent } from "@/model/domain/event/top/TopButtonMouseUpEvent";
 import { execute as textComponent } from "@/model/ui/component/atom/TextComponent";
 import { app } from "@next2d/framework";
 import { PointerEvent } from "@next2d/events";
-import type { TopContent } from "@/model/application/content/TopContent";
-import type { MovieClip } from "@next2d/display";
 
 /**
  * @description Topページのボタンを生成

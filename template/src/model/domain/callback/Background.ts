@@ -2,72 +2,13 @@ import { config } from "@/config/Config";
 import { app } from "@next2d/framework";
 import { Shape, stage } from "@next2d/display";
 import { Event } from "@next2d/events";
-import { Matrix } from "@next2d/geom";
+import { execute as backgroundDrawService } from "./Background/service/BackgroundDrawService";
+import { execute as backgroundChangeScaleService } from "./Background/service/BackgroundChangeScaleService";
 
 /**
- * @type {Shape}
- * @private
- */
-const shape: Shape = new Shape();
-
-/**
- * @description 背景のグラデーション描画をセット
- *              Set background gradient drawing
+ * @description グラデーション背景
+ *              Gradient background
  *
- * @return {void}
- * @method
- * @private
- */
-const drawGradient = (): void =>
-{
-    const width  = config.stage.width;
-    const height = config.stage.height;
-
-    const matrix = new Matrix();
-    matrix.createGradientBox(width, height, Math.PI / 2);
-
-    shape
-        .graphics
-        .clear()
-        .beginGradientFill(
-            "linear",
-            ["#1461A0", "#ffffff"],
-            [0.6, 1],
-            [0, 255],
-            matrix
-        )
-        .drawRect(0, 0, width, height)
-        .endFill();
-};
-
-/**
- * @description 表示範囲に合わせてShapeを拡大・縮小
- *              Scale the shape to fit the display area
- *
- * @return {void}
- * @method
- * @private
- */
-const changeScale = (): void =>
-{
-    const width  = config.stage.width;
-    const height = config.stage.height;
-    const scale  = stage.rendererScale;
-
-    const tx = (stage.rendererWidth  - stage.stageWidth * scale) / 2;
-    if (tx) {
-        shape.scaleX = (width + tx * 2 / scale) / width;
-        shape.x = -tx / scale;
-    }
-
-    const ty = (stage.rendererHeight - stage.stageHeight * scale) / 2;
-    if (ty) {
-        shape.scaleY = (height + ty * 2 / scale) / height;
-        shape.y = -ty / scale;
-    }
-};
-
-/**
  * @class
  */
 export class Background
@@ -103,17 +44,18 @@ export class Background
             return ;
         }
 
+        const shape = this.shape;
         if (stage && !stage.hasEventListener(Event.RESIZE)) {
             stage.addEventListener(Event.RESIZE, () =>
             {
-                changeScale();
-                drawGradient();
+                backgroundChangeScaleService(this);
+                backgroundDrawService(this);
             });
         }
 
         if (config.stage.width !== shape.width) {
-            changeScale();
-            drawGradient();
+            backgroundChangeScaleService(this);
+            backgroundDrawService(this);
         }
 
         view.addChildAt(shape, 0);
