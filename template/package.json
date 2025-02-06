@@ -25,7 +25,6 @@
     "@capacitor/ios": "^7.0.1",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.19.0",
-    "@next2d/vite-auto-loader-plugin": "^2.0.0",
     "@types/node": "^22.13.1",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
@@ -54,6 +53,7 @@
     "@next2d/text": "file:../../player/packages/text",
     "@next2d/texture-packer": "file:../../player/packages/texture-packer",
     "@next2d/ui": "file:../../player/packages/ui",
-    "@next2d/webgl": "file:../../player/packages/webgl"
+    "@next2d/webgl": "file:../../player/packages/webgl",
+    "vite-plugin-next2d-auto-loader": "file:../../vite-plugin-next2d-auto-loader"
   }
 }

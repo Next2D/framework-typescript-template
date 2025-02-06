@@ -1,7 +1,7 @@
 {
   "width": 240,
   "height": 240,
-  "fps": 12,
+  "fps": 60,
   "options": {
     "fullScreen": true
   }

@@ -23,7 +23,7 @@ export const execute = <D extends MovieClip> (top_content: TopContent): D =>
     const text = response.has("TopText") ? response.get("TopText").word : "";
     const textField = textComponent(text, {
         "border": true,
-        "autoSize": "left"
+        "autoSize": "center"
     });
 
     textField.x = config.stage.width / 2 - textField.width / 2;

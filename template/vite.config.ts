@@ -2,7 +2,7 @@
 
 import { defineConfig } from "vite";
 import path from "path";
-import autoLoader from "@next2d/vite-auto-loader-plugin";
+import autoLoader from "vite-plugin-next2d-auto-loader";
 
 export default defineConfig({
     "base": "./",
