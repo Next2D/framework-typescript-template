@@ -25,6 +25,7 @@
     "@capacitor/ios": "^7.0.1",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.19.0",
+    "@next2d/vite-plugin-next2d-auto-loader": "^2.0.4",
     "@types/node": "^22.13.1",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
@@ -38,12 +39,12 @@
     "vitest-webgl-canvas-mock": "^1.1.0"
   },
   "peerDependencies": {
-    "@next2d/framework": "file:../../framework",
     "@next2d/cache": "file:../../player/packages/cache",
     "@next2d/core": "file:../../player/packages/core",
     "@next2d/display": "file:../../player/packages/display",
     "@next2d/events": "file:../../player/packages/events",
     "@next2d/filters": "file:../../player/packages/filters",
+    "@next2d/framework": "file:../../framework",
     "@next2d/geom": "file:../../player/packages/geom",
     "@next2d/media": "file:../../player/packages/media",
     "@next2d/net": "file:../../player/packages/net",
@@ -53,7 +54,6 @@
     "@next2d/text": "file:../../player/packages/text",
     "@next2d/texture-packer": "file:../../player/packages/texture-packer",
     "@next2d/ui": "file:../../player/packages/ui",
-    "@next2d/webgl": "file:../../player/packages/webgl",
-    "vite-plugin-next2d-auto-loader": "file:../../vite-plugin-next2d-auto-loader"
+    "@next2d/webgl": "file:../../player/packages/webgl"
   }
 }
