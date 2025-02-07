@@ -2,8 +2,8 @@ import { config } from "@/config/Config";
 import { ButtonComponent } from "@/model/ui/component/atom/ButtonComponent";
 import { HomeContent } from "@/model/application/content/HomeContent";
 import { PointerEvent } from "@next2d/events";
-import { execute as homeButtonMouseDownEvent } from "@/model/domain/event/home/HomeButtonMouseDownEvent";
-import { execute as homeButtonMouseUpEvent } from "@/model/domain/event/home/HomeButtonMouseUpEvent";
+import { execute as homeButtonPointerDownEvent } from "@/model/domain/event/home/HomeButtonPointerDownEvent";
+import { execute as homeButtonPointerUpEvent } from "@/model/domain/event/home/HomeButtonPointerUpEvent";
 
 /**
  * @description Home画面のキャラクターを生成
@@ -23,8 +23,8 @@ export const execute = (): HomeContent =>
     homeContent.scaleX = 2;
     homeContent.scaleY = 2;
 
-    homeContent.addEventListener(PointerEvent.POINTER_DOWN, homeButtonMouseDownEvent);
-    homeContent.addEventListener(PointerEvent.POINTER_UP, homeButtonMouseUpEvent);
+    homeContent.addEventListener(PointerEvent.POINTER_DOWN, homeButtonPointerDownEvent);
+    homeContent.addEventListener(PointerEvent.POINTER_UP, homeButtonPointerUpEvent);
 
     return homeContent;
 };

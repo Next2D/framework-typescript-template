@@ -58,6 +58,10 @@ export class Background
             backgroundDrawService(this);
         }
 
+        /**
+         * 一番下のレイヤーに登録
+         * Register at the bottom layer
+         **/
         view.addChildAt(shape, 0);
     }
 }

@@ -1,8 +1,8 @@
+import type { TextField } from "@next2d/text";
+import type { HomeContent } from "@/model/application/content/HomeContent";
 import { config } from "@/config/Config";
 import { execute as textComponent } from "@/model/ui/component/atom/TextComponent";
 import { app } from "@next2d/framework";
-import type { TextField } from "@next2d/text";
-import type { HomeContent } from "@/model/application/content/HomeContent";
 
 /**
  * @description Home画面のTextFieldを作成
