@@ -1,10 +1,8 @@
 # View and ViewModel
 
-1画面に1View、1ViewModelが基本スタイルです。  
-ディレクトリ構成はキャメルケースの最初のブロックで作成するのを推奨しています。  
+1画面にViewとViewModelがワンセット作成するのが基本スタイルです。ディレクトリ構成はキャメルケースの最初のブロックで作成するのを推奨しています。  
 
-The basic style is one View and one ViewModel per screen.  
-It is recommended that the directory structure be created in the first block of the camelCase.  
+The basic style is to create one set of View and ViewModel per screen. It is recommended that the directory structure be created using the first block of camelCase.  
 
 ## Example of directory structure
 

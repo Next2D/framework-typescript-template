@@ -96,13 +96,9 @@ infrastructure
 └── repository
 ```
 
-外部へのアクセスロジックを格納するディレクトリです。  
-データベースからの情報であれば`entity`ディレクトリを作成して可変可能オブジェクトとして  
-可変想定がないオブジェクトなどはデータ転送オブジェクト(DTO)として`dto`ディレクトリにそれぞれ責務を分散させるのが良いかもしれません。  
+外部へのアクセスロジックを格納するディレクトリです。データベースからの情報であれば `entity` ディレクトリを作成して可変可能オブジェクトとして運用し、可変想定がないオブジェクトなどはデータ転送オブジェクト(DTO)として `dto` ディレクトリにそれぞれ責務を分散させるのが良いかもしれません。  
 
-A directory to store external access logic.  
-If the information is from a database, create an `entity` directory as a variable object.  
-For objects that have no variable assumptions, it may be a good idea to distribute their responsibilities in the `dto` directory as data transfer objects (DTOs).
+This directory stores logic for external access. For data retrieved from a database, you might consider creating an `entity` directory to manage mutable objects, while objects that are not meant to change can have their responsibilities distributed into a `dto` directory as data transfer objects (DTOs).
 
 ### UI(User Interface)
 
@@ -115,12 +111,6 @@ ui
         └── home
 ```
 
-アトミックデザインを意識したディレクトリ構成になってます。  
-`atom`ディレクトリに最小の表示要素を作成して、`template`ディレクトリで各atomの要素を呼び出しページのレイアウトを作成してます。  
-今回は`template`内のクラスが`UseCase`の責務も担っています。  
-`application`ディレクトリへのアクセスは`template`内のクラスに制限する想定です。  
+アトミックデザインを意識したディレクトリ構成になってます。`atom` ディレクトリに最小の表示要素を作成して、`template` ディレクトリで各atomの要素を呼び出しページのレイアウトを作成してます。今回は `template` 内のクラスが `UseCase` の責務も担っています。`application` ディレクトリへのアクセスは `template` 内のクラスに制限する想定です。  
 
-The directory structure is designed with atomic design in mind.  
-The minimum display elements are created in the `atom` directory, and the elements of each atom are called in the `template` directory to create the layout of the page.  
-In this case, the classes in the `template` directory are also responsible for `UseCase`.  
-Access to the `application` directory is supposed to be restricted to the classes in the `template` directory.
+The directory structure is designed with atomic design in mind. Minimal display elements are created in the `atom` directory, and in the `template` directory, these atom elements are assembled to build the page layout. In this case, the classes in the `template` directory also carry the responsibilities of the `UseCase`. Access to the `application` directory is intended to be restricted to classes within the `template` directory.
