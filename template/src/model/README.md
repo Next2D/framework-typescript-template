@@ -61,6 +61,8 @@ export class TopContent extends MovieClipContent
 {
     /**
      * @return {string}
+     * @readonly
+     * @public
      */
     get namespace ()
     {
@@ -81,9 +83,7 @@ domain
     └── home
 ```
 
-アプリケーションの固有ロジックを格納するディレクトリで、プロジェクトの核心になる層です。  
-`callback`で、全画面の背景を生成、`event`ディレクトリは各ページのイベント処理を行っています。  
-`event`ディレクトリのクラスがUserからの`InputUseCase`の責務を担っています。  
+アプリケーションの固有ロジックを格納するディレクトリで、プロジェクトの核心になる層です。このテンプレートでは `callback` で、背景に全画面のグラデーション描画を行なっています。 `event` ディレクトリは各ページのイベント処理関数が管理されています。 `event` ディレクトリのクラスがユーザーからの `InputUseCase` の責務を担っています。  
 
 This directory stores the application-specific logic and is the core layer of the project.  
 The `callback` generates the background for all screens, and the `event` directory handles events for each page.  
