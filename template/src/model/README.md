@@ -1,10 +1,8 @@
 # Model
 
-アプリケーションのドメインを隔離するためのディレクトリです。  
-テンプレートのディレクトリ構成は一例であり、アプリケーションの機能性、保守性など、特性に合わせてモデリングを行ってください。
+アプリケーションのドメインを隔離するためのディレクトリです。このディレクトリ構成は一例であり、アプリケーションの機能性、保守性など、特性に合わせてモデリングを行ってください。  
 
-This directory is used to isolate the domain of the application.  
-The directory structure of the template is an example and should be modeled according to the characteristics of the application, such as functionality and maintainability.  
+This directory is used to isolate the domain of the application. The directory structure provided is just one example; please model it according to the specific characteristics of your application, such as its functionality and maintainability.  
 
 ## Example of directory structure
 
@@ -29,11 +27,11 @@ project
                     └── home
 ```
 
-このテンプレートの各ディレクトリの役割  
-(テンプレートのディレクトリ構成は一例であり、アプリケーションの機能性、保守性など、特性に合わせてモデリングを行ってください。)  
+各ディレクトリの役割を記載していきます。  
+(このディレクトリ構成は一例であり、アプリケーションの機能性、保守性など、特性に合わせてモデリングを行ってください。)  
 
-The role of each directory in this template  
-(The directory structure of the template is an example and should be modeled according to the characteristics of the application, such as functionality, maintainability, etc.)
+We will describe the role of each directory.  
+(This directory structure is just an example; please model it according to the specific characteristics of your application, such as its functionality and maintainability.)
 
 ### Application
 
@@ -42,15 +40,13 @@ application
 └── content
 ```
 
-`content`ディレクトリにはAnimation Toolで作成されたアニメーションを動的に生成するためのクラスが格納されてます。  
-`service`ディレクトリを作成して、`domain`へのアクセスを行う責務を担う事も良いかもしれません。  
+`content` ディレクトリにはAnimation Toolで作成された `DisplayObject` を動的に生成するためのクラスが格納されてます。動的に生成された `DisplayObject` は起動時に `initialize` 関数が実行されます。 `service`、 `usecase`  ディレクトリを作成して、`domain` へのアクセスを行う責務を担う事も良いかもしれません。  
 
-The `content` directory contains classes for dynamically generating animations created by the Animation Tool.  
-It may be a good idea to create a `service` directory to be responsible for accessing the `domain`.  
+The `content` directory contains classes for dynamically generating `DisplayObject`s created by the Animation Tool. Dynamically generated `DisplayObject`s execute their `initialize` function upon startup. It might also be a good idea to create `service` and `usecase` directories to handle the responsibility of accessing the `domain`.
 
 #### Example of cooperation with Animation Tool
 
-`namespace`にAnimation Toolのシンボルに設定した名前を追記する事で動的生成が可能になります。  
+`namespace` にAnimation Toolのシンボルに設定した名前を追記する事で動的生成が可能になります。  
 Dynamic generation is enabled by appending the name set for the Animation Tool symbol in the `namespace` field.  
 
 ```javascript
@@ -68,7 +64,9 @@ export class TopContent extends MovieClipContent
      */
     get namespace ()
     {
-        return "TopContent"; // Animation Toolのsymbolで設定した名前を追記
+        // Animation Toolのsymbolで設定した名前を追記
+        // Append the name assigned to the Animation Tool symbol.
+        return "TopContent"; 
     }
 }
 ```
