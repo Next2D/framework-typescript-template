@@ -1,6 +1,9 @@
 import { TextField } from "@next2d/text";
 
 /**
+ * @description 指定したテキストフィールドを生成します。
+ *              Generates the specified text field.
+ *
  * @param  {string} text
  * @param  {object} [props=null]
  * @param  {object} [format=null]

@@ -1,7 +1,7 @@
 import type { TopContent } from "@/model/application/content/TopContent";
 import type { MovieClip } from "@next2d/display";
 import { config } from "@/config/Config";
-import { ButtonComponent } from "@/model/ui/component/atom/ButtonComponent";
+import { execute as buttonComponent } from "@/model/ui/component/atom/ButtonComponent";
 import { execute as topButtonPointerUpEvent } from "@/model/domain/event/top/TopButtonPointerUpEvent";
 import { execute as textComponent } from "@/model/ui/component/atom/TextComponent";
 import { app } from "@next2d/framework";
@@ -28,7 +28,7 @@ export const execute = <D extends MovieClip> (top_content: TopContent): D =>
     textField.x = config.stage.width / 2 - textField.width / 2;
     textField.y = top_content.y + top_content.height / 2 + textField.height;
 
-    const button = ButtonComponent.factory();
+    const button = buttonComponent();
     button.addChild(textField);
 
     /**

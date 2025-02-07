@@ -12,6 +12,6 @@ export class HomeTextRepository
     static async get (): Promise<any>
     {
         const response = await fetch(`${config.api.endPoint}api/home.json`);
-        return response.json();
+        return await response.json();
     }
 }

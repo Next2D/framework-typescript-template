@@ -1,5 +1,5 @@
 import { config } from "@/config/Config";
-import { ButtonComponent } from "@/model/ui/component/atom/ButtonComponent";
+import { execute as buttonComponent } from "@/model/ui/component/atom/ButtonComponent";
 import { HomeContent } from "@/model/application/content/HomeContent";
 import { PointerEvent } from "@next2d/events";
 import { execute as homeButtonPointerDownEvent } from "@/model/domain/event/home/HomeButtonPointerDownEvent";
@@ -15,7 +15,7 @@ import { execute as homeButtonPointerUpEvent } from "@/model/domain/event/home/H
  */
 export const execute = (): HomeContent =>
 {
-    const homeContent = ButtonComponent.factory(new HomeContent());
+    const homeContent = buttonComponent(new HomeContent());
 
     homeContent.x = config.stage.width  / 2 - 4;
     homeContent.y = config.stage.height / 2;
