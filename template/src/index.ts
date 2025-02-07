@@ -2,9 +2,7 @@
 
 import type { IConfig } from "@/interface/IConfig";
 import { app } from "@next2d/framework";
-// @ts-ignore
 import { config } from "@/config/Config";
-// @ts-ignore
 import { packages } from "@/Packages";
 
 /**
