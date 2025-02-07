@@ -25,14 +25,14 @@ JSON file for setting the display area.
 
 ## config.json
 
-初期は`local`、`dev`、`stg`、`prd`、`all`、と区切られており、`all`以外は任意の環境名です。環境に依存する設定（例：APIエンドポイント、ログ出力レベル、キャッシュの設定など）を分離することで、開発中と本番運用時とで異なる挙動を実現できます。また、全ての設定値が一箇所にまとまっているため、管理やメンテナンスが容易になります。新たなパラメータの追加や既存の設定変更も、該当箇所を探しやすくなります。 
+初期は `local`、`dev`、`stg`、`prd`、`all`、と区切られており、`all` 以外は任意の環境名です。環境に依存する設定（例：APIエンドポイント、ログ出力レベル、キャッシュの設定など）を分離することで、開発中と本番運用時とで異なる挙動を実現できます。また、全ての設定値が一箇所にまとまっているため、管理やメンテナンスが容易になります。新たなパラメータの追加や既存の設定変更も、該当箇所を探しやすくなります。 
 
 Initially, the configuration is divided into `local`, `dev`, `stg`, `prd`, and `all`, where any environment name is allowed except for `all`.  
 By segregating environment-specific settings (for example, API endpoints, log output levels, cache configurations, etc.), you can achieve different behaviors between development and production. Additionally, since all configuration values are consolidated in one place, management and maintenance become easier, and it simplifies locating the relevant sections when adding new parameters or modifying existing settings.
 
 ### config.json > all
 
-`all`はその名の通り、どの環境でも書き出される共通変数となります。`all`で機能に影響のある設定項目は以下の項目となります。  
+`all` はその名の通り、どの環境でも書き出される共通変数となります。`all` で機能に影響のある設定項目は以下の項目となります。  
 
 As the name suggests, `all` is a common variable that is written out in any environment. The following items are available in `all` that affect functionality.  
 
@@ -45,7 +45,7 @@ As the name suggests, `all` is a common variable that is written out in any envi
 
 ### config.json > platform
 
-`platform`の値は書き出し時の `--platform` で指定した値がセットされます。値は、`macos`、`windows`、`linux`、`ios`、`android`、`web` が対応しています。プラットフォーム固有の判定などで利用が可能です。  
+`platform` の値は書き出し時の `--platform` で指定した値がセットされます。値は、`macos`、`windows`、`linux`、`ios`、`android`、`web` が対応しています。プラットフォーム固有の判定などで利用が可能です。  
 
 The `platform` value is assigned based on the value specified with `--platform` at export time. The accepted values are `macos`, `windows`, `linux`, `ios`, `android`, and `web`. It can be used for platform-specific determinations.
 
@@ -87,11 +87,11 @@ The following items are available for setting up the requests array
 
 | name       | value           | default  | description                                                                                                                                                                                                                                                                          |
 |------------|-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`     | string          | content  | `json`、`content`、`custom`の固定値が利用可能です。 <br> Fixed values for `json`, `content`, and `custom` are available.                                                                                                                                                                           |
-| `path`     | string          | empty    | `{{***}}`で囲むと、`config.json`の変数を取得できます。例）{{ api.endPoint }}path/to/api <br> Enclose the variables in `{{***}}` to get the variables in `config.json`. Example: {{ api.endPoint }}path/to/api                                                                                          |
-| `name`     | string          | empty    | `name`を設定すると、設定した値をキーとして`response`にセットされます。画面遷移すると前の画面で取得した`response`データは初期化されます。 <br> When `name` is set, the set value is set to `response` as a key. When the screen transitions, the `response` data acquired on the previous screen is initialized.                             |
-| `cache`    | boolean         | false    | `name`で設定した値をキーにして、取得したデータをキャッシュします。キャッシュしたデータは画面遷移しても初期化される事はありません。 <br> Cache the retrieved data using the value set in `name` as a key. Cached data will not be initialized after a screen transition.                                                                            |
-| `callback` | string or array | null     | リクエスト完了後にコールバックするクラスを指定することができます。コントラクターを起動後、取得した値を第一引数にセットし、`execute`関数がコールされます。 <br> You can specify a class to be called back after the request is completed. After invoking the contractor, the `execute` function is called with the retrieved value set as the first argument. |
+| `type`     | string          | content  | `json`、`content`、`custom` の固定値が利用可能です。 <br> Fixed values for `json`, `content`, and `custom` are available.                                                                                                                                                                           |
+| `path`     | string          | empty    | `{{***}}` で囲むと `config.json` の変数を取得できます。Example: {{ api.endPoint }}path/to/api <br> Enclose the variables in `{{***}}` to get the variables in `config.json`. Example: {{ api.endPoint }}path/to/api                                                                                          |
+| `name`     | string          | empty    | `name` を設定すると、設定した値をキーとして `response` にセットされます。画面遷移すると前の画面で取得した `response` データは初期化されます。 <br> When `name` is set, the set value is set to `response` as a key. When the screen transitions, the `response` data acquired on the previous screen is initialized.                             |
+| `cache`    | boolean         | false    | `name` で設定した値をキーにして、取得したデータをキャッシュします。キャッシュしたデータは画面遷移しても初期化される事はありません。 `cache` は `app.getCache()` で取得できます。 Example: `app.getCache().get("key")` <br> The data retrieved is cached using the value set in `name` as the key. The cached data persists through screen transitions and is not reset. You can access the cache using `app.getCache()`. Example: `app.getCache().get("key")`                                                                            |
+| `callback` | string or array | null     | リクエスト完了後にコールバックするクラスを指定することができます。コントラクターを起動後、取得した値を第一引数にセットし、`execute` 関数がコールされます。配列で複数のクラスを設定することができ、各クラスのexecute関数がasync/awaitを利用した非同期処理で呼び出されます。 <br> After the request is completed, you can specify a callback class. Once the constructor is invoked, the retrieved value is set as the first argument and the `execute` function is called. You can also specify multiple classes as an array, and the `execute` function of each class is invoked asynchronously using async/await. |
 | `class`    | string          | empty    | リクエストを実行するクラスを指定することができます。(typeがcustomのときのみ呼び出されます。） <br> You can specify a class to execute the request. (This is only called when type is custom.)                                                                                                                                 |
-| `access`   | string          | public   | リクエストを実行する関数へのアクセスを指定できます。`public`あるいは`static`を指定することができます。(typeがcustomのときのみ呼び出されます）<br> You can specify access to the function that will execute the request, which can be `public` or `static`. (Only called if type is custom.)                                                   |
+| `access`   | string          | public   | リクエストを実行する関数へのアクセスを指定できます。`public` あるいは `static` を指定することができます。(typeがcustomのときのみ呼び出されます）<br> You can specify access to the function that will execute the request, which can be `public` or `static`. (Only called if type is custom.)                                                   |
 | `method`   | string          | empty    | リクエストを実行する関数名を指定することができます。(typeがcustomのときのみ起動します）。 <br> You can specify the name of the function that will execute the request. (It will be invoked only when type is custom).                                                                                                       |
