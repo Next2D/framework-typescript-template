@@ -1,9 +1,5 @@
 # Mock
 
-ローカル開発時のモックディレクトリ環境です。  
-`http://localhost:8080/***` としてアクセス可能です。  
-routing.jsonのパス設定と重複しないよう気をつけて運用してください。  
+ローカル環境での開発時に利用できるモックディレクトリです。`http://localhost:5173/***` としてアクセス可能ですが、 `routing.json` のパス設定と重複しないよう気をつけて運用してください。  
 
-Mock directory environment for local development.  
-It can be accessed as `http://localhost:8080/***`.  
-Please be careful not to duplicate the path setting in routing.json.  
+This is a mock directory for use during local development. It can be accessed at `http://localhost:5173/***`, but please ensure that it does not conflict with the path settings in `routing.json`.
