@@ -11,7 +11,7 @@
             }
         }
     },
-    "dependencies": {
+    "devDependencies": {
         "electron": "*"
     }
 }
