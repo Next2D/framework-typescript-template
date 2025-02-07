@@ -41,7 +41,7 @@ As the name suggests, `all` is a common variable that is written out in any envi
 | `defaultTop` | string | "top" | ページトップ(index)のViewを指定、設定がない場合はTopViewクラスが起動します。 <br> Specifies the view at the top of the page (index); if not set, the TopView class is invoked. |
 | `spa`               | boolean         | true                    | Single Page Applicationとして、URLでシーンを制御することができます。 <br> As a Single Page Application, scenes can be controlled by URL.                                                                                                                                                     |
 | `loading.callback`  | string          | Loading                 | 画面遷移の準備が完了するまでの間、ローディング画面を表示するかどうかを設定します。コールバックとして設定されたクラスのstart関数とend関数を呼び出します。 <br> Sets whether or not the loading screen is displayed until the preparation for screen transition is completed. Calls the start and end functions of the class set as the callback. |
-| `gotoView.callback` | string or array | ["callback.Background"] | gotoView関数が終了した後にコールバックするクラスを指定できます。 指定クラスのexecute関数を呼び出します。<br> You can specify a class to be called back after the gotoView function completes. The execute function of the specified class will be invoked.                                                                                                                                                |
+| `gotoView.callback` | string or array | ["callback.Background"] | gotoView関数が完了した後、コールバック用のクラスを指定できます。配列で複数のクラスを設定することができ、各クラスのexecute関数がasync/awaitを利用した非同期処理で呼び出されます。<br> After the gotoView function completes, you can specify one or more callback classes. These classes can be provided as an array, and the execute function of each class is invoked asynchronously using async/await.                                                                                                                                                |
 
 ### config.json > platform
 
@@ -75,8 +75,8 @@ Context is set to the QuestListView class.
 
 | name        | value    | default | description                                                                                                                                                                                                               |
 |-------------|----------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `private`   | boolean  | false   | URLでの直接的なアクセスを制御したい時に利用します。trueに設定しURLでアクセスすると、TopViewが読み込まれます。 <br> This is used to control direct URL access. If set to true, accessing via URL will load the TopView.                     |
-| `requests`  | array    | null    | Viewがbindされる前に、指定したアクセス先にリクエストを送信します。受け取った情報は、nameをキーに `response` にセットされます。 <br> Before accessing the View, a request is sent to the specified destination. The information received is set in `response` with name as the key.  |
+| `private`   | boolean  | false   | URLでの直接的なアクセスを制御したい時に利用します。trueに設定した場合、URLでアクセスすると、TopViewが読み込まれます。 <br> This is used to control direct URL access. If set to true, accessing the URL will load the TopView.                     |
+| `requests`  | array    | null    | Viewがbindされる前に、指定したアクセス先にリクエストを送信します。受け取った情報は、nameをキーに `response` にセットされます。`response`  は `app.getResponse()` で取得できます。 Example: `app.getResponse().get("key")` <br> Before the View is bound, a request is sent to the specified endpoint. The received data is stored in `response` using the given name as the key, and you can retrieve `response` with `app.getResponse()`. Example: `app.getResponse().get("key")`  |
 
 
 ### routing.json > requests
