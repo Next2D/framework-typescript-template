@@ -21,7 +21,6 @@ export const execute = <D extends MovieClip> (top_content: TopContent): D =>
 
     const text = response.has("TopText") ? response.get("TopText").word : "";
     const textField = textComponent(text, {
-        "border": true,
         "autoSize": "center"
     });
 
