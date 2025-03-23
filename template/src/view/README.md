@@ -1,10 +1,8 @@
 # View and ViewModel
 
-1画面に1View、1ViewModelが基本スタイルです。  
-ディレクトリ構成はキャメルケースの最初のブロックで作成するのを推奨しています。  
+1画面にViewとViewModelをワンセット作成するのが基本スタイルです。ディレクトリ構成はキャメルケースの最初のブロックで作成するのを推奨しています。  
 
-The basic style is one View and one ViewModel per screen.  
-It is recommended that the directory structure be created in the first block of the camelCase.  
+The basic style is to create one set of View and ViewModel per screen. It is recommended that the directory structure be organized using the first segment in camelCase. 
 
 ## Example of directory structure
 
@@ -22,26 +20,20 @@ project
 
 ## Generator
 
-複数のViewクラス/ViewModelクラスを生成する際は、以下のコマンドで自動生成する事をお勧めします。  
-このコマンドはrouting.jsonのトッププロパティの値を分解し、viewディレクトリ直下に対象のディレクトリがなければディレクトリを作成し、ViewとViewModelが存在しない場合のみ新規でクラスを生成します。  
+複数のViewクラス、及び、ViewModelクラスを生成する際は、以下のコマンドで自動生成する事をお勧めします。このコマンドは `routing.json` のトッププロパティの値を分解し、`view` ディレクトリ直下に対象のディレクトリがなければディレクトリを作成し、ViewとViewModelが存在しない場合のみ新規でクラスを生成します。  
 
-When generating multiple View/ViewModel classes, it is recommended to use the following command to generate them automatically.  
-This command breaks down the values of the top properties in routing.json, creates the directories directly under the view directory if they do not exist, and generates new classes only if the View and ViewModel classes do not exist.
+When generating multiple View and ViewModel classes, it is recommended to use the following command for auto-generation. This command parses the top-level property values in `routing.json`, creates the target directories under the `view` directory if they do not exist, and generates new classes only if the corresponding View and ViewModel classes are missing.  
 
 ```sh
 npm run generate
 ```
 
 ## View Class
-メインコンテキストにアタッチされるコンテナの役割を担うのがViewクラスです。  
-その為、記述は至ってシンプルで、routing.jsonで設定した値のキャメルケースでファイルを作成し、`View`クラスを継承するのが基本のスタイルです。  
-特殊な要件がない限り、Viewでロジックを組む事はありません。  
+メインコンテキストにアタッチされるコンテナです。その為、記述は至ってシンプルで、 `routing.json` で設定した値のキャメルケースでファイルを作成し、Viewクラスを継承するのが基本のスタイルです。起動時に `initialize` 関数がコールされます。ですが、特殊な要件がない限り、Viewでロジックを組む事はありません。  
   
-The View class plays the role of a container attached to the main context.  
-Therefore, the description is quite simple. The basic style is to create a file with a camelCase of values set in routing.json and inherit from the `View` class.  
-Unless there are special requirements, we do not build logic in View.  
+It is a container attached to the main context. Therefore, its implementation is kept very simple: files are created using the camelCase version of the values specified in `routing.json`, and the basic style is to extend the View class. The `initialize` function is called at startup; however, unless there are special requirements, no logic should be implemented in the View.
   
-### View class source
+### Example of View class source
 
 ```javascript
 import { View } from "@next2d/framework";
@@ -60,15 +52,11 @@ export class TopView extends View
 ```
 
 ## ViewModel Class
-表示の開始時にbind関数がコールされ、画面遷移する前に終了処理としてunbind関数がコールされます。  
-Viewに任意のDisplayObjectをbindするのが、ViewModelの役割です。  
-ViewModelは、model/ui/component/template/{{page}}/*.jsへのアクセスのみ許可するのを推奨しています。
+画面遷移するタイミングで終了処理として `unbind` 関数がコールされ、表示の開始時に `bind` 関数がコールされます。Viewに任意のDisplayObjectをbindするのが、ViewModelの役割です。今回のテンプレートでは、ViewModelは `model/ui/component/template/{{page}}/*.[ts|js]` のアクセスのみ許可するスタイルで作成しています。
 
-The bind function is called at the start of the display, and the unbind function is called as the end process before the screen transition.  
-The role of the ViewModel is to bind an arbitrary DisplayObject to the View.  
-It is recommended that the ViewModel only allow access to model/ui/component/template/{{page}}/*.js.  
+During screen transitions, the `unbind` function is called as part of the cleanup process, and the `bind` function is called when the display starts. The role of the ViewModel is to bind an arbitrary DisplayObject to the View. In this template, the ViewModel is designed to only allow access to files in `model/ui/component/template/{{page}}/*.[ts|js]`.  
 
-### ViewModel class source
+### Example of ViewModel class source
 
 ```javascript
 import { ViewModel } from "@next2d/framework";
@@ -83,42 +71,40 @@ export class TopViewModel extends ViewModel
 {
     /**
      * @param  {View} view
-     * @return {Promise}
+     * @return {Promise<void>}
      * @method
      * @public
      */
-    bind (view)
+    async bind (view)
     {
-        return this
-            .factory(view)
-            .then((view) =>
-            {
-                /**
-                 * ロゴアニメーションをNoCodeToolのJSONから生成
-                 * Logo animation generated from NoCodeTool's JSON
-                 */
-                const topContent = new TopContentTemplate().factory();
-                view.addChild(topContent);
+        /**
+         * ロゴアニメーションをAnimation ToolのJSONから生成
+         * Logo animation generated from Animation Tool's JSON
+         */
+        const topContent = new TopContentTemplate().factory();
+        view.addChild(topContent);
 
-                /**
-                 * ボタンエリアを生成
-                 * Generate button area
-                 */
-                const button = new TopButtonTemplate().factory(topContent);
-                view.addChild(button);
-            });
+        /**
+         * ボタンエリアを生成
+         * Generate button area
+         */
+        const button = new TopButtonTemplate().factory(topContent);
+        view.addChild(button);
     }
 
     /**
      * @param  {View} view
-     * @return {void}
+     * @return {Promise<View>}
      * @method
      * @public
      */
     unbind (view)
     {
-        // unbind関数を利用しなければ削除
-        // Delete if unbind function is not used
+        /**
+         * unbind関数を利用しなければ削除
+         * Delete if unbind function is not used
+         */
+        return super.unbind(view);
     }
 }
 ```

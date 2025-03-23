@@ -1,7 +1,9 @@
-import { TextField } from "@next2d/display";
-import type { TextFormat } from "@next2d/text";
+import { TextField } from "@next2d/text";
 
 /**
+ * @description 指定したテキストフィールドを生成します。
+ *              Generates the specified text field.
+ *
  * @param  {string} text
  * @param  {object} [props=null]
  * @param  {object} [format=null]
@@ -15,14 +17,14 @@ export const execute = (
     format: any = null
 ): TextField => {
 
-    const textField: TextField = new TextField();
+    const textField = new TextField();
 
     if (props) {
 
         const keys: string[] = Object.keys(props);
-        for (let idx: number = 0; idx < keys.length; idx++) {
+        for (let idx = 0; idx < keys.length; idx++) {
 
-            const name: string = keys[idx];
+            const name = keys[idx];
 
             if (!(name in textField)) {
                 continue;
@@ -35,10 +37,10 @@ export const execute = (
 
     if (format) {
 
-        const textFormat: TextFormat = textField.defaultTextFormat;
+        const textFormat = textField.defaultTextFormat;
 
         const keys: string[] = Object.keys(format);
-        for (let idx: number = 0; idx < keys.length; idx++) {
+        for (let idx = 0; idx < keys.length; idx++) {
 
             const name = keys[idx];
 

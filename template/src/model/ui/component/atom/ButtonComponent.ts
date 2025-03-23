@@ -1,21 +1,18 @@
 import { MovieClip } from "@next2d/display";
-import type { ParentImpl } from "@next2d/interface";
 
 /**
- * @class
+ * @description 指定したコンテンツをボタンモードに設定します。
+ *              Sets the specified content to button mode.
+ *
+ * @param  {D} content
+ * @return {D}
+ * @method
+ * @public
  */
-export class ButtonComponent
+export const execute = <D extends MovieClip> (content: D | null = null): D =>
 {
-    /**
-     * @param {Sprite} [content=null]
-     * @method
-     * @static
-     */
-    static factory (content: ParentImpl<any> | null = null): ParentImpl<any>
-    {
-        const button = content || new MovieClip();
-        button.buttonMode = true;
+    const button = content || new MovieClip();
+    button.buttonMode = true;
 
-        return button;
-    }
-}
+    return button as D;
+};
