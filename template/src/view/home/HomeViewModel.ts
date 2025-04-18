@@ -32,7 +32,7 @@ export class HomeViewModel extends ViewModel
          * Generate animation from Animation Tool's JSON
          */
         const homeContent = homeButtonTemplate();
-        view.addChild(homeButtonTemplate());
+        view.addChild(homeContent);
 
         /**
          * Hello, Worldのテキストを生成
