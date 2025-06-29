@@ -1,7 +1,7 @@
 {
   "name": "@next2d/framework-typescript-template",
   "description": "Next2D Framework default TypeScript template.",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "homepage": "https://next2d.app",
   "bugs": "https://github.com/Next2D/framework-typescript-template/issues/new",
   "author": "Toshiyuki Ienaga<ienaga@next2d.app>",
