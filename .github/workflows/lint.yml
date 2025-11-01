@@ -13,9 +13,12 @@ on:
 jobs:
   macos-browser-test:
     runs-on: macos-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
       - run: |
           npm install
           npx eslint ./src/**/*.ts
@@ -23,9 +26,12 @@ jobs:
 
   windows-browser-test:
     runs-on: windows-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
       - run: |
           npm install
           npx eslint ./src/**/*.ts

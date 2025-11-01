@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from "vite";
-import path from "path";
+import { defineConfig } from "vitest/config";
+import tsconfigPaths from "vite-tsconfig-paths";
 import autoLoader from "@next2d/vite-plugin-next2d-auto-loader";
 
 export default defineConfig({
@@ -19,6 +19,7 @@ export default defineConfig({
         }
     },
     "plugins": [
+        tsconfigPaths(),
         autoLoader()
     ],
     "server": {
@@ -33,11 +34,6 @@ export default defineConfig({
                 "target": "http://localhost:5173",
                 "rewrite": (path) => path.replace(/^\/api/, "/mock/api")
             }
-        }
-    },
-    "resolve": {
-        "alias": {
-            "@": path.resolve(process.cwd(), "./src")
         }
     },
     "test": {
