@@ -1,7 +1,7 @@
 Next2D Framework TypeScript Template
 =============
 
-[![CodeQL](https://github.com/Next2D/framework-typescript-template/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/Next2D/framework-typescript-template/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/Next2D/framework-typescript-template/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/Next2D/framework-typescript-template/actions/workflows/github-code-scanning/codeql)
 [![release](https://img.shields.io/github/v/release/Next2D/framework-typescript-template)](https://github.com/Next2D/framework-typescript-template/releases)
 [![license](https://img.shields.io/github/license/Next2D/framework-typescript-template)](https://github.com/Next2D/framework-typescript-template/blob/main/LICENSE)
 
