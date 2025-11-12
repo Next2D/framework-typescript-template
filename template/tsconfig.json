@@ -24,11 +24,10 @@
       "vitest/globals"
     ],
 
-    "esModuleInterop": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
-    }
+      "@/*": ["src/*"]
+    },
   },
   "include": [
     "src/**/*.ts",
