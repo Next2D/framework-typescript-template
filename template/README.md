@@ -35,14 +35,12 @@ Launches the test runner.
 
 ## Build
 
-### `npm run build:web`
-### `npm run build:steam:windows`
-### `npm run build:steam:macos`
-### `npm run build:steam:linux`
-### `npm run build -- --platform *** --env***`
+### `npm run build:web -- --env prd`
+### `npm run build:steam:windows -- --env prd`
+### `npm run build:steam:macos -- --env prd`
+### `npm run build:steam:linux -- --env prd`
+### `npm run build:ios -- --env prd`
+### `npm run build:android -- --env prd`
 
 Multi-platform builder, writes to various platforms including macOS, Windows, iOS, Android, and Web (HTML).  
 Builds apps for the environment specified by env=***.
-
-### Flowchart
-![Flowchart](https://raw.githubusercontent.com/Next2D/framework/main/Framework_Flowchart.svg)

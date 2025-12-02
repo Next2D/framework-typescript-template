@@ -1,6 +1,4 @@
-import { View, ViewModel } from "@next2d/framework";
-import { execute as topContentTemplate } from "@/model/ui/component/template/top/TopContentTemplate";
-import { execute as topButtonTemplate } from "@/model/ui/component/template/top/TopButtonTemplate";
+import { ViewModel, app } from "@next2d/framework";
 
 /**
  * @class
@@ -9,35 +7,26 @@ import { execute as topButtonTemplate } from "@/model/ui/component/template/top/
 export class TopViewModel extends ViewModel
 {
     /**
-     * @param  {View} view
-     * @return {Promise<View>}
+     * @return {Promise<void>}
      * @method
+     * @override
      * @public
      */
-    async unbind (view: View): Promise<View>
+    async initialize (): Promise<void>
     {
-        return super.unbind(view);
+        return void 0;
     }
 
     /**
-     * @param  {View} view
+     * @description スタートボタンがクリックされたときの処理
+     *              Handle when the start button is clicked
+     *
      * @return {Promise<void>}
      * @method
      * @public
      */
-    async bind (view: View): Promise<void>
+    async onClickStartButton (): Promise<void>
     {
-        /**
-         * ロゴアニメーションをAnimation ToolのJSONから生成
-         * Logo animation generated from Animation Tool JSON
-         */
-        const topContent = topContentTemplate();
-        view.addChild(topContent);
-
-        /**
-         * ボタンエリアを生成
-         * Generate button area
-         */
-        view.addChild(topButtonTemplate(topContent));
+        await app.gotoView("home");
     }
 }
