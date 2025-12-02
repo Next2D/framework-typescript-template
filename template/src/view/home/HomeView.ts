@@ -1,5 +1,9 @@
 import type { HomeViewModel } from "./HomeViewModel";
-import { View } from "@next2d/framework";
+import { View, app } from "@next2d/framework";
+import { config } from "@/config/Config";
+import { HomeBtnMolecule } from "@/ui/component/molecule/HomeBtnMolecule";
+import { TextAtom } from "@/ui/component/atom/TextAtom";
+import { PointerEvent, Event } from "@next2d/events";
 
 /**
  * @class
@@ -26,7 +30,59 @@ export class HomeView extends View
      */
     async initialize (): Promise<void>
     {
-        return void 0;
+        /**
+         * ホームコンテンツの座標をセット
+         * Set the coordinates of the home content
+         */
+        const homeContent = new HomeBtnMolecule();
+        homeContent.x = config.stage.width  / 2 - 5;
+        homeContent.y = config.stage.height / 2;
+
+        /**
+         * ホームコンテンツのイベントをViewModelに送信
+         * Send home content events to ViewModel
+         */
+        homeContent.addEventListener(PointerEvent.POINTER_DOWN,
+            this.vm.homeContentPointerDownEvent
+        );
+        homeContent.addEventListener(PointerEvent.POINTER_UP,
+            this.vm.homeContentPointerUpEvent
+        );
+
+        /**
+         * ホームコンテンツを追加
+         * Add home content
+         */
+        this.addChild(homeContent);
+
+        // Hello, World.
+        const response = app.getResponse();
+        const text = response.has("HomeText") ? response.get("HomeText").word : "";
+        const textField = new TextAtom(text, {
+            "autoSize": "center",
+            "type": "input"
+        });
+
+        /**
+         * ホームテキストの座標をセット
+         * Set the coordinates of the home text
+         */
+        textField.x = (config.stage.width - textField.width) / 2;
+        textField.y = homeContent.y + homeContent.height / 2 + textField.height;
+
+        /**
+         * ホームテキストのイベントをViewModelに送信
+         * Send home text events to ViewModel
+         */
+        textField.addEventListener(Event.CHANGE,
+            this.vm.homeTextChangeEvent
+        );
+
+        /**
+         * ホームテキストを追加
+         * Add home text
+         */
+        this.addChild(textField);
     }
 
     /**
