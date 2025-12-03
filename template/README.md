@@ -25,8 +25,8 @@ This project was bootstrapped with [Create Next2D App](https://github.com/Next2D
 
 | ツール / Tool | バージョン / Version |
 |--------------|---------------------|
-| Node.js | 18.x 以上 / 18.x or higher |
-| npm | 9.x 以上 / 9.x or higher |
+| Node.js | 22.x 以上 / 22.x or higher |
+| npm | 10.x 以上 / 10.x or higher |
 
 ### オプション / Optional
 
@@ -35,7 +35,7 @@ iOS/Androidビルドを行う場合は、以下も必要です。
 For iOS/Android builds, the following are also required:
 
 - **iOS**: Xcode 14 以上、macOS
-- **Android**: Android Studio、JDK 17 以上
+- **Android**: Android Studio、JDK 21 以上
 
 ---
 
