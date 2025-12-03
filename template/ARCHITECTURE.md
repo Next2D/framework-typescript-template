@@ -6,47 +6,102 @@ This project implements a combination of Clean Architecture and MVVM pattern.
 
 ## アーキテクチャの概要 / Architecture Overview
 
+```mermaid
+graph TB
+    subgraph ViewLayer["🎨 View Layer<br/>(view/*, ui/*)"]
+        View["View<br/>画面の構造を定義"]
+        ViewModel["ViewModel<br/>Viewとビジネスロジックの橋渡し"]
+        UI["UI Components<br/>再利用可能なUIパーツ"]
+    end
+
+    subgraph InterfaceLayer["📋 Interface Layer<br/>(interface/*)"]
+        IDraggable["IDraggable"]
+        ITextField["ITextField"]
+        IResponse["IHomeTextResponse"]
+    end
+
+    subgraph ApplicationLayer["⚙️ Application Layer<br/>(model/application/*/usecase/*)"]
+        UseCase["UseCase<br/>ビジネスロジックの実装"]
+        AppLogic["アプリケーション固有の処理"]
+    end
+
+    subgraph DomainLayer["💎 Domain Layer<br/>(model/domain/*)"]
+        DomainLogic["コアビジネスロジック"]
+        DomainService["ドメインサービス"]
+    end
+
+    subgraph InfraLayer["🔧 Infrastructure Layer<br/>(model/infrastructure/repository/*)"]
+        Repository["Repository<br/>データソースの抽象化"]
+        ExternalAPI["外部API・DBアクセス"]
+    end
+
+    %% 依存関係
+    View -.->|uses| ViewModel
+    ViewModel -.->|depends on| InterfaceLayer
+    ViewModel -.->|calls| UseCase
+    UseCase -.->|implements| InterfaceLayer
+    UseCase -.->|uses| DomainLogic
+    UseCase -.->|calls| Repository
+    Repository -.->|accesses| ExternalAPI
+    DomainService -.->|uses| DomainLogic
+    UI -.->|implements| InterfaceLayer
+
+    %% スタイル
+    classDef viewStyle fill:#e1f5ff,stroke:#01579b,stroke-width:2px,color:#000
+    classDef interfaceStyle fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+    classDef appStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+    classDef domainStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#000
+    classDef infraStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:#000
+
+    class View,ViewModel,UI viewStyle
+    class IDraggable,ITextField,IResponse interfaceStyle
+    class UseCase,AppLogic appStyle
+    class DomainLogic,DomainService domainStyle
+    class Repository,ExternalAPI infraStyle
 ```
-┌─────────────────────────────────────────────────────────┐
-│                        View Layer                        │
-│  (view/*, ui/*)                                          │
-│  - View: 画面の構造を定義                                  │
-│  - ViewModel: Viewとビジネスロジックの橋渡し               │
-│  - UI Components: 再利用可能なUIパーツ                     │
-└─────────────────────────────────────────────────────────┘
-                            ↓ ↑
-                    (Interface 経由)
-                            ↓ ↑
-┌─────────────────────────────────────────────────────────┐
-│                   Application Layer                      │
-│  (model/application/*/usecase/*)                        │
-│  - UseCase: ビジネスロジックの実装                         │
-│  - アプリケーション固有の処理を担当                         │
-└─────────────────────────────────────────────────────────┘
-                            ↓ ↑
-┌─────────────────────────────────────────────────────────┐
-│                     Domain Layer                         │
-│  (model/domain/*)                                        │
-│  - コアビジネスロジック                                    │
-│  - フレームワークや外部ライブラリに依存しない               │
-└─────────────────────────────────────────────────────────┘
-                            ↓ ↑
-┌─────────────────────────────────────────────────────────┐
-│                 Infrastructure Layer                     │
-│  (model/infrastructure/repository/*)                    │
-│  - 外部API、データベースへのアクセス                        │
-│  - Repository: データソースの抽象化                        │
-└─────────────────────────────────────────────────────────┘
+
+### レイヤー間の依存関係 / Layer Dependencies
+
+```mermaid
+flowchart LR
+    View["View Layer<br/>視覚表現"]
+    Interface["Interface Layer<br/>抽象化"]
+    App["Application Layer<br/>ユースケース"]
+    Domain["Domain Layer<br/>ビジネスルール"]
+    Infra["Infrastructure Layer<br/>外部接続"]
+
+    View -->|depends on| Interface
+    App -->|depends on| Interface
+    App -->|depends on| Domain
+    Infra -->|implements| Interface
+    UI["UI Components"] -->|implements| Interface
+
+    style View fill:#e1f5ff,stroke:#01579b,stroke-width:3px
+    style Interface fill:#fff9c4,stroke:#f57f17,stroke-width:3px
+    style App fill:#f3e5f5,stroke:#4a148c,stroke-width:3px
+    style Domain fill:#e8f5e9,stroke:#1b5e20,stroke-width:3px
+    style Infra fill:#fce4ec,stroke:#880e4f,stroke-width:3px
+    style UI fill:#e1f5ff,stroke:#01579b,stroke-width:2px
 ```
 
-## 依存関係の方向 / Dependency Direction
+### 依存関係の方向 / Dependency Direction
 
-クリーンアーキテクチャの原則に従い、依存関係は常に内側（Domain層）に向かいます。
+クリーンアーキテクチャの原則に従い、依存関係は常に内側（Domain層）に向かい、外側の層は内側の層を知りません。
 
-Following Clean Architecture principles, dependencies always point inward (toward the Domain layer).
+Following Clean Architecture principles, dependencies always point inward (toward the Domain layer), and outer layers don't know about inner layers.
 
-```
-View ──→ Interface ←── Application ──→ Domain ←── Infrastructure
+```mermaid
+graph LR
+    View["View<br/>Layer"] -->|depends on| Interface["Interface<br/>Layer"]
+    App["Application<br/>Layer"] -->|depends on| Interface
+    App -->|depends on| Domain["Domain<br/>Layer"]
+    Infra["Infrastructure<br/>Layer"] -->|implements| Interface
+    
+    style View fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    style Interface fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style App fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    style Domain fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    style Infra fill:#fce4ec,stroke:#880e4f,stroke-width:2px
 ```
 
 - **View層**: インターフェースを通じてApplication層を使用
@@ -56,25 +111,105 @@ View ──→ Interface ←── Application ──→ Domain ←── Infras
 
 ## ディレクトリ構造 / Directory Structure
 
+```mermaid
+graph TB
+    subgraph src["📁 src/"]
+        subgraph interface["📋 interface/"]
+            IDrag["IDraggable.ts"]
+            IText["ITextField.ts"]
+            IRes["IHomeTextResponse.ts"]
+        end
+
+        subgraph view["🎨 view/"]
+            subgraph home1["home/"]
+                HView["HomeView.ts"]
+                HVM["HomeViewModel.ts"]
+            end
+            subgraph top1["top/"]
+                TView["TopView.ts"]
+                TVM["TopViewModel.ts"]
+            end
+        end
+
+        subgraph model["⚙️ model/"]
+            subgraph application["application/"]
+                subgraph homeApp["home/usecase/"]
+                    StartUC["StartDragUseCase.ts"]
+                    StopUC["StopDragUseCase.ts"]
+                    CenterUC["CenterTextFieldUseCase.ts"]
+                end
+                subgraph topApp["top/usecase/"]
+                    NavUC["NavigateToViewUseCase.ts"]
+                end
+            end
+
+            subgraph domain["💎 domain/"]
+                subgraph callback["callback/"]
+                    BG["Background.ts"]
+                end
+            end
+
+            subgraph infrastructure["🔧 infrastructure/"]
+                subgraph repository["repository/"]
+                    HomeRepo["HomeTextRepository.ts"]
+                end
+            end
+        end
+
+        subgraph ui["🎨 ui/"]
+            subgraph component["component/"]
+                subgraph atom["atom/"]
+                    BtnAtom["ButtonAtom.ts"]
+                    TxtAtom["TextAtom.ts"]
+                end
+                subgraph molecule["molecule/"]
+                    HomeMol["HomeBtnMolecule.ts"]
+                    TopMol["TopBtnMolecule.ts"]
+                end
+            end
+            subgraph content["content/"]
+                HomeContent["HomeContent.ts"]
+                TopContent["TopContent.ts"]
+            end
+        end
+    end
+
+    classDef interfaceClass fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    classDef viewClass fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    classDef appClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef domainClass fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    classDef infraClass fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef uiClass fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+
+    class interface,IDrag,IText,IRes interfaceClass
+    class view,home1,top1,HView,HVM,TView,TVM viewClass
+    class application,homeApp,topApp,StartUC,StopUC,CenterUC,NavUC appClass
+    class domain,callback,BG domainClass
+    class infrastructure,repository,HomeRepo infraClass
+    class ui,component,atom,molecule,content,BtnAtom,TxtAtom,HomeMol,TopMol,HomeContent,TopContent uiClass
+```
+
+### ファイル・ディレクトリ一覧 / File & Directory List
+
 ```
 src/
-├── interface/              # インターフェース定義
-│   ├── IDraggable.ts      # ドラッグ可能なオブジェクト
-│   ├── ITextField.ts      # テキストフィールド
-│   └── IHomeTextResponse.ts # API レスポンス型
+├── 📋 interface/              # インターフェース定義
+│   ├── IDraggable.ts         # ドラッグ可能なオブジェクト
+│   ├── ITextField.ts         # テキストフィールド
+│   └── IHomeTextResponse.ts  # API レスポンス型
 │
-├── view/                   # View & ViewModel
+├── 🎨 view/                   # View & ViewModel
 │   ├── home/
-│   │   ├── HomeView.ts    # 画面の構造定義
-│   │   └── HomeViewModel.ts # ビジネスロジックとの橋渡し
+│   │   ├── HomeView.ts       # 画面の構造定義
+│   │   └── HomeViewModel.ts  # ビジネスロジックとの橋渡し
 │   └── top/
 │       ├── TopView.ts
 │       └── TopViewModel.ts
 │
-├── model/
-│   ├── application/        # アプリケーション層
+├── ⚙️ model/
+│   ├── application/          # アプリケーション層
 │   │   ├── home/
-│   │   │   └── usecase/   # ビジネスロジック実装
+│   │   │   └── usecase/     # ビジネスロジック実装
 │   │   │       ├── StartDragUseCase.ts
 │   │   │       ├── StopDragUseCase.ts
 │   │   │       └── CenterTextFieldUseCase.ts
@@ -82,23 +217,23 @@ src/
 │   │       └── usecase/
 │   │           └── NavigateToViewUseCase.ts
 │   │
-│   ├── domain/            # ドメイン層
-│   │   └── callback/      # コアビジネスロジック
+│   ├── 💎 domain/            # ドメイン層
+│   │   └── callback/        # コアビジネスロジック
 │   │       └── Background.ts
 │   │
-│   └── infrastructure/    # インフラ層
+│   └── 🔧 infrastructure/    # インフラ層
 │       └── repository/
 │           └── HomeTextRepository.ts # データアクセス
 │
-└── ui/                    # UIコンポーネント
+└── 🎨 ui/                    # UIコンポーネント
     ├── component/
-    │   ├── atom/          # 最小単位のコンポーネント
+    │   ├── atom/            # 最小単位のコンポーネント
     │   │   ├── ButtonAtom.ts
     │   │   └── TextAtom.ts
-    │   └── molecule/      # Atomを組み合わせたコンポーネント
+    │   └── molecule/        # Atomを組み合わせたコンポーネント
     │       ├── HomeBtnMolecule.ts
     │       └── TopBtnMolecule.ts
-    └── content/           # Animation Tool生成コンテンツ
+    └── content/             # Animation Tool生成コンテンツ
         ├── HomeContent.ts
         └── TopContent.ts
 ```
@@ -161,13 +296,99 @@ export class HomeTextRepository {
 
 ## データフロー / Data Flow
 
-### 例: ドラッグ操作の場合
+### 例: ドラッグ操作の場合 / Example: Drag Operation
 
-1. **ユーザーアクション**: ユーザーがコンテンツをポインターダウン
-2. **View**: イベントをキャッチし、ViewModelのメソッドを呼び出し
-3. **ViewModel**: UseCaseを実行
-4. **UseCase**: インターフェースを通じてビジネスロジックを実行
-5. **UI Component**: 実際のドラッグ処理を実行
+```mermaid
+sequenceDiagram
+    actor User as 👤 User
+    participant View as View<br/>(HomeView)
+    participant VM as ViewModel<br/>(HomeViewModel)
+    participant UC as UseCase<br/>(StartDragUseCase)
+    participant UI as UI Component<br/>(HomeBtnMolecule)
+    participant Content as Content<br/>(HomeContent)
+
+    User->>View: 1. ポインターダウン<br/>(Pointer Down)
+    View->>VM: 2. homeContentPointerDownEvent(event)
+    activate VM
+    VM->>VM: 3. event.currentTarget as IDraggable
+    VM->>UC: 4. execute(target)
+    activate UC
+    UC->>UI: 5. target.startDrag()
+    activate UI
+    UI->>Content: 6. homeContent.startDrag()
+    activate Content
+    Content-->>Content: 7. ドラッグ処理実行<br/>(Execute drag)
+    Content-->>UI: 8. 完了
+    deactivate Content
+    UI-->>UC: 9. 完了
+    deactivate UI
+    UC-->>VM: 10. 完了
+    deactivate UC
+    VM-->>View: 11. 完了
+    deactivate VM
+    View-->>User: 12. ドラッグ開始<br/>(Drag started)
+
+    Note over View,Content: すべてインターフェース経由で通信<br/>All communication via interfaces
+```
+
+### データ取得フロー / Data Fetch Flow
+
+```mermaid
+sequenceDiagram
+    participant View as View<br/>(HomeView)
+    participant VM as ViewModel<br/>(HomeViewModel)
+    participant UC as UseCase<br/>(FetchHomeTextUseCase)
+    participant Repo as Repository<br/>(HomeTextRepository)
+    participant API as External API<br/>(api/home.json)
+
+    View->>VM: 1. initialize()
+    activate VM
+    VM->>UC: 2. execute()
+    activate UC
+    UC->>Repo: 3. get()
+    activate Repo
+    Repo->>API: 4. fetch()
+    activate API
+    API-->>Repo: 5. JSON Response
+    deactivate API
+    Repo->>Repo: 6. エラーチェック<br/>(Error check)
+    Repo-->>UC: 7. IHomeTextResponse
+    deactivate Repo
+    UC->>UC: 8. ビジネスロジック<br/>(Business logic)
+    UC-->>VM: 9. データ返却<br/>(Return data)
+    deactivate UC
+    VM->>View: 10. データをViewに設定<br/>(Set data to View)
+    deactivate VM
+    View->>View: 11. 画面更新<br/>(Update UI)
+
+    Note over Repo,API: エラーハンドリングと<br/>型安全性を保証<br/>(Error handling &<br/>type safety)
+```
+
+### 画面遷移フロー / View Navigation Flow
+
+```mermaid
+flowchart TD
+    A[👤 User clicks button] --> B[View<br/>Button Event]
+    B --> C[ViewModel<br/>onClickStartButton]
+    C --> D[UseCase<br/>NavigateToViewUseCase]
+    D --> E{ビジネスルール<br/>チェック}
+    E -->|OK| F[app.gotoView<br/>'home']
+    E -->|NG| G[エラー処理]
+    F --> H[Framework<br/>Routing処理]
+    H --> I[新しいView<br/>ロード]
+    I --> J[ViewModel<br/>initialize]
+    J --> K[View<br/>initialize]
+    K --> L[View<br/>onEnter]
+    L --> M[🎨 画面表示]
+
+    style A fill:#e1f5ff,stroke:#01579b
+    style E fill:#fff9c4,stroke:#f57f17
+    style F fill:#e8f5e9,stroke:#1b5e20
+    style G fill:#ffebee,stroke:#c62828
+    style M fill:#e1f5ff,stroke:#01579b
+```
+
+### コード例 / Code Example
 
 ```typescript
 // 1. View: イベントハンドリング
@@ -177,12 +398,13 @@ homeContent.addEventListener(PointerEvent.POINTER_DOWN,
 
 // 2. ViewModel: UseCaseの実行
 homeContentPointerDownEvent(event: PointerEvent): void {
-    const target = event.currentTarget as IDraggable;
+    const target = event.currentTarget as unknown as IDraggable;
     this.startDragUseCase.execute(target);
 }
 
 // 3. UseCase: ビジネスロジック
 execute(target: IDraggable): void {
+    // ビジネスルール: ドラッグ可能かチェック
     target.startDrag();
 }
 
