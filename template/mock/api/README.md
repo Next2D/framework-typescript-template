@@ -20,7 +20,7 @@ Mock API response for the Home screen.
 
 ```json
 {
-    "word": "Hello, Next2D!"
+    "word": "Hello, World."
 }
 ```
 
@@ -34,7 +34,7 @@ Mock API response for the Top screen.
 
 ```json
 {
-    "title": "Welcome"
+    "title": "Click Me."
 }
 ```
 
