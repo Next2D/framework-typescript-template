@@ -201,26 +201,21 @@ Environment-specific settings are managed in the `src/config/` directory.
 
 ## ディレクトリ構成 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph src["src/"]
-        config["config/<br>設定ファイル"]
-        interface["interface/<br>インターフェース定義"]
-        subgraph model["model/"]
-            application["application/<br>ユースケース"]
-            domain["domain/<br>ドメインロジック"]
-            infrastructure["infrastructure/<br>リポジトリ"]
-        end
-        subgraph ui["ui/"]
-            subgraph component["component/"]
-                atom["atom/<br>最小コンポーネント"]
-                molecule["molecule/<br>複合コンポーネント"]
-            end
-            content["content/<br>Animation Tool"]
-            animation["animation/<br>アニメーション定義"]
-        end
-        view["view/<br>View & ViewModel"]
-    end
+```
+src/
+├── config/                    # 設定ファイル / Configuration files
+├── interface/                 # インターフェース定義 / Interface definitions
+├── model/
+│   ├── application/           # ユースケース / Use cases
+│   ├── domain/                # ドメインロジック / Domain logic
+│   └── infrastructure/        # リポジトリ / Repositories
+├── ui/
+│   ├── animation/             # アニメーション定義 / Animation definitions
+│   ├── component/
+│   │   ├── atom/              # 最小コンポーネント / Smallest components
+│   │   └── molecule/          # 複合コンポーネント / Composite components
+│   └── content/               # Animation Tool 生成 / Generated content
+└── view/                      # View & ViewModel
 ```
 
 各ディレクトリの詳細は、ディレクトリ内の `README.md` を参照してください。
