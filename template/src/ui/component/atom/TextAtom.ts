@@ -1,3 +1,4 @@
+import type { ITextField } from "@/interface/ITextField";
 import type { ITextFormatObject } from "@/interface/ITextFormatObject";
 import { TextField } from "@next2d/text";
 
@@ -7,9 +8,10 @@ import { TextField } from "@next2d/text";
  *
  * @class
  * @extends {TextField}
+ * @implements {ITextField}
  * @public
  */
-export class TextAtom extends TextField {
+export class TextAtom extends TextField implements ITextField {
 
     /**
      * @param {string} [text=""]

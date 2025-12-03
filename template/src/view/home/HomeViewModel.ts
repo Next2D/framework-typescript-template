@@ -1,8 +1,10 @@
+import type { IDraggable } from "@/interface/IDraggable";
+import type { ITextField } from "@/interface/ITextField";
 import { ViewModel } from "@next2d/framework";
 import type { PointerEvent, Event } from "@next2d/events";
-import { execute as homeContentPointerDownService } from "@/model/application/home/service/HomeContentPointerDownService";
-import { execute as homeContentPointerUpService } from "@/model/application/home/service/HomeContentPointerUpService";
-import { execute as homeTextChangeService } from "@/model/application/home/service/HomeTextChangeService";
+import { StartDragUseCase } from "@/model/application/home/usecase/StartDragUseCase";
+import { StopDragUseCase } from "@/model/application/home/usecase/StopDragUseCase";
+import { CenterTextFieldUseCase } from "@/model/application/home/usecase/CenterTextFieldUseCase";
 
 /**
  * @class
@@ -10,6 +12,22 @@ import { execute as homeTextChangeService } from "@/model/application/home/servi
  */
 export class HomeViewModel extends ViewModel
 {
+    private readonly startDragUseCase: StartDragUseCase;
+    private readonly stopDragUseCase: StopDragUseCase;
+    private readonly centerTextFieldUseCase: CenterTextFieldUseCase;
+
+    /**
+     * @constructor
+     * @public
+     */
+    constructor ()
+    {
+        super();
+        this.startDragUseCase = new StartDragUseCase();
+        this.stopDragUseCase = new StopDragUseCase();
+        this.centerTextFieldUseCase = new CenterTextFieldUseCase();
+    }
+
     /**
      * @return {Promise<void>}
      * @method
@@ -32,7 +50,8 @@ export class HomeViewModel extends ViewModel
      */
     homeContentPointerDownEvent (event: PointerEvent): void
     {
-        homeContentPointerDownService(event);
+        const target = event.currentTarget as unknown as IDraggable;
+        this.startDragUseCase.execute(target);
     }
 
     /**
@@ -46,7 +65,8 @@ export class HomeViewModel extends ViewModel
      */
     homeContentPointerUpEvent (event: PointerEvent): void
     {
-        homeContentPointerUpService(event);
+        const target = event.currentTarget as unknown as IDraggable;
+        this.stopDragUseCase.execute(target);
     }
 
     /**
@@ -60,6 +80,7 @@ export class HomeViewModel extends ViewModel
      */
     homeTextChangeEvent (event: Event): void
     {
-        homeTextChangeService(event);
+        const textField = event.currentTarget as unknown as ITextField;
+        this.centerTextFieldUseCase.execute(textField);
     }
 }

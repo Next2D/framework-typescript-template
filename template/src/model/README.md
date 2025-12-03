@@ -36,13 +36,13 @@ We will describe the role of each directory.
 ### Application
 
 ```sh
-application
-└── content
+ application
+ └── content
 ```
 
-`content` ディレクトリにはAnimation Toolで作成された `DisplayObject` を動的に生成するためのクラスが格納されてます。動的に生成された `DisplayObject` は起動時に `initialize` 関数が実行されます。 `service`、 `usecase`  ディレクトリを作成して、`domain` へのアクセスを行う責務を担う事も良いかもしれません。  
+`content` ディレクトリにはAnimation Toolで作成された `DisplayObject` を動的に生成するためのクラスが格納されてます。`usecase` ディレクトリを作成して、ビジネスロジックを実装し、`domain` へのアクセスを行う責務を担います。  
 
-The `content` directory contains classes for dynamically generating `DisplayObject`s created by the Animation Tool. Dynamically generated `DisplayObject`s execute their `initialize` function upon startup. It might also be a good idea to create `service` and `usecase` directories to handle the responsibility of accessing the `domain`.
+The `content` directory contains classes for dynamically generating `DisplayObject`s created by the Animation Tool. The `usecase` directory is created to implement business logic and handle the responsibility of accessing the `domain`.
 
 #### Example of cooperation with Animation Tool
 
@@ -83,11 +83,9 @@ domain
     └── home
 ```
 
-アプリケーションの固有ロジックを格納するディレクトリで、プロジェクトの核心になる層です。このテンプレートでは `callback` で、背景に全画面のグラデーション描画を行なっています。 `event` ディレクトリは各ページのイベント処理関数が管理されています。 `event` ディレクトリのクラスがユーザーからの `InputUseCase` の責務を担っています。  
+アプリケーションの固有ロジックを格納するディレクトリで、プロジェクトの核心になる層です。このテンプレートでは `callback` で、背景に全画面のグラデーション描画を行なっています。ドメインロジックは外部の詳細実装に依存せず、インターフェースを通じて抽象化された依存関係を持つべきです。  
 
-This directory stores the application-specific logic and is the core layer of the project.  
-The `callback` generates the background for all screens, and the `event` directory handles events for each page.  
-The classes in the `event` directory are responsible for `InputUseCase` from User.  
+This directory stores the application-specific logic and is the core layer of the project. The `callback` generates the background for all screens. Domain logic should not depend on external implementation details and should have dependencies abstracted through interfaces.  
 
 ### Infrastructure
 
@@ -96,21 +94,25 @@ infrastructure
 └── repository
 ```
 
-外部へのアクセスロジックを格納するディレクトリです。データベースからの情報であれば `entity` ディレクトリを作成して可変可能オブジェクトとして運用し、可変想定がないオブジェクトなどはデータ転送オブジェクト(DTO)として `dto` ディレクトリにそれぞれ責務を分散させるのが良いかもしれません。  
+外部へのアクセスロジックを格納するディレクトリです。データベースからの情報であれば `entity` ディレクトリを作成して可変可能オブジェクトとして運用し、可変想定がないオブジェクトなどはデータ転送オブジェクト(DTO)として `dto` ディレクトリにそれぞれ責務を分散させるのが良いかもしれません。Repositoryは具体的な実装であり、ドメイン層からはインターフェースを通じてアクセスされるべきです。  
 
-This directory stores logic for external access. For data retrieved from a database, you might consider creating an `entity` directory to manage mutable objects, while objects that are not meant to change can have their responsibilities distributed into a `dto` directory as data transfer objects (DTOs).
+This directory stores logic for external access. For data retrieved from a database, you might consider creating an `entity` directory to manage mutable objects, while objects that are not meant to change can have their responsibilities distributed into a `dto` directory as data transfer objects (DTOs). Repositories are concrete implementations and should be accessed from the domain layer through interfaces.
 
 ### UI(User Interface)
+
+このテンプレートでは、UIコンポーネントは `src/ui` ディレクトリに配置されており、`model/ui` ではありません。  
+
+In this template, UI components are located in the `src/ui` directory, not in `model/ui`.
+
+## UI Components
 
 ```sh
 ui
 └── component
     ├── atom
-    └── template
-        ├── top
-        └── home
+    └── molecule
 ```
 
-アトミックデザインを意識したディレクトリ構成になってます。`atom` ディレクトリに最小の表示要素を作成して、`template` ディレクトリで各atomの要素を呼び出しページのレイアウトを作成してます。今回は `template` 内のクラスが `UseCase` の責務も担っています。`application` ディレクトリへのアクセスは `template` 内のクラスに制限する想定です。  
+アトミックデザインを意識したディレクトリ構成になってます。`atom` ディレクトリに最小の表示要素を作成して、`molecule` ディレクトリで各atomの要素を組み合わせたコンポーネントを作成します。UIコンポーネントはインターフェースを実装することで、ビジネスロジック層から抽象化された形で扱われます。  
 
-The directory structure is designed with atomic design in mind. Minimal display elements are created in the `atom` directory, and in the `template` directory, these atom elements are assembled to build the page layout. In this case, the classes in the `template` directory also carry the responsibilities of the `UseCase`. Access to the `application` directory is intended to be restricted to classes within the `template` directory.
+The directory structure is designed with atomic design in mind. Minimal display elements are created in the `atom` directory, and in the `molecule` directory, components are created by combining atom elements. UI components implement interfaces to be handled in an abstracted manner from the business logic layer.

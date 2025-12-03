@@ -1,4 +1,5 @@
-import { ViewModel, app } from "@next2d/framework";
+import { ViewModel } from "@next2d/framework";
+import { NavigateToViewUseCase } from "@/model/application/top/usecase/NavigateToViewUseCase";
 
 /**
  * @class
@@ -6,6 +7,18 @@ import { ViewModel, app } from "@next2d/framework";
  */
 export class TopViewModel extends ViewModel
 {
+    private readonly navigateToViewUseCase: NavigateToViewUseCase;
+
+    /**
+     * @constructor
+     * @public
+     */
+    constructor ()
+    {
+        super();
+        this.navigateToViewUseCase = new NavigateToViewUseCase();
+    }
+
     /**
      * @return {Promise<void>}
      * @method
@@ -27,6 +40,6 @@ export class TopViewModel extends ViewModel
      */
     async onClickStartButton (): Promise<void>
     {
-        await app.gotoView("home");
+        await this.navigateToViewUseCase.execute("home");
     }
 }
