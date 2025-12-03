@@ -8,67 +8,77 @@ This project implements a combination of Clean Architecture and MVVM pattern.
 
 ```mermaid
 graph TB
-    subgraph ViewLayer["🎨 View Layer<br/>(view/*, ui/*)"]
-        View["View<br/>画面の構造を定義"]
-        ViewModel["ViewModel<br/>Viewとビジネスロジックの橋渡し"]
-        UI["UI Components<br/>再利用可能なUIパーツ"]
+    subgraph ViewLayer["🎨 View Layer"]
+        direction TB
+        ViewLayerPath["view/*, ui/*"]
+        View["View"]
+        ViewDesc["画面の構造を定義"]
+        ViewModel["ViewModel"]
+        VMDesc["Viewとビジネスロジックの橋渡し"]
+        UI["UI Components"]
+        UIDesc["再利用可能なUIパーツ"]
     end
 
-    subgraph InterfaceLayer["📋 Interface Layer<br/>(interface/*)"]
+    subgraph InterfaceLayer["📋 Interface Layer"]
+        direction TB
+        InterfacePath["interface/*"]
         IDraggable["IDraggable"]
         ITextField["ITextField"]
         IResponse["IHomeTextResponse"]
     end
 
-    subgraph ApplicationLayer["⚙️ Application Layer<br/>(model/application/*/usecase/*)"]
-        UseCase["UseCase<br/>ビジネスロジックの実装"]
+    subgraph ApplicationLayer["⚙️ Application Layer"]
+        direction TB
+        AppPath["model/application/*/usecase/*"]
+        UseCase["UseCase"]
+        UseCaseDesc["ビジネスロジックの実装"]
         AppLogic["アプリケーション固有の処理"]
     end
 
-    subgraph DomainLayer["💎 Domain Layer<br/>(model/domain/*)"]
+    subgraph DomainLayer["💎 Domain Layer"]
+        direction TB
+        DomainPath["model/domain/*"]
         DomainLogic["コアビジネスロジック"]
         DomainService["ドメインサービス"]
     end
 
-    subgraph InfraLayer["🔧 Infrastructure Layer<br/>(model/infrastructure/repository/*)"]
-        Repository["Repository<br/>データソースの抽象化"]
+    subgraph InfraLayer["🔧 Infrastructure Layer"]
+        direction TB
+        InfraPath["model/infrastructure/repository/*"]
+        Repository["Repository"]
+        RepoDesc["データソースの抽象化"]
         ExternalAPI["外部API・DBアクセス"]
     end
 
-    %% 依存関係
-    View -.->|uses| ViewModel
-    ViewModel -.->|depends on| InterfaceLayer
-    ViewModel -.->|calls| UseCase
-    UseCase -.->|implements| InterfaceLayer
-    UseCase -.->|uses| DomainLogic
-    UseCase -.->|calls| Repository
-    Repository -.->|accesses| ExternalAPI
-    DomainService -.->|uses| DomainLogic
-    UI -.->|implements| InterfaceLayer
+    ViewLayer -.->|interface経由| InterfaceLayer
+    ViewLayer -.->|calls| ApplicationLayer
+    ApplicationLayer -.->|interface経由| InterfaceLayer
+    ApplicationLayer -.->|uses| DomainLayer
+    ApplicationLayer -.->|calls| InfraLayer
+    InfraLayer -.->|accesses| ExternalAPI
 
-    %% スタイル
     classDef viewStyle fill:#e1f5ff,stroke:#01579b,stroke-width:2px,color:#000
     classDef interfaceStyle fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
     classDef appStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
     classDef domainStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#000
     classDef infraStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:#000
 
-    class View,ViewModel,UI viewStyle
-    class IDraggable,ITextField,IResponse interfaceStyle
-    class UseCase,AppLogic appStyle
-    class DomainLogic,DomainService domainStyle
-    class Repository,ExternalAPI infraStyle
+    class ViewLayer,View,ViewModel,UI viewStyle
+    class InterfaceLayer,IDraggable,ITextField,IResponse interfaceStyle
+    class ApplicationLayer,UseCase,AppLogic appStyle
+    class DomainLayer,DomainLogic,DomainService domainStyle
+    class InfraLayer,Repository,ExternalAPI infraStyle
 ```
 
 ### レイヤー間の依存関係 / Layer Dependencies
 
 ```mermaid
-flowchart LR
-    View["View Layer<br/>視覚表現"]
-    Interface["Interface Layer<br/>抽象化"]
-    App["Application Layer<br/>ユースケース"]
-    Domain["Domain Layer<br/>ビジネスルール"]
-    Infra["Infrastructure Layer<br/>外部接続"]
+flowchart TD
+    View["🎨 View Layer<br/>視覚表現"]
+    Interface["📋 Interface Layer<br/>抽象化"]
+    App["⚙️ Application Layer<br/>ユースケース"]
+    Domain["💎 Domain Layer<br/>ビジネスルール"]
+    Infra["🔧 Infrastructure Layer<br/>外部接続"]
 
     View -->|depends on| Interface
     App -->|depends on| Interface
@@ -91,11 +101,17 @@ flowchart LR
 Following Clean Architecture principles, dependencies always point inward (toward the Domain layer), and outer layers don't know about inner layers.
 
 ```mermaid
-graph LR
-    View["View<br/>Layer"] -->|depends on| Interface["Interface<br/>Layer"]
-    App["Application<br/>Layer"] -->|depends on| Interface
-    App -->|depends on| Domain["Domain<br/>Layer"]
-    Infra["Infrastructure<br/>Layer"] -->|implements| Interface
+flowchart TD
+    View["🎨 View Layer"]
+    Interface["📋 Interface Layer"]
+    App["⚙️ Application Layer"]
+    Domain["💎 Domain Layer"]
+    Infra["🔧 Infrastructure Layer"]
+    
+    View -->|depends on| Interface
+    App -->|depends on| Interface
+    App -->|depends on| Domain
+    Infra -->|implements| Interface
     
     style View fill:#e1f5ff,stroke:#01579b,stroke-width:2px
     style Interface fill:#fff9c4,stroke:#f57f17,stroke-width:2px
@@ -109,96 +125,16 @@ graph LR
 - **Domain層**: 何にも依存しない（純粋なビジネスロジック）
 - **Infrastructure層**: Domain層のインターフェースを実装
 
-## ディレクトリ構造 / Directory Structure
-
-```mermaid
-graph TB
-    subgraph src["📁 src/"]
-        subgraph interface["📋 interface/"]
-            IDrag["IDraggable.ts"]
-            IText["ITextField.ts"]
-            IRes["IHomeTextResponse.ts"]
-        end
-
-        subgraph view["🎨 view/"]
-            subgraph home1["home/"]
-                HView["HomeView.ts"]
-                HVM["HomeViewModel.ts"]
-            end
-            subgraph top1["top/"]
-                TView["TopView.ts"]
-                TVM["TopViewModel.ts"]
-            end
-        end
-
-        subgraph model["⚙️ model/"]
-            subgraph application["application/"]
-                subgraph homeApp["home/usecase/"]
-                    StartUC["StartDragUseCase.ts"]
-                    StopUC["StopDragUseCase.ts"]
-                    CenterUC["CenterTextFieldUseCase.ts"]
-                end
-                subgraph topApp["top/usecase/"]
-                    NavUC["NavigateToViewUseCase.ts"]
-                end
-            end
-
-            subgraph domain["💎 domain/"]
-                subgraph callback["callback/"]
-                    BG["Background.ts"]
-                end
-            end
-
-            subgraph infrastructure["🔧 infrastructure/"]
-                subgraph repository["repository/"]
-                    HomeRepo["HomeTextRepository.ts"]
-                end
-            end
-        end
-
-        subgraph ui["🎨 ui/"]
-            subgraph component["component/"]
-                subgraph atom["atom/"]
-                    BtnAtom["ButtonAtom.ts"]
-                    TxtAtom["TextAtom.ts"]
-                end
-                subgraph molecule["molecule/"]
-                    HomeMol["HomeBtnMolecule.ts"]
-                    TopMol["TopBtnMolecule.ts"]
-                end
-            end
-            subgraph content["content/"]
-                HomeContent["HomeContent.ts"]
-                TopContent["TopContent.ts"]
-            end
-        end
-    end
-
-    classDef interfaceClass fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    classDef viewClass fill:#e1f5ff,stroke:#01579b,stroke-width:2px
-    classDef appClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef domainClass fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef infraClass fill:#fce4ec,stroke:#880e4f,stroke-width:2px
-    classDef uiClass fill:#e1f5ff,stroke:#01579b,stroke-width:2px
-
-    class interface,IDrag,IText,IRes interfaceClass
-    class view,home1,top1,HView,HVM,TView,TVM viewClass
-    class application,homeApp,topApp,StartUC,StopUC,CenterUC,NavUC appClass
-    class domain,callback,BG domainClass
-    class infrastructure,repository,HomeRepo infraClass
-    class ui,component,atom,molecule,content,BtnAtom,TxtAtom,HomeMol,TopMol,HomeContent,TopContent uiClass
-```
-
 ### ファイル・ディレクトリ一覧 / File & Directory List
 
 ```
 src/
-├── 📋 interface/              # インターフェース定義
+├── 📋 interface/             # インターフェース定義
 │   ├── IDraggable.ts         # ドラッグ可能なオブジェクト
 │   ├── ITextField.ts         # テキストフィールド
 │   └── IHomeTextResponse.ts  # API レスポンス型
 │
-├── 🎨 view/                   # View & ViewModel
+├── 🎨 view/                  # View & ViewModel
 │   ├── home/
 │   │   ├── HomeView.ts       # 画面の構造定義
 │   │   └── HomeViewModel.ts  # ビジネスロジックとの橋渡し
@@ -301,45 +237,45 @@ export class HomeTextRepository {
 ```mermaid
 sequenceDiagram
     actor User as 👤 User
-    participant View as View<br/>(HomeView)
-    participant VM as ViewModel<br/>(HomeViewModel)
-    participant UC as UseCase<br/>(StartDragUseCase)
-    participant UI as UI Component<br/>(HomeBtnMolecule)
-    participant Content as Content<br/>(HomeContent)
+    participant View as View
+    participant VM as ViewModel
+    participant UC as UseCase
+    participant UI as UI Component
+    participant Content as Content
 
-    User->>View: 1. ポインターダウン<br/>(Pointer Down)
-    View->>VM: 2. homeContentPointerDownEvent(event)
+    User->>View: 1. Pointer Down
+    View->>VM: 2. event handler
     activate VM
-    VM->>VM: 3. event.currentTarget as IDraggable
-    VM->>UC: 4. execute(target)
+    VM->>VM: 3. cast to IDraggable
+    VM->>UC: 4. execute()
     activate UC
-    UC->>UI: 5. target.startDrag()
+    UC->>UI: 5. startDrag()
     activate UI
-    UI->>Content: 6. homeContent.startDrag()
+    UI->>Content: 6. content.startDrag()
     activate Content
-    Content-->>Content: 7. ドラッグ処理実行<br/>(Execute drag)
-    Content-->>UI: 8. 完了
+    Content-->>Content: 7. Execute drag
+    Content-->>UI: 8. Complete
     deactivate Content
-    UI-->>UC: 9. 完了
+    UI-->>UC: 9. Complete
     deactivate UI
-    UC-->>VM: 10. 完了
+    UC-->>VM: 10. Complete
     deactivate UC
-    VM-->>View: 11. 完了
+    VM-->>View: 11. Complete
     deactivate VM
-    View-->>User: 12. ドラッグ開始<br/>(Drag started)
+    View-->>User: 12. Drag started
 
-    Note over View,Content: すべてインターフェース経由で通信<br/>All communication via interfaces
+    Note over View,Content: Interface-based communication
 ```
 
 ### データ取得フロー / Data Fetch Flow
 
 ```mermaid
 sequenceDiagram
-    participant View as View<br/>(HomeView)
-    participant VM as ViewModel<br/>(HomeViewModel)
-    participant UC as UseCase<br/>(FetchHomeTextUseCase)
-    participant Repo as Repository<br/>(HomeTextRepository)
-    participant API as External API<br/>(api/home.json)
+    participant View as View
+    participant VM as ViewModel
+    participant UC as UseCase
+    participant Repo as Repository
+    participant API as External API
 
     View->>VM: 1. initialize()
     activate VM
@@ -351,35 +287,49 @@ sequenceDiagram
     activate API
     API-->>Repo: 5. JSON Response
     deactivate API
-    Repo->>Repo: 6. エラーチェック<br/>(Error check)
+    Repo->>Repo: 6. Error check
     Repo-->>UC: 7. IHomeTextResponse
     deactivate Repo
-    UC->>UC: 8. ビジネスロジック<br/>(Business logic)
-    UC-->>VM: 9. データ返却<br/>(Return data)
+    UC->>UC: 8. Business logic
+    UC-->>VM: 9. Return data
     deactivate UC
-    VM->>View: 10. データをViewに設定<br/>(Set data to View)
+    VM->>View: 10. Set data
     deactivate VM
-    View->>View: 11. 画面更新<br/>(Update UI)
+    View->>View: 11. Update UI
 
-    Note over Repo,API: エラーハンドリングと<br/>型安全性を保証<br/>(Error handling &<br/>type safety)
+    Note over Repo,API: Error handling & type safety
 ```
 
 ### 画面遷移フロー / View Navigation Flow
 
 ```mermaid
 flowchart TD
-    A[👤 User clicks button] --> B[View<br/>Button Event]
-    B --> C[ViewModel<br/>onClickStartButton]
-    C --> D[UseCase<br/>NavigateToViewUseCase]
-    D --> E{ビジネスルール<br/>チェック}
-    E -->|OK| F[app.gotoView<br/>'home']
-    E -->|NG| G[エラー処理]
-    F --> H[Framework<br/>Routing処理]
-    H --> I[新しいView<br/>ロード]
-    I --> J[ViewModel<br/>initialize]
-    J --> K[View<br/>initialize]
-    K --> L[View<br/>onEnter]
-    L --> M[🎨 画面表示]
+    A["👤 User<br/>clicks button"]
+    B["View<br/>Button Event"]
+    C["ViewModel<br/>onClickStartButton"]
+    D["UseCase<br/>NavigateToViewUseCase"]
+    E{"ビジネス<br/>ルール<br/>チェック"}
+    F["app.gotoView<br/>home"]
+    G["エラー処理"]
+    H["Framework<br/>Routing"]
+    I["新しいView<br/>ロード"]
+    J["ViewModel<br/>initialize"]
+    K["View<br/>initialize"]
+    L["View<br/>onEnter"]
+    M["🎨<br/>画面表示"]
+    
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E -->|OK| F
+    E -->|NG| G
+    F --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    L --> M
 
     style A fill:#e1f5ff,stroke:#01579b
     style E fill:#fff9c4,stroke:#f57f17
