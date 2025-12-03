@@ -73,22 +73,30 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 This project adopts **MVVM + Clean Architecture + Atomic Design**.
 
 ```mermaid
-block-beta
-    columns 1
-    block:view["🎨 View Layer (view/, ui/)"]
-        view_desc["View: 画面の構造定義 / Screen structure<br>ViewModel: ビジネスロジックとの橋渡し / Bridge<br>UI Components: 再利用可能なUIパーツ / Reusable UI"]
+flowchart TB
+    subgraph view["🎨 View Layer"]
+        view_path["view/, ui/"]
+        view_desc["View・ViewModel・UI Components"]
     end
-    block:interface["📋 Interface Layer (interface/)"]
-        interface_desc["型定義とインターフェース / Type definitions"]
+
+    subgraph interface["📋 Interface Layer"]
+        interface_path["interface/"]
+        interface_desc["型定義・インターフェース"]
     end
-    block:application["⚙️ Application Layer (model/application/)"]
-        application_desc["UseCase: ビジネスロジック実装 / Business logic"]
+
+    subgraph application["⚙️ Application Layer"]
+        app_path["model/application/"]
+        app_desc["UseCase: ビジネスロジック"]
     end
-    block:domain["💎 Domain Layer (model/domain/)"]
-        domain_desc["コアビジネスルール / Core business rules"]
+
+    subgraph domain["💎 Domain Layer"]
+        domain_path["model/domain/"]
+        domain_desc["コアビジネスルール"]
     end
-    block:infrastructure["🔧 Infrastructure Layer (model/infrastructure/)"]
-        infrastructure_desc["Repository: データアクセス / Data access"]
+
+    subgraph infrastructure["🔧 Infrastructure Layer"]
+        infra_path["model/infrastructure/"]
+        infra_desc["Repository: データアクセス"]
     end
 
     view --> interface
@@ -96,11 +104,11 @@ block-beta
     application --> domain
     application --> infrastructure
 
-    style view fill:#e3f2fd
-    style interface fill:#fff9c4
-    style application fill:#f3e5f5
-    style domain fill:#e8f5e9
-    style infrastructure fill:#fce4ec
+    style view fill:#e3f2fd,stroke:#1565c0
+    style interface fill:#fff9c4,stroke:#f9a825
+    style application fill:#f3e5f5,stroke:#7b1fa2
+    style domain fill:#e8f5e9,stroke:#2e7d32
+    style infrastructure fill:#fce4ec,stroke:#c2185b
 ```
 
 詳細は [ARCHITECTURE.md](./ARCHITECTURE.md) を参照してください。
