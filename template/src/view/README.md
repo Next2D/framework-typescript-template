@@ -422,6 +422,135 @@ Acts as a bridge between View and Model. Holds UseCases and processes events fro
 - ❌ **UI操作** - Viewに委譲
 - ❌ **ビジネスロジック** - UseCaseに委譲
 
+### ライフサイクル / Lifecycle
+
+ViewModelには主要なライフサイクルメソッドがあります。重要なのは、**ViewModelの`initialize()`はViewの`initialize()`より前に呼び出される**という点です。
+
+ViewModel has key lifecycle methods. Importantly, **ViewModel's `initialize()` is called before View's `initialize()`**.
+
+```mermaid
+sequenceDiagram
+    participant Framework as Framework
+    participant VM as ViewModel
+    participant View as View
+    participant UC as UseCase
+    participant UI as UI Components
+
+    Note over Framework,UI: 画面遷移開始 / Screen transition starts
+    
+    Framework->>VM: new ViewModel()
+    activate VM
+    VM->>UC: Create UseCases
+    Note over VM: コンストラクタで<br/>UseCaseを生成
+    
+    Framework->>VM: initialize()
+    VM->>UC: Fetch initial data
+    Note over VM: データ取得など<br/>事前準備を実施
+    
+    Framework->>View: new View(vm)
+    activate View
+    
+    Framework->>View: initialize()
+    View->>UI: Create components
+    View->>VM: Register event listeners
+    Note over View: UIコンポーネント<br/>の構築
+    
+    Framework->>View: onEnter()
+    View->>UI: Start animations
+    View->>VM: Notify ready
+    Note over View: 画面表示処理
+    
+    Note over Framework,UI: ユーザーが操作 / User interacts
+    
+    Framework->>View: onExit()
+    View->>UI: Stop animations
+    View->>VM: Clean up
+    deactivate View
+    deactivate VM
+```
+
+#### 実行順序 / Execution Order
+
+```
+1. ViewModel のインスタンス生成
+   ↓
+2. ViewModel.initialize() ⭐ ViewModelが先
+   ↓
+3. View のインスタンス生成（ViewModelを注入）
+   ↓
+4. View.initialize()
+   ↓
+5. View.onEnter()
+   ↓
+   （ユーザー操作）
+   ↓
+6. View.onExit()
+```
+
+#### ViewModel.initialize() の詳細
+
+**呼び出しタイミング / When Called:**
+- ViewModelのインスタンス生成直後
+- **Viewの`initialize()`より前**
+- 画面遷移時に1回だけ呼び出される
+
+After ViewModel instance is created. **Before View's `initialize()`**. Called only once during screen transition.
+
+**主な用途 / Primary Usage:**
+- ✅ 初期データの取得
+- ✅ 共通設定の読み込み
+- ✅ 状態の初期化
+- ✅ Repositoryからのデータフェッチ
+- ❌ UI操作（まだViewが存在しない）
+
+**コード例 / Code Example:**
+
+```typescript
+async initialize(): Promise<void> {
+    // 1. 初期データの取得
+    try {
+        const data = await HomeTextRepository.get();
+        this.homeText = data.word;
+    } catch (error) {
+        console.error('Failed to fetch initial data:', error);
+        this.homeText = 'Hello, World!'; // フォールバック
+    }
+    
+    // 2. 状態の初期化
+    this.isLoading = false;
+    this.errorMessage = null;
+    
+    // 3. 共通設定の読み込み
+    this.config = await this.loadConfig();
+}
+```
+
+**重要な注意点 / Important Notes:**
+
+```typescript
+// ✅ 良い例: データ取得とビジネスロジックの準備
+async initialize(): Promise<void> {
+    // データ取得: Viewが表示される前に完了
+    const data = await this.fetchHomeTextUseCase.execute();
+    this.homeText = data.word;
+}
+
+// ❌ 悪い例: UI操作（まだViewが存在しない）
+async initialize(): Promise<void> {
+    // NG: この時点ではまだViewのinitialize()が呼ばれていない
+    const textField = this.view.getTextField(); // エラー！
+    textField.text = "Hello";
+}
+```
+
+#### ViewModelのライフサイクルメソッド比較
+
+| メソッド | 呼び出しタイミング | 主な用途 | View参照 |
+|---------|-----------------|---------|---------|
+| `constructor()` | インスタンス生成時 | UseCaseの生成 | ❌ 不可 |
+| `initialize()` | Viewより**前** | データ取得、状態初期化 | ❌ 不可 |
+| イベントハンドラ | ユーザー操作時 | ビジネスロジック実行 | ✅ 可能 |
+
 ### Example of ViewModel class source
 
 ```typescript
@@ -432,6 +561,7 @@ import type { PointerEvent, Event } from "@next2d/events";
 import { StartDragUseCase } from "@/model/application/home/usecase/StartDragUseCase";
 import { StopDragUseCase } from "@/model/application/home/usecase/StopDragUseCase";
 import { CenterTextFieldUseCase } from "@/model/application/home/usecase/CenterTextFieldUseCase";
+import { HomeTextRepository } from "@/model/infrastructure/repository/HomeTextRepository";
 
 /**
  * @class
@@ -443,6 +573,10 @@ export class HomeViewModel extends ViewModel
     private readonly startDragUseCase: StartDragUseCase;
     private readonly stopDragUseCase: StopDragUseCase;
     private readonly centerTextFieldUseCase: CenterTextFieldUseCase;
+    
+    // 画面の状態管理
+    private homeText: string = "";
+    private isLoading: boolean = true;
 
     /**
      * @description ViewModelの初期化とUseCaseの注入
@@ -462,6 +596,10 @@ export class HomeViewModel extends ViewModel
     }
 
     /**
+     * @description ViewModelの初期化 - データ取得と状態準備
+     *              Initialize ViewModel - Fetch data and prepare state
+     *              ⭐ Viewのinitialize()より前に呼ばれる
+     *
      * @return {Promise<void>}
      * @method
      * @override
@@ -469,8 +607,29 @@ export class HomeViewModel extends ViewModel
      */
     async initialize (): Promise<void>
     {
-        // 初期化処理（必要に応じて）
-        return void 0;
+        // 初期データの取得（Viewが表示される前に完了）
+        try {
+            const data = await HomeTextRepository.get();
+            this.homeText = data.word;
+            this.isLoading = false;
+        } catch (error) {
+            console.error('Failed to fetch home text:', error);
+            this.homeText = 'Hello, World!';
+            this.isLoading = false;
+        }
+    }
+
+    /**
+     * @description 取得したテキストを返す
+     *              Return fetched text
+     *
+     * @return {string}
+     * @method
+     * @public
+     */
+    getHomeText (): string
+    {
+        return this.homeText;
     }
 
     /**
@@ -519,6 +678,45 @@ export class HomeViewModel extends ViewModel
     {
         const textField = event.currentTarget as unknown as ITextField;
         this.centerTextFieldUseCase.execute(textField);
+    }
+}
+```
+
+### ViewModelとViewの連携 / ViewModel and View Coordination
+
+ViewModelの`initialize()`で取得したデータをViewで使用する例:
+
+Example of using data fetched in ViewModel's `initialize()` from View:
+
+```typescript
+// HomeViewModel.ts
+export class HomeViewModel extends ViewModel {
+    private homeText: string = "";
+    
+    async initialize(): Promise<void> {
+        // ViewModelのinitializeで事前にデータ取得
+        const data = await HomeTextRepository.get();
+        this.homeText = data.word;
+    }
+    
+    getHomeText(): string {
+        return this.homeText;
+    }
+}
+
+// HomeView.ts
+export class HomeView extends View {
+    constructor(private readonly vm: HomeViewModel) {
+        super();
+    }
+    
+    async initialize(): Promise<void> {
+        // この時点でvm.initialize()は既に完了している
+        const text = this.vm.getHomeText();
+        
+        // 取得済みのデータを使ってUIを構築
+        const textField = new TextAtom(text);
+        this.addChild(textField);
     }
 }
 ```

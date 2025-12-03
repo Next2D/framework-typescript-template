@@ -43,10 +43,10 @@ export class HomeView extends View
          * Send home content events to ViewModel
          */
         homeContent.addEventListener(PointerEvent.POINTER_DOWN,
-            this.vm.homeContentPointerDownEvent
+            this.vm.homeContentPointerDownEvent.bind(this.vm)
         );
         homeContent.addEventListener(PointerEvent.POINTER_UP,
-            this.vm.homeContentPointerUpEvent
+            this.vm.homeContentPointerUpEvent.bind(this.vm)
         );
 
         /**
