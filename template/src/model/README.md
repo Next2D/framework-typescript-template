@@ -6,29 +6,34 @@ This directory is responsible for business logic and data access. Based on Clean
 
 ## 📁 現在のディレクトリ構造 / Current Directory Structure
 
-```sh
-model/
-├── application/              # アプリケーション層
-│   ├── home/
-│   │   └── usecase/         # ビジネスロジック実装
-│   │       ├── StartDragUseCase.ts
-│   │       ├── StopDragUseCase.ts
-│   │       └── CenterTextFieldUseCase.ts
-│   └── top/
-│       └── usecase/
-│           └── NavigateToViewUseCase.ts
-│
-├── domain/                   # ドメイン層
-│   └── callback/
-│       └── Background/
-│           ├── Background.ts
-│           └── service/
-│               ├── BackgroundDrawService.ts
-│               └── BackgroundChangeScaleService.ts
-│
-└── infrastructure/           # インフラストラクチャ層
-    └── repository/
-        └── HomeTextRepository.ts
+```mermaid
+graph LR
+    subgraph model["model/"]
+        subgraph application["application/<br>アプリケーション層"]
+            subgraph home["home/"]
+                home_usecase["usecase/<br>StartDragUseCase.ts<br>StopDragUseCase.ts<br>CenterTextFieldUseCase.ts"]
+            end
+            subgraph top["top/"]
+                top_usecase["usecase/<br>NavigateToViewUseCase.ts"]
+            end
+        end
+        subgraph domain["domain/<br>ドメイン層"]
+            subgraph callback["callback/"]
+                subgraph Background["Background/"]
+                    bg_ts["Background.ts"]
+                    subgraph service["service/"]
+                        draw["BackgroundDrawService.ts"]
+                        scale["BackgroundChangeScaleService.ts"]
+                    end
+                end
+            end
+        end
+        subgraph infrastructure["infrastructure/<br>インフラ層"]
+            subgraph repository["repository/"]
+                repo["HomeTextRepository.ts"]
+            end
+        end
+    end
 ```
 
 ## 🎨 アーキテクチャ概要 / Architecture Overview
@@ -77,16 +82,16 @@ Implements business logic corresponding to user actions. Creates a UseCase class
 
 ### ディレクトリ構造 / Directory Structure
 
-```sh
-application/
-├── home/                     # Home画面のビジネスロジック
-│   └── usecase/
-│       ├── StartDragUseCase.ts         # ドラッグ開始
-│       ├── StopDragUseCase.ts          # ドラッグ停止
-│       └── CenterTextFieldUseCase.ts   # テキスト中央揃え
-└── top/                      # Top画面のビジネスロジック
-    └── usecase/
-        └── NavigateToViewUseCase.ts    # 画面遷移
+```mermaid
+graph LR
+    subgraph application["application/"]
+        subgraph home["home/<br>Home画面"]
+            home_uc["usecase/<br>StartDragUseCase.ts<br>StopDragUseCase.ts<br>CenterTextFieldUseCase.ts"]
+        end
+        subgraph top["top/<br>Top画面"]
+            top_uc["usecase/<br>NavigateToViewUseCase.ts"]
+        end
+    end
 ```
 
 ### 実装例 / Implementation Example
@@ -146,14 +151,19 @@ Implements the core business rules of the application. Pure logic that doesn't d
 
 ### ディレクトリ構造 / Directory Structure
 
-```sh
-domain/
-└── callback/
-    └── Background/
-        ├── Background.ts                      # グラデーション背景クラス
-        └── service/
-            ├── BackgroundDrawService.ts       # 描画サービス
-            └── BackgroundChangeScaleService.ts # スケール変更サービス
+```mermaid
+graph LR
+    subgraph domain["domain/"]
+        subgraph callback["callback/"]
+            subgraph Background["Background/"]
+                bg["Background.ts<br>グラデーション背景"]
+                subgraph service["service/"]
+                    draw["BackgroundDrawService.ts<br>描画サービス"]
+                    scale["BackgroundChangeScaleService.ts<br>スケール変更"]
+                end
+            end
+        end
+    end
 ```
 
 ### 実装例 / Implementation Example
@@ -247,10 +257,13 @@ Integrates with external systems (APIs, databases, etc.). Implements data access
 
 ### ディレクトリ構造 / Directory Structure
 
-```sh
-infrastructure/
-└── repository/
-    └── HomeTextRepository.ts    # Home画面テキストデータアクセス
+```mermaid
+graph LR
+    subgraph infrastructure["infrastructure/"]
+        subgraph repository["repository/"]
+            repo["HomeTextRepository.ts<br>Home画面テキストデータ"]
+        end
+    end
 ```
 
 ### 実装例 / Implementation Example
@@ -328,10 +341,16 @@ sequenceDiagram
 
 ### 1. 依存関係の方向 / Dependency Direction
 
-```
-View Layer → Application Layer → Domain Layer
-                ↓
-         Infrastructure Layer
+```mermaid
+graph LR
+    View["View Layer"] --> Application["Application Layer"]
+    Application --> Domain["Domain Layer"]
+    Application --> Infrastructure["Infrastructure Layer"]
+    
+    style Domain fill:#e8f5e9,stroke:#1b5e20
+    style Application fill:#f3e5f5,stroke:#4a148c
+    style Infrastructure fill:#fce4ec,stroke:#880e4f
+    style View fill:#e3f2fd,stroke:#0d47a1
 ```
 
 - **Application層** は **Domain層** と **Infrastructure層** に依存

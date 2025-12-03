@@ -72,25 +72,35 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 This project adopts **MVVM + Clean Architecture + Atomic Design**.
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  🎨 View Layer (view/, ui/)                             │
-│  - View: 画面の構造定義 / Screen structure              │
-│  - ViewModel: ビジネスロジックとの橋渡し / Bridge       │
-│  - UI Components: 再利用可能なUIパーツ / Reusable UI    │
-├─────────────────────────────────────────────────────────┤
-│  📋 Interface Layer (interface/)                        │
-│  - 型定義とインターフェース / Type definitions          │
-├─────────────────────────────────────────────────────────┤
-│  ⚙️ Application Layer (model/application/)              │
-│  - UseCase: ビジネスロジック実装 / Business logic       │
-├─────────────────────────────────────────────────────────┤
-│  💎 Domain Layer (model/domain/)                        │
-│  - コアビジネスルール / Core business rules             │
-├─────────────────────────────────────────────────────────┤
-│  🔧 Infrastructure Layer (model/infrastructure/)        │
-│  - Repository: データアクセス / Data access             │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+block-beta
+    columns 1
+    block:view["🎨 View Layer (view/, ui/)"]
+        view_desc["View: 画面の構造定義 / Screen structure<br>ViewModel: ビジネスロジックとの橋渡し / Bridge<br>UI Components: 再利用可能なUIパーツ / Reusable UI"]
+    end
+    block:interface["📋 Interface Layer (interface/)"]
+        interface_desc["型定義とインターフェース / Type definitions"]
+    end
+    block:application["⚙️ Application Layer (model/application/)"]
+        application_desc["UseCase: ビジネスロジック実装 / Business logic"]
+    end
+    block:domain["💎 Domain Layer (model/domain/)"]
+        domain_desc["コアビジネスルール / Core business rules"]
+    end
+    block:infrastructure["🔧 Infrastructure Layer (model/infrastructure/)"]
+        infrastructure_desc["Repository: データアクセス / Data access"]
+    end
+
+    view --> interface
+    interface --> application
+    application --> domain
+    application --> infrastructure
+
+    style view fill:#e3f2fd
+    style interface fill:#fff9c4
+    style application fill:#f3e5f5
+    style domain fill:#e8f5e9
+    style infrastructure fill:#fce4ec
 ```
 
 詳細は [ARCHITECTURE.md](./ARCHITECTURE.md) を参照してください。
@@ -191,21 +201,26 @@ Environment-specific settings are managed in the `src/config/` directory.
 
 ## ディレクトリ構成 / Directory Structure
 
-```
-src/
-├── config/          # 設定ファイル / Configuration files
-├── interface/       # インターフェース定義 / Interface definitions
-├── model/
-│   ├── application/ # ユースケース / Use cases
-│   ├── domain/      # ドメインロジック / Domain logic
-│   └── infrastructure/ # リポジトリ / Repositories
-├── ui/
-│   ├── component/
-│   │   ├── atom/    # 最小コンポーネント / Smallest components
-│   │   └── molecule/# 複合コンポーネント / Composite components
-│   ├── content/     # Animation Tool コンテンツ / Animation Tool content
-│   └── animation/   # アニメーション定義 / Animation definitions
-└── view/            # View & ViewModel
+```mermaid
+graph LR
+    subgraph src["src/"]
+        config["config/<br>設定ファイル"]
+        interface["interface/<br>インターフェース定義"]
+        subgraph model["model/"]
+            application["application/<br>ユースケース"]
+            domain["domain/<br>ドメインロジック"]
+            infrastructure["infrastructure/<br>リポジトリ"]
+        end
+        subgraph ui["ui/"]
+            subgraph component["component/"]
+                atom["atom/<br>最小コンポーネント"]
+                molecule["molecule/<br>複合コンポーネント"]
+            end
+            content["content/<br>Animation Tool"]
+            animation["animation/<br>アニメーション定義"]
+        end
+        view["view/<br>View & ViewModel"]
+    end
 ```
 
 各ディレクトリの詳細は、ディレクトリ内の `README.md` を参照してください。

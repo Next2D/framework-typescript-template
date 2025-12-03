@@ -81,16 +81,20 @@ sequenceDiagram
 
 ## Example of directory structure
 
-```sh
-project
-└── src
-    └── view
-        ├── top
-        │   ├── TopView.ts
-        │   └── TopViewModel.ts
-        └── home
-            ├── HomeView.ts
-            └── HomeViewModel.ts
+```mermaid
+graph LR
+    subgraph src["src/"]
+        subgraph view["view/"]
+            subgraph top["top/"]
+                topView["TopView.ts"]
+                topVM["TopViewModel.ts"]
+            end
+            subgraph home["home/"]
+                homeView["HomeView.ts"]
+                homeVM["HomeViewModel.ts"]
+            end
+        end
+    end
 ```
 
 ## Generator

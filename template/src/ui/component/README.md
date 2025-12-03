@@ -6,14 +6,18 @@ Directory for UI components based on Atomic Design principles.
 
 ## ディレクトリ構造 / Directory Structure
 
-```
-component/
-├── atom/            # 最小単位のコンポーネント / Smallest components
-│   ├── ButtonAtom.ts
-│   └── TextAtom.ts
-└── molecule/        # Atomを組み合わせたコンポーネント / Composite components
-    ├── HomeBtnMolecule.ts
-    └── TopBtnMolecule.ts
+```mermaid
+graph LR
+    subgraph component["component/"]
+        subgraph atom["atom/<br>最小単位"]
+            button["ButtonAtom.ts"]
+            text["TextAtom.ts"]
+        end
+        subgraph molecule["molecule/<br>複合コンポーネント"]
+            homeBtn["HomeBtnMolecule.ts"]
+            topBtn["TopBtnMolecule.ts"]
+        end
+    end
 ```
 
 ## アトミックデザイン階層 / Atomic Design Hierarchy
