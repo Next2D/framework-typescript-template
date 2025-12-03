@@ -1,4 +1,4 @@
-import { ViewModel } from "@next2d/framework";
+import { ViewModel, app } from "@next2d/framework";
 import { NavigateToViewUseCase } from "@/model/application/top/usecase/NavigateToViewUseCase";
 
 /**
@@ -8,6 +8,7 @@ import { NavigateToViewUseCase } from "@/model/application/top/usecase/NavigateT
 export class TopViewModel extends ViewModel
 {
     private readonly navigateToViewUseCase: NavigateToViewUseCase;
+    private topText: string = "";
 
     /**
      * @constructor
@@ -27,7 +28,21 @@ export class TopViewModel extends ViewModel
      */
     async initialize (): Promise<void>
     {
-        return void 0;
+        const response = app.getResponse();
+        this.topText = response.has("TopText") ? response.get("TopText").word : "";
+    }
+
+    /**
+     * @description Topテキストを取得
+     *              Get top text
+     *
+     * @return {string}
+     * @method
+     * @public
+     */
+    getTopText (): string
+    {
+        return this.topText;
     }
 
     /**

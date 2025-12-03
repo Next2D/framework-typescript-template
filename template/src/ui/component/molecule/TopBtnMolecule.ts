@@ -1,7 +1,6 @@
 import { TopBtnEntranceAnimation } from "@/ui/animation/top/TopBtnEntranceAnimation";
 import { ButtonAtom } from "../atom/ButtonAtom";
 import { TextAtom } from "../atom/TextAtom";
-import { app } from "@next2d/framework";
 
 /**
  * @description Top画面のボタン分子
@@ -14,16 +13,14 @@ import { app } from "@next2d/framework";
 export class TopBtnMolecule extends ButtonAtom
 {
     /**
+     * @param {string} text - ボタンに表示するテキスト / Text to display on the button
      * @constructor
      * @public
      */
-    constructor ()
+    constructor (text: string)
     {
         super();
 
-        const response = app.getResponse();
-
-        const text = response.has("TopText") ? response.get("TopText").word : "";
         const textField = new TextAtom(text, {
             "autoSize": "center"
         });

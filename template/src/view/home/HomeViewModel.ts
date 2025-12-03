@@ -5,6 +5,7 @@ import type { PointerEvent, Event } from "@next2d/events";
 import { StartDragUseCase } from "@/model/application/home/usecase/StartDragUseCase";
 import { StopDragUseCase } from "@/model/application/home/usecase/StopDragUseCase";
 import { CenterTextFieldUseCase } from "@/model/application/home/usecase/CenterTextFieldUseCase";
+import { config } from "@/config/Config";
 
 /**
  * @class
@@ -96,6 +97,6 @@ export class HomeViewModel extends ViewModel
     homeTextChangeEvent (event: Event): void
     {
         const textField = event.currentTarget as unknown as ITextField;
-        this.centerTextFieldUseCase.execute(textField);
+        this.centerTextFieldUseCase.execute(textField, config.stage.width);
     }
 }

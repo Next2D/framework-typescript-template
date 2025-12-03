@@ -1,5 +1,4 @@
 import type { ITextField } from "@/interface/ITextField";
-import { config } from "@/config/Config";
 
 /**
  * @description テキストフィールド中央揃えのユースケース
@@ -14,12 +13,13 @@ export class CenterTextFieldUseCase
      *              Center the text field on the screen
      *
      * @param  {ITextField} textField
+     * @param  {number} stageWidth - ステージの幅 / Stage width
      * @return {void}
      * @method
      * @public
      */
-    execute (textField: ITextField): void
+    execute (textField: ITextField, stageWidth: number): void
     {
-        textField.x = (config.stage.width - textField.width) / 2;
+        textField.x = (stageWidth - textField.width) / 2;
     }
 }

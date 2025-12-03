@@ -45,7 +45,7 @@ export class TopView extends View
          * Topボタンを生成して、座標をセット
          * Create Top button and set coordinates
          */
-        const topBtn = new TopBtnMolecule();
+        const topBtn = new TopBtnMolecule(this.vm.getTopText());
         topBtn.name = "topBtn";
         topBtn.x = config.stage.width  / 2;
         topBtn.y = config.stage.height / 2 + topContent.height / 2 + topBtn.height;

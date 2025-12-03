@@ -1,3 +1,4 @@
+import type { ViewName } from "@/interface/IViewName";
 import { app } from "@next2d/framework";
 
 /**
@@ -12,12 +13,12 @@ export class NavigateToViewUseCase
      * @description 指定された画面に遷移する
      *              Navigate to the specified view
      *
-     * @param  {string} viewName
+     * @param  {ViewName} viewName
      * @return {Promise<void>}
      * @method
      * @public
      */
-    async execute (viewName: string): Promise<void>
+    async execute (viewName: ViewName): Promise<void>
     {
         await app.gotoView(viewName);
     }
