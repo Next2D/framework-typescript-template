@@ -83,6 +83,7 @@ export class StartDragUseCase
 ### Example: NavigateToViewUseCase
 
 ```typescript
+import type { ViewName } from "@/interface/IViewName";
 import { app } from "@next2d/framework";
 
 /**
@@ -97,12 +98,12 @@ export class NavigateToViewUseCase
      * @description 指定された画面に遷移する
      *              Navigate to the specified view
      *
-     * @param  {string} viewName
+     * @param  {ViewName} viewName
      * @return {Promise<void>}
      * @method
      * @public
      */
-    async execute (viewName: string): Promise<void>
+    async execute (viewName: ViewName): Promise<void>
     {
         // ビジネスルール: 遷移前の検証など
         // 例: 未保存データのチェック、権限確認など
@@ -112,11 +113,14 @@ export class NavigateToViewUseCase
 }
 ```
 
+**ポイント / Key Points:**
+- `ViewName` 型を使用することで、存在しない画面名を指定するとコンパイルエラーになる
+- 型安全な画面遷移を実現
+
 ### Example: CenterTextFieldUseCase
 
 ```typescript
 import type { ITextField } from "@/interface/ITextField";
-import { config } from "@/config/Config";
 
 /**
  * @description テキストフィールド中央揃えのユースケース
@@ -131,17 +135,22 @@ export class CenterTextFieldUseCase
      *              Center the text field on the screen
      *
      * @param  {ITextField} textField
+     * @param  {number} stageWidth - ステージの幅 / Stage width
      * @return {void}
      * @method
      * @public
      */
-    execute (textField: ITextField): void
+    execute (textField: ITextField, stageWidth: number): void
     {
         // ビジネスロジック: 中央配置の計算
-        textField.x = (config.stage.width - textField.width) / 2;
+        textField.x = (stageWidth - textField.width) / 2;
     }
 }
 ```
+
+**ポイント / Key Points:**
+- `config` に直接依存せず、`stageWidth` を引数で受け取る
+- テスタビリティが向上（任意の幅でテスト可能）
 
 ## UseCaseの設計原則 / UseCase Design Principles
 

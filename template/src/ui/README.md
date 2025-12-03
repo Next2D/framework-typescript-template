@@ -101,10 +101,9 @@ Button component for the Top screen.
 
 ```typescript
 export class TopBtnMolecule extends ButtonAtom {
-    constructor() {
+    constructor(text: string) {
         super();
-        // レスポンスデータからテキストを取得
-        const text = app.getResponse().get("TopText").word;
+        // ViewModelから渡されたテキストを表示
         const textField = new TextAtom(text, { autoSize: "center" });
         this.addChild(textField);
     }
@@ -116,7 +115,7 @@ export class TopBtnMolecule extends ButtonAtom {
 ```
 
 **特徴 / Features:**
-- テキストとアニメーションを含む
+- テキストはViewModelから引数で受け取る（データ取得はViewModelの責務）
 - 入場アニメーション機能
 
 ### 3. Content - Animation Tool生成コンテンツ

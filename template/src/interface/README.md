@@ -144,6 +144,21 @@ Defines HTTP request configuration.
 **使用例 / Usage:**
 - `routing.json` の `requests` 配列の型定義
 
+### 4. 画面遷移関連 / View Navigation
+
+#### IViewName.ts
+利用可能な画面名をUnion型で定義します。
+
+Defines available view names as a Union type.
+
+```typescript
+export type ViewName = "top" | "home";
+```
+
+**使用例 / Usage:**
+- `NavigateToViewUseCase` - 画面遷移時の型安全性を確保
+- 新しい画面を追加した場合は、この型にも追加が必要
+
 ## ベストプラクティス / Best Practices
 
 ### 1. インターフェースの命名規則 / Interface Naming Convention

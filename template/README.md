@@ -1,54 +1,228 @@
-# Getting Started with Create Next2D App
+# Next2D Framework TypeScript Template
+
+[Create Next2D App](https://github.com/Next2D/create-next2d-app) でブートストラップされたプロジェクトです。
 
 This project was bootstrapped with [Create Next2D App](https://github.com/Next2D/create-next2d-app).
 
-## Architecture
+---
 
-このプロジェクトは **MVVM + Clean Architecture + Atomic Design** を採用しています。  
-アーキテクチャの詳細は [ARCHITECTURE.md](./ARCHITECTURE.md) を参照してください。
+## 目次 / Table of Contents
 
-This project adopts **MVVM + Clean Architecture + Atomic Design**.  
-See [ARCHITECTURE.md](./ARCHITECTURE.md) for architecture details.
+- [必要な環境 / Requirements](#必要な環境--requirements)
+- [セットアップ / Setup](#セットアップ--setup)
+- [アーキテクチャ / Architecture](#アーキテクチャ--architecture)
+- [開発サーバー / Development Server](#開発サーバー--development-server)
+- [コード生成 / Code Generation](#コード生成--code-generation)
+- [プラットフォームエミュレーター / Platform Emulators](#プラットフォームエミュレーター--platform-emulators)
+- [ユニットテスト / Unit Test](#ユニットテスト--unit-test)
+- [ビルド / Build](#ビルド--build)
+- [ディレクトリ構成 / Directory Structure](#ディレクトリ構成--directory-structure)
+- [ライセンス / License](#ライセンス--license)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 必要な環境 / Requirements
+
+| ツール / Tool | バージョン / Version |
+|--------------|---------------------|
+| Node.js | 18.x 以上 / 18.x or higher |
+| npm | 9.x 以上 / 9.x or higher |
+
+### オプション / Optional
+
+iOS/Androidビルドを行う場合は、以下も必要です。
+
+For iOS/Android builds, the following are also required:
+
+- **iOS**: Xcode 14 以上、macOS
+- **Android**: Android Studio、JDK 17 以上
+
+---
+
+## セットアップ / Setup
+
+### 1. リポジトリのクローン / Clone the repository
+
+```bash
+git clone <repository-url>
+cd <project-directory>
+```
+
+### 2. 依存パッケージのインストール / Install dependencies
+
+```bash
+npm install
+```
+
+### 3. 開発サーバーの起動 / Start the development server
+
+```bash
+npm start
+```
+
+ブラウザで [http://localhost:5173](http://localhost:5173) を開いてください。
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+---
+
+## アーキテクチャ / Architecture
+
+このプロジェクトは **MVVM + Clean Architecture + Atomic Design** を採用しています。
+
+This project adopts **MVVM + Clean Architecture + Atomic Design**.
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  🎨 View Layer (view/, ui/)                             │
+│  - View: 画面の構造定義 / Screen structure              │
+│  - ViewModel: ビジネスロジックとの橋渡し / Bridge       │
+│  - UI Components: 再利用可能なUIパーツ / Reusable UI    │
+├─────────────────────────────────────────────────────────┤
+│  📋 Interface Layer (interface/)                        │
+│  - 型定義とインターフェース / Type definitions          │
+├─────────────────────────────────────────────────────────┤
+│  ⚙️ Application Layer (model/application/)              │
+│  - UseCase: ビジネスロジック実装 / Business logic       │
+├─────────────────────────────────────────────────────────┤
+│  💎 Domain Layer (model/domain/)                        │
+│  - コアビジネスルール / Core business rules             │
+├─────────────────────────────────────────────────────────┤
+│  🔧 Infrastructure Layer (model/infrastructure/)        │
+│  - Repository: データアクセス / Data access             │
+└─────────────────────────────────────────────────────────┘
+```
+
+詳細は [ARCHITECTURE.md](./ARCHITECTURE.md) を参照してください。
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for details.
+
+---
+
+## 開発サーバー / Development Server
 
 ### `npm start`
 
-Runs the app in the development mode.  
+開発モードでアプリケーションを起動します。  
+[http://localhost:5173](http://localhost:5173) をブラウザで開いてください。  
+コードを変更すると自動的にリロードされます。
+
+Runs the app in development mode.  
 Open [http://localhost:5173](http://localhost:5173) to view it in your browser.  
-The page will reload when you make changes.  
+The page will reload when you make changes.
 
-## Start the emulator for each platform.
+---
 
-### `npm run preview:windows -- --env prd`
-### `npm run preview:macos -- --env prd`
-### `npm run preview:linux -- --env prd`
-### `npm run preview:ios -- --env prd`
-### `npm run preview:android -- --env prd`
-
-Launch emulators for various platforms including Windows, macOS, Linux, iOS, Android, and Web (HTML).
-You can check the operation of the application in the environment specified by env=***.
+## コード生成 / Code Generation
 
 ### `npm run generate`
 
-Generate the necessary View and ViewModel classes from the routing JSON file.
+`routing.json` の設定に基づいて、必要な View と ViewModel クラスを自動生成します。  
+新しい画面を追加する際に便利です。
 
-## Unit Test
+Generates the necessary View and ViewModel classes from the `routing.json` file.  
+Useful when adding new screens.
+
+---
+
+## プラットフォームエミュレーター / Platform Emulators
+
+各プラットフォーム向けのエミュレーターを起動します。  
+`--env` オプションで環境を指定できます（`dev`, `stg`, `prd` など）。
+
+Launch emulators for each platform.  
+You can specify the environment with the `--env` option (`dev`, `stg`, `prd`, etc.).
+
+| コマンド / Command | プラットフォーム / Platform |
+|-------------------|---------------------------|
+| `npm run preview:windows -- --env prd` | Windows |
+| `npm run preview:macos -- --env prd` | macOS |
+| `npm run preview:linux -- --env prd` | Linux |
+| `npm run preview:ios -- --env prd` | iOS |
+| `npm run preview:android -- --env prd` | Android |
+
+---
+
+## ユニットテスト / Unit Test
 
 ### `npm test`
 
-Launches the test runner.
+Vitest を使用してテストを実行します。
 
-## Build
+Runs tests using Vitest.
 
-### `npm run build:web -- --env prd`
-### `npm run build:steam:windows -- --env prd`
-### `npm run build:steam:macos -- --env prd`
-### `npm run build:steam:linux -- --env prd`
-### `npm run build:ios -- --env prd`
-### `npm run build:android -- --env prd`
+```bash
+# 全テスト実行 / Run all tests
+npm test
 
-Multi-platform builder, writes to various platforms including macOS, Windows, iOS, Android, and Web (HTML).  
-Builds apps for the environment specified by env=***.
+# ウォッチモード / Watch mode
+npm test -- --watch
+
+# カバレッジレポート / Coverage report
+npm test -- --coverage
+```
+
+---
+
+## ビルド / Build
+
+各プラットフォーム向けにビルドを行います。  
+`--env` オプションで環境を指定できます。
+
+Build for each platform.  
+You can specify the environment with the `--env` option.
+
+| コマンド / Command | プラットフォーム / Platform | 出力先 / Output |
+|-------------------|---------------------------|----------------|
+| `npm run build:web -- --env prd` | Web (HTML) | `dist/web/prd/` |
+| `npm run build:steam:windows -- --env prd` | Windows (Steam) | `dist/steam/windows/` |
+| `npm run build:steam:macos -- --env prd` | macOS (Steam) | `dist/steam/macos/` |
+| `npm run build:steam:linux -- --env prd` | Linux (Steam) | `dist/steam/linux/` |
+| `npm run build:ios -- --env prd` | iOS | Xcode project |
+| `npm run build:android -- --env prd` | Android | Android Studio project |
+
+### 環境設定 / Environment Configuration
+
+環境ごとの設定は `src/config/` ディレクトリで管理されています。
+
+Environment-specific settings are managed in the `src/config/` directory.
+
+---
+
+## ディレクトリ構成 / Directory Structure
+
+```
+src/
+├── config/          # 設定ファイル / Configuration files
+├── interface/       # インターフェース定義 / Interface definitions
+├── model/
+│   ├── application/ # ユースケース / Use cases
+│   ├── domain/      # ドメインロジック / Domain logic
+│   └── infrastructure/ # リポジトリ / Repositories
+├── ui/
+│   ├── component/
+│   │   ├── atom/    # 最小コンポーネント / Smallest components
+│   │   └── molecule/# 複合コンポーネント / Composite components
+│   ├── content/     # Animation Tool コンテンツ / Animation Tool content
+│   └── animation/   # アニメーション定義 / Animation definitions
+└── view/            # View & ViewModel
+```
+
+各ディレクトリの詳細は、ディレクトリ内の `README.md` を参照してください。
+
+See the `README.md` in each directory for details.
+
+---
+
+## ライセンス / License
+
+MIT License
+
+---
+
+## 関連リンク / Related Links
+
+- [Next2D Player](https://github.com/Next2D/player) - レンダリングエンジン / Rendering engine
+- [Next2D Framework](https://github.com/Next2D/framework) - フレームワーク / Framework
+- [Create Next2D App](https://github.com/Next2D/create-next2d-app) - プロジェクト生成ツール / Project generator
+- [Next2D Animation Tool](https://tool.next2d.app/) - アニメーション作成ツール / Animation creation tool

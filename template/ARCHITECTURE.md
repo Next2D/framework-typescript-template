@@ -132,7 +132,8 @@ src/
 ├── 📋 interface/             # インターフェース定義
 │   ├── IDraggable.ts         # ドラッグ可能なオブジェクト
 │   ├── ITextField.ts         # テキストフィールド
-│   └── IHomeTextResponse.ts  # API レスポンス型
+│   ├── IHomeTextResponse.ts  # API レスポンス型
+│   └── IViewName.ts          # 画面名の型定義
 │
 ├── 🎨 view/                  # View & ViewModel
 │   ├── home/

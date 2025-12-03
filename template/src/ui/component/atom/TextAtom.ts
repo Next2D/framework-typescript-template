@@ -29,34 +29,34 @@ export class TextAtom extends TextField implements ITextField {
         super();
 
         if (props) {
-            const keys: string[] = Object.keys(props);
+            const keys = Object.keys(props) as (keyof ITextFieldProps)[];
             for (let idx = 0; idx < keys.length; idx++) {
 
                 const name = keys[idx];
+                const value = props[name];
 
-                if (!(name in this)) {
+                if (!(name in this) || value === undefined) {
                     continue;
                 }
 
-                // @ts-ignore
-                this[name] = props[name];
+                (this as unknown as Record<keyof ITextFieldProps, unknown>)[name] = value;
             }
         }
 
         if (format_object) {
-            const keys: string[] = Object.keys(format_object);
+            const keys = Object.keys(format_object) as (keyof ITextFormatObject)[];
             if (keys.length) {
                 const textFormat = this.defaultTextFormat;
                 for (let idx = 0; idx < keys.length; idx++) {
 
                     const name = keys[idx];
+                    const value = format_object[name];
 
                     if (!(name in textFormat)) {
                         continue;
                     }
 
-                    // @ts-ignore
-                    textFormat[name] = format_object[name];
+                    (textFormat as unknown as Record<keyof ITextFormatObject, unknown>)[name] = value;
                 }
 
                 this.defaultTextFormat = textFormat;
