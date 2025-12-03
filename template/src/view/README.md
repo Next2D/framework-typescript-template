@@ -118,6 +118,184 @@ It is a container attached to the main context. Therefore, its implementation is
 - ❌ **データアクセス** - Repositoryに委譲
 - ❌ **状態管理** - ViewModelに委譲
 
+### ライフサイクル / Lifecycle
+
+Viewには3つの主要なライフサイクルメソッドがあります。各メソッドは特定のタイミングで自動的に呼び出されます。
+
+Views have three main lifecycle methods. Each method is automatically called at a specific timing.
+
+```mermaid
+sequenceDiagram
+    participant Framework as Framework
+    participant View as View
+    participant VM as ViewModel
+    participant UI as UI Components
+
+    Note over Framework,UI: 画面遷移開始 / Screen transition starts
+    
+    Framework->>View: new View(vm)
+    activate View
+    Framework->>View: initialize()
+    View->>UI: Create components
+    View->>UI: Set positions
+    View->>VM: Register event listeners
+    Note over View: UIコンポーネントの構築<br/>Build UI components
+    
+    Framework->>View: onEnter()
+    activate View
+    View->>UI: Start animations
+    View->>VM: Initialize data
+    Note over View: 画面表示時の処理<br/>On screen shown
+    deactivate View
+    
+    Note over Framework,UI: ユーザーが画面を操作 / User interacts
+    
+    Note over Framework,UI: 別の画面へ遷移 / Navigate to another screen
+    
+    Framework->>View: onExit()
+    activate View
+    View->>UI: Stop animations
+    View->>VM: Clean up listeners
+    Note over View: 画面非表示時の処理<br/>On screen hidden
+    deactivate View
+    deactivate View
+```
+
+#### 1. initialize() - 初期化
+
+**呼び出しタイミング / When Called:**
+- Viewのインスタンスが生成された直後、画面が表示される前
+- 画面遷移時に1回だけ呼び出される
+- `onEnter()` より前に実行される
+
+After the View instance is created, before the screen is displayed. Called only once during screen transition. Executed before `onEnter()`.
+
+**主な用途 / Primary Usage:**
+- ✅ UIコンポーネントの生成と配置
+- ✅ イベントリスナーの登録
+- ✅ 子要素の追加（`addChild`）
+- ✅ 初期レイアウトの設定
+
+**コード例 / Code Example:**
+
+```typescript
+async initialize(): Promise<void> {
+    // 1. コンポーネントの生成
+    const homeContent = new HomeBtnMolecule();
+    
+    // 2. 位置の設定
+    homeContent.x = 120;
+    homeContent.y = 120;
+    
+    // 3. イベントリスナーの登録
+    homeContent.addEventListener(
+        PointerEvent.POINTER_DOWN,
+        this.vm.homeContentPointerDownEvent
+    );
+    
+    // 4. 表示リストに追加
+    this.addChild(homeContent);
+    
+    // 5. テキストフィールドの作成
+    const textField = new TextAtom("Hello, World!");
+    textField.y = 50;
+    this.addChild(textField);
+}
+```
+
+#### 2. onEnter() - 画面表示時
+
+**呼び出しタイミング / When Called:**
+- `initialize()` の実行完了後
+- 画面が実際に表示される直前
+- 画面遷移のたびに毎回呼び出される
+
+After `initialize()` completes. Just before the screen is actually displayed. Called every time during screen transition.
+
+**主な用途 / Primary Usage:**
+- ✅ 入場アニメーションの開始
+- ✅ データの取得・更新
+- ✅ タイマーやインターバルの開始
+- ✅ フォーカス設定
+- ✅ 背景音楽の再生開始
+
+**コード例 / Code Example:**
+
+```typescript
+async onEnter(): Promise<void> {
+    // 1. 入場アニメーションの再生
+    const topBtn = this.getChildByName("topBtn") as TopBtnMolecule;
+    topBtn.playEntrance(() => {
+        console.log("Entrance animation completed");
+    });
+    
+    // 2. データの取得（ViewModelに委譲）
+    await this.vm.fetchInitialData();
+    
+    // 3. タイマーの開始
+    this.startAutoSlideTimer();
+    
+    // 4. アクティブ状態の設定
+    this.isActive = true;
+}
+```
+
+#### 3. onExit() - 画面非表示時
+
+**呼び出しタイミング / When Called:**
+- 別の画面に遷移する直前
+- 画面が非表示になる時
+- Viewが破棄される前
+
+Just before transitioning to another screen. When the screen is hidden. Before the View is destroyed.
+
+**主な用途 / Primary Usage:**
+- ✅ アニメーションの停止
+- ✅ タイマーやインターバルのクリア
+- ✅ イベントリスナーの削除（必要に応じて）
+- ✅ リソースの解放
+- ✅ 背景音楽の停止
+- ✅ 一時データのクリア
+
+**コード例 / Code Example:**
+
+```typescript
+async onExit(): Promise<void> {
+    // 1. アニメーションの停止
+    const animations = this.getAnimations();
+    animations.forEach(anim => anim.stop());
+    
+    // 2. タイマーのクリア
+    if (this.autoSlideTimer) {
+        clearInterval(this.autoSlideTimer);
+        this.autoSlideTimer = null;
+    }
+    
+    // 3. 不要なイベントリスナーの削除（必要に応じて）
+    // ※ Viewが破棄される場合は自動的に削除されるため通常不要
+    
+    // 4. 一時データのクリア
+    this.tempData = null;
+    
+    // 5. 非アクティブ状態に設定
+    this.isActive = false;
+}
+```
+
+### ライフサイクルの注意点 / Lifecycle Notes
+
+#### ✅ すべきこと / Do
+
+1. **initialize()** - UIの構築のみ、データ取得は避ける
+2. **onEnter()** - アニメーション、データ取得、タイマー開始
+3. **onExit()** - リソース解放、タイマー停止
+
+#### ❌ すべきでないこと / Don't
+
+1. **initialize()** - 重い処理、API呼び出し（画面表示が遅くなる）
+2. **onEnter()** - UIコンポーネントの生成（`initialize()`で行う）
+3. **onExit()** - 新しいリソースの作成
+
 ### Example of View class source
 
 ```typescript
@@ -133,6 +311,9 @@ import { PointerEvent, Event } from "@next2d/events";
  */
 export class HomeView extends View
 {
+    private autoSlideTimer: number | null = null;
+    private isActive: boolean = false;
+
     /**
      * @param {HomeViewModel} vm
      * @constructor
@@ -145,8 +326,8 @@ export class HomeView extends View
     }
 
     /**
-     * @description 画面の初期化
-     *              Initialize the screen
+     * @description 画面の初期化 - UIコンポーネントの構築
+     *              Initialize - Build UI components
      *
      * @return {Promise<void>}
      * @method
@@ -159,6 +340,7 @@ export class HomeView extends View
         const homeContent = new HomeBtnMolecule();
         homeContent.x = 120;
         homeContent.y = 120;
+        homeContent.name = "homeContent";
 
         // イベントをViewModelに委譲
         homeContent.addEventListener(
@@ -170,8 +352,8 @@ export class HomeView extends View
     }
 
     /**
-     * @description 画面表示時の処理
-     *              Called when screen is shown
+     * @description 画面表示時の処理 - アニメーション開始、データ取得
+     *              On screen shown - Start animations, fetch data
      *
      * @return {Promise<void>}
      * @method
@@ -180,12 +362,24 @@ export class HomeView extends View
      */
     async onEnter (): Promise<void>
     {
-        // アニメーション開始などの処理
+        // アニメーション開始
+        const homeContent = this.getChildByName("homeContent") as HomeBtnMolecule;
+        if (homeContent && homeContent.playEntrance) {
+            homeContent.playEntrance(() => {
+                console.log("Entrance animation completed");
+            });
+        }
+
+        // データ取得（ViewModelに委譲）
+        await this.vm.initialize();
+
+        // アクティブ状態に設定
+        this.isActive = true;
     }
 
     /**
-     * @description 画面非表示時の処理
-     *              Called when screen is hidden
+     * @description 画面非表示時の処理 - クリーンアップ
+     *              On screen hidden - Clean up resources
      *
      * @return {Promise<void>}
      * @method
@@ -194,7 +388,14 @@ export class HomeView extends View
      */
     async onExit (): Promise<void>
     {
-        // クリーンアップ処理
+        // タイマーのクリア
+        if (this.autoSlideTimer) {
+            clearInterval(this.autoSlideTimer);
+            this.autoSlideTimer = null;
+        }
+
+        // 非アクティブ状態に設定
+        this.isActive = false;
     }
 }
 ```
