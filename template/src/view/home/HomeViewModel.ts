@@ -1,6 +1,6 @@
 import type { IDraggable } from "@/interface/IDraggable";
 import type { ITextField } from "@/interface/ITextField";
-import { ViewModel } from "@next2d/framework";
+import { ViewModel, app } from "@next2d/framework";
 import type { PointerEvent, Event } from "@next2d/events";
 import { StartDragUseCase } from "@/model/application/home/usecase/StartDragUseCase";
 import { StopDragUseCase } from "@/model/application/home/usecase/StopDragUseCase";
@@ -15,6 +15,7 @@ export class HomeViewModel extends ViewModel
     private readonly startDragUseCase: StartDragUseCase;
     private readonly stopDragUseCase: StopDragUseCase;
     private readonly centerTextFieldUseCase: CenterTextFieldUseCase;
+    private homeText: string = "";
 
     /**
      * @constructor
@@ -36,7 +37,21 @@ export class HomeViewModel extends ViewModel
      */
     async initialize (): Promise<void>
     {
-        return void 0;
+        const response = app.getResponse();
+        this.homeText = response.has("HomeText") ? response.get("HomeText").word : "";
+    }
+
+    /**
+     * @description ホームテキストを取得
+     *              Get home text
+     *
+     * @return {string}
+     * @method
+     * @public
+     */
+    getHomeText (): string
+    {
+        return this.homeText;
     }
 
     /**

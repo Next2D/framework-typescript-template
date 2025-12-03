@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create Next2D App](https://github.com/Next2D/create-next2d-app).
 
+## Architecture
+
+このプロジェクトは **MVVM + Clean Architecture + Atomic Design** を採用しています。  
+アーキテクチャの詳細は [ARCHITECTURE.md](./ARCHITECTURE.md) を参照してください。
+
+This project adopts **MVVM + Clean Architecture + Atomic Design**.  
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for architecture details.
+
 ## Available Scripts
 
 In the project directory, you can run:

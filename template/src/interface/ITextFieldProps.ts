@@ -1,11 +1,16 @@
+import type { ITextFieldAutoSize } from "./ITextFieldAutoSize";
+import type { ITextFieldType } from "./ITextFieldType";
+
 export interface ITextFieldProps {
-    selectable: boolean | null;
-    mouseEnabled: boolean | null;
-    wordWrap: boolean | null;
-    multiline: boolean | null;
-    maxChars: number | null;
-    background: boolean | null;
-    backgroundColor: number | null;
-    border: boolean | null;
-    borderColor: number | null;
+    selectable?: boolean;
+    mouseEnabled?: boolean;
+    wordWrap?: boolean;
+    multiline?: boolean;
+    maxChars?: number;
+    background?: boolean;
+    backgroundColor?: number;
+    border?: boolean;
+    borderColor?: number;
+    autoSize?: ITextFieldAutoSize;
+    type?: ITextFieldType;
 }

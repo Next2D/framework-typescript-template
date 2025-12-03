@@ -1,4 +1,5 @@
 import type { ITextField } from "@/interface/ITextField";
+import type { ITextFieldProps } from "@/interface/ITextFieldProps";
 import type { ITextFormatObject } from "@/interface/ITextFormatObject";
 import { TextField } from "@next2d/text";
 
@@ -22,7 +23,7 @@ export class TextAtom extends TextField implements ITextField {
      */
     constructor(
         text: string = "",
-        props: any | null = null,
+        props: ITextFieldProps | null = null,
         format_object: ITextFormatObject | null = null
     ) {
         super();

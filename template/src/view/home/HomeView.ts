@@ -1,5 +1,5 @@
 import type { HomeViewModel } from "./HomeViewModel";
-import { View, app } from "@next2d/framework";
+import { View } from "@next2d/framework";
 import { config } from "@/config/Config";
 import { HomeBtnMolecule } from "@/ui/component/molecule/HomeBtnMolecule";
 import { TextAtom } from "@/ui/component/atom/TextAtom";
@@ -55,9 +55,11 @@ export class HomeView extends View
          */
         this.addChild(homeContent);
 
-        // Hello, World.
-        const response = app.getResponse();
-        const text = response.has("HomeText") ? response.get("HomeText").word : "";
+        /**
+         * ホームテキストをViewModelから取得
+         * Get home text from ViewModel
+         */
+        const text = this.vm.getHomeText();
         const textField = new TextAtom(text, {
             "autoSize": "center",
             "type": "input"
@@ -75,7 +77,7 @@ export class HomeView extends View
          * Send home text events to ViewModel
          */
         textField.addEventListener(Event.CHANGE,
-            this.vm.homeTextChangeEvent
+            this.vm.homeTextChangeEvent.bind(this.vm)
         );
 
         /**

@@ -10,7 +10,7 @@ Domain層は、アプリケーションの核心となるビジネスルール�
 
 The Domain layer holds the core business rules of the application. This layer has the following characteristics:
 
-- ✅ **純粋なビジネスロジック** - フレームワークに依存しない
+- ✅ **純粋なビジネスロジック** - フレームワークに依存しない（※注: 一部Next2D固有機能を使用）
 - ✅ **再利用可能なロジック** - アプリケーション全体で利用される
 - ✅ **ドメイン知識の表現** - ビジネスルールを明確に表現
 - ✅ **安定性** - 外部の変更に影響されにくい
@@ -215,6 +215,11 @@ export class ValidationService {
 }
 
 // ⚠️ 注意: Next2D固有の機能を使う場合は明確に
+// このプロジェクトではNext2Dの描画機能（Shape, stage等）を
+// Domain層で使用することを許容しています。
+// これはNext2Dフレームワーク固有の設計判断であり、
+// 純粋なクリーンアーキテクチャからは逸脱していますが、
+// 描画ロジックの再利用性を優先した設計です。
 export class Background {
     // Next2Dのshapeを使用（このプロジェクトでは許容）
     public readonly shape: Shape;
