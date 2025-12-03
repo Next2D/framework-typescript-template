@@ -10,27 +10,73 @@ The basic style is to create one set of View and ViewModel per screen. It is rec
 
 This project adopts the **MVVM (Model-View-ViewModel)** pattern.
 
+```mermaid
+graph TB
+    subgraph ViewLayer["🎨 View Layer"]
+        direction TB
+        ViewRole["画面の構造と表示を担当<br/>Screen structure and display"]
+        ViewRule["ビジネスロジックは持たない<br/>No business logic"]
+    end
+
+    subgraph ViewModelLayer["⚙️ ViewModel Layer"]
+        direction TB
+        VMRole1["ViewとModelの橋渡し<br/>Bridge between View and Model"]
+        VMRole2["UseCaseを保持<br/>Holds UseCases"]
+        VMRole3["イベントハンドリング<br/>Event handling"]
+    end
+
+    subgraph InterfaceLayer["📋 Interface Layer"]
+        direction TB
+        InterfaceDesc["抽象化レイヤー<br/>Abstraction layer"]
+    end
+
+    subgraph ModelLayer["💎 Model Layer"]
+        direction TB
+        ModelRole1["ビジネスロジック<br/>UseCase"]
+        ModelRole2["データアクセス<br/>Repository"]
+    end
+
+    ViewLayer <-->|双方向<br/>Bidirectional| ViewModelLayer
+    ViewModelLayer -->|Interface経由<br/>Via Interface| InterfaceLayer
+    InterfaceLayer <--> ModelLayer
+
+    classDef viewStyle fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    classDef vmStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef interfaceStyle fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    classDef modelStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+
+    class ViewLayer,ViewRole,ViewRule viewStyle
+    class ViewModelLayer,VMRole1,VMRole2,VMRole3 vmStyle
+    class InterfaceLayer,InterfaceDesc interfaceStyle
+    class ModelLayer,ModelRole1,ModelRole2 modelStyle
 ```
-┌─────────────────────────────────────────┐
-│              View Layer                  │
-│  - 画面の構造と表示を担当                   │
-│  - ビジネスロジックは持たない               │
-└─────────────────────────────────────────┘
-                  ↓ ↑
-┌─────────────────────────────────────────┐
-│           ViewModel Layer                │
-│  - ViewとModelの橋渡し                    │
-│  - UseCaseを保持                         │
-│  - イベントハンドリング                     │
-└─────────────────────────────────────────┘
-                  ↓ ↑
-           (Interface 経由)
-                  ↓ ↑
-┌─────────────────────────────────────────┐
-│            Model Layer                   │
-│  - ビジネスロジック (UseCase)             │
-│  - データアクセス (Repository)            │
-└─────────────────────────────────────────┘
+
+### MVVMパターンの流れ / MVVM Pattern Flow
+
+```mermaid
+sequenceDiagram
+    participant User as 👤 User
+    participant View as View
+    participant VM as ViewModel
+    participant UC as UseCase
+    participant Repo as Repository
+
+    User->>View: 1. ユーザー操作<br/>User action
+    View->>VM: 2. イベント通知<br/>Event notification
+    activate VM
+    VM->>UC: 3. ビジネスロジック実行<br/>Execute business logic
+    activate UC
+    UC->>Repo: 4. データ取得<br/>Fetch data
+    activate Repo
+    Repo-->>UC: 5. データ返却<br/>Return data
+    deactivate Repo
+    UC-->>VM: 6. 処理結果<br/>Result
+    deactivate UC
+    VM->>View: 7. 状態更新<br/>Update state
+    deactivate VM
+    View->>User: 8. UI更新<br/>Update UI
+
+    Note over View,Repo: Interface経由で疎結合<br/>Loosely coupled via interfaces
 ```
 
 ## Example of directory structure
