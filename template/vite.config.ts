@@ -44,7 +44,6 @@ export default defineConfig({
         "globals": true,
         "environment": "jsdom",
         "setupFiles": [
-            "test.setup.ts",
             "@vitest/web-worker",
             "vitest-webgl-canvas-mock"
         ],
