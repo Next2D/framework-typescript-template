@@ -82,16 +82,16 @@ Implements business logic corresponding to user actions. Creates a UseCase class
 
 ### ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph application["application/"]
-        subgraph home["home/<br>Home画面"]
-            home_uc["usecase/<br>StartDragUseCase.ts<br>StopDragUseCase.ts<br>CenterTextFieldUseCase.ts"]
-        end
-        subgraph top["top/<br>Top画面"]
-            top_uc["usecase/<br>NavigateToViewUseCase.ts"]
-        end
-    end
+```
+application/
+├── home/                           # Home画面
+│   └── usecase/
+│       ├── StartDragUseCase.ts
+│       ├── StopDragUseCase.ts
+│       └── CenterTextFieldUseCase.ts
+└── top/                            # Top画面
+    └── usecase/
+        └── NavigateToViewUseCase.ts
 ```
 
 ### 実装例 / Implementation Example
@@ -151,19 +151,14 @@ Implements the core business rules of the application. Pure logic that doesn't d
 
 ### ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph domain["domain/"]
-        subgraph callback["callback/"]
-            subgraph Background["Background/"]
-                bg["Background.ts<br>グラデーション背景"]
-                subgraph service["service/"]
-                    draw["BackgroundDrawService.ts<br>描画サービス"]
-                    scale["BackgroundChangeScaleService.ts<br>スケール変更"]
-                end
-            end
-        end
-    end
+```
+domain/
+└── callback/
+    └── Background/
+        ├── Background.ts                       # グラデーション背景
+        └── service/
+            ├── BackgroundDrawService.ts        # 描画サービス
+            └── BackgroundChangeScaleService.ts # スケール変更
 ```
 
 ### 実装例 / Implementation Example
