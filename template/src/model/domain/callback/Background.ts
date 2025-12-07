@@ -11,8 +11,7 @@ import { execute as backgroundChangeScaleService } from "./Background/service/Ba
  *
  * @class
  */
-export class Background
-{
+export class Background {
     /**
      * @type {Shape}
      * @public

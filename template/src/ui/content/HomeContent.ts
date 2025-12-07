@@ -7,8 +7,7 @@ import { MovieClipContent } from "@next2d/framework";
  * @extends {MovieClipContent}
  * @implements {IDraggable}
  */
-export class HomeContent extends MovieClipContent implements IDraggable
-{
+export class HomeContent extends MovieClipContent implements IDraggable {
     /**
      * @return {string}
      * @readonly

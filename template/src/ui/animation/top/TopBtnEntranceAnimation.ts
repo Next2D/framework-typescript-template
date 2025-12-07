@@ -9,8 +9,8 @@ import { Event } from "@next2d/events";
  * @class
  * @public
  */
-export class TopBtnEntranceAnimation
-{
+export class TopBtnEntranceAnimation {
+
     private readonly _entranceJob: Job;
 
     /**

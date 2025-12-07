@@ -11,8 +11,8 @@ import { config } from "@/config/Config";
  * @class
  * @extends {ViewModel}
  */
-export class HomeViewModel extends ViewModel
-{
+export class HomeViewModel extends ViewModel {
+
     private readonly startDragUseCase: StartDragUseCase;
     private readonly stopDragUseCase: StopDragUseCase;
     private readonly centerTextFieldUseCase: CenterTextFieldUseCase;
@@ -39,7 +39,9 @@ export class HomeViewModel extends ViewModel
     async initialize (): Promise<void>
     {
         const response = app.getResponse();
-        this.homeText = response.has("HomeText") ? response.get("HomeText").word : "";
+        this.homeText = response.has("HomeText")
+            ? (response.get("HomeText") as { word: string }).word
+            : "";
     }
 
     /**

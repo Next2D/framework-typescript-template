@@ -11,8 +11,8 @@ import { ButtonAtom } from "../atom/ButtonAtom";
  * @implements {IDraggable}
  * @public
  */
-export class HomeBtnMolecule extends ButtonAtom implements IDraggable
-{
+export class HomeBtnMolecule extends ButtonAtom implements IDraggable {
+
     private readonly homeContent: HomeContent;
 
     /**
@@ -28,31 +28,5 @@ export class HomeBtnMolecule extends ButtonAtom implements IDraggable
         this.homeContent.scaleY = 2;
 
         this.addChild(this.homeContent);
-    }
-
-    /**
-     * @description ドラッグを開始する
-     *              Start dragging
-     *
-     * @return {void}
-     * @method
-     * @public
-     */
-    startDrag (): void
-    {
-        this.homeContent.startDrag();
-    }
-
-    /**
-     * @description ドラッグを停止する
-     *              Stop dragging
-     *
-     * @return {void}
-     * @method
-     * @public
-     */
-    stopDrag (): void
-    {
-        this.homeContent.stopDrag();
     }
 }

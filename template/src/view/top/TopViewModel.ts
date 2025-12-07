@@ -5,8 +5,8 @@ import { NavigateToViewUseCase } from "@/model/application/top/usecase/NavigateT
  * @class
  * @extends {ViewModel}
  */
-export class TopViewModel extends ViewModel
-{
+export class TopViewModel extends ViewModel {
+
     private readonly navigateToViewUseCase: NavigateToViewUseCase;
     private topText: string = "";
 
@@ -29,7 +29,9 @@ export class TopViewModel extends ViewModel
     async initialize (): Promise<void>
     {
         const response = app.getResponse();
-        this.topText = response.has("TopText") ? response.get("TopText").word : "";
+        this.topText = response.has("TopText")
+            ? (response.get("TopText") as { word: string }).word
+            : "";
     }
 
     /**

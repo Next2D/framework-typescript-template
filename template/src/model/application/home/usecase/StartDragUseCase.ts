@@ -6,8 +6,7 @@ import type { IDraggable } from "@/interface/IDraggable";
  *
  * @class
  */
-export class StartDragUseCase
-{
+export class StartDragUseCase {
     /**
      * @description ドラッグ可能なオブジェクトのドラッグを開始する
      *              Start dragging a draggable object

@@ -11,8 +11,7 @@ import { stage } from "@next2d/display";
  * @method
  * @protected
  */
-export const execute = (background: Background): void =>
-{
+export const execute = (background: Background): void => {
     const width  = config.stage.width;
     const height = config.stage.height;
     const scale  = stage.rendererScale;

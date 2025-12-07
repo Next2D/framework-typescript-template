@@ -4,8 +4,7 @@ import { config } from "@/config/Config";
 /**
  * @class
  */
-export class HomeTextRepository
-{
+export class HomeTextRepository {
     /**
      * @description Home画面のテキストデータを取得
      *              Get text data for Home screen

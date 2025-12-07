@@ -7,8 +7,7 @@ import { app } from "@next2d/framework";
  *
  * @class
  */
-export class NavigateToViewUseCase
-{
+export class NavigateToViewUseCase {
     /**
      * @description 指定された画面に遷移する
      *              Navigate to the specified view

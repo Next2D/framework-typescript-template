@@ -10,8 +10,8 @@ import { TextAtom } from "../atom/TextAtom";
  * @extends {ButtonAtom}
  * @public
  */
-export class TopBtnMolecule extends ButtonAtom
-{
+export class TopBtnMolecule extends ButtonAtom {
+
     /**
      * @param {string} text - ボタンに表示するテキスト / Text to display on the button
      * @constructor
