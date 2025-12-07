@@ -22,11 +22,7 @@ jobs:
         with:
           node-version: 24
           registry-url: "https://registry.npmjs.org"
-      - run: npm install -g npm@latest
-      - run: npm install
-      - run: |
-        cd template  
-        npx eslint ./src/**/*.ts
+      - run: cd template && npx eslint ./src/**/*.ts
 
   windows-browser-test:
     runs-on: windows-latest
@@ -39,9 +35,5 @@ jobs:
         with:
           node-version: 24
           registry-url: "https://registry.npmjs.org"
-      - run: npm install -g npm@latest
-      - run: npm install
-      - run: |
-        cd template  
-        npx eslint ./src/**/*.ts
+      - run: cd template && npx eslint ./src/**/*.ts
     
