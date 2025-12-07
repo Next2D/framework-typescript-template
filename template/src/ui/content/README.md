@@ -12,12 +12,10 @@ Wraps animations created with the Animation Tool as TypeScript classes for use i
 
 ## ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph content["content/"]
-        home["HomeContent.ts<br>Home画面用"]
-        top["TopContent.ts<br>Top画面用"]
-    end
+```
+content/
+├── HomeContent.ts             # Home画面用
+└── TopContent.ts              # Top画面用
 ```
 
 ## コンテンツの仕組み / How Content Works

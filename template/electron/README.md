@@ -6,13 +6,11 @@ Directory for Electron configuration used to build desktop applications for Wind
 
 ## ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph electron["electron/"]
-        icons["icons/<br>アプリケーションアイコン"]
-        index["index.js<br>メインプロセス"]
-        package["package.json<br>依存関係"]
-    end
+```
+electron/
+├── icons/                     # アプリケーションアイコン
+├── index.js                   # メインプロセス
+└── package.json               # 依存関係
 ```
 
 ## ファイル説明 / File Description

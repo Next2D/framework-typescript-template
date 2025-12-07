@@ -12,13 +12,10 @@ Separating animation definitions from components improves code reusability and m
 
 ## ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph animation["animation/"]
-        subgraph top["top/"]
-            entrance["TopBtnEntranceAnimation.ts"]
-        end
-    end
+```
+animation/
+└── top/
+    └── TopBtnEntranceAnimation.ts
 ```
 
 画面ごとにサブディレクトリを作成し、その中にアニメーション定義ファイルを配置します。

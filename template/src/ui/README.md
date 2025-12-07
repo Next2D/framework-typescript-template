@@ -6,16 +6,13 @@ Directory for storing UI components, structured based on Atomic Design principle
 
 ## ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph ui["ui/"]
-        animation["animation/<br>アニメーション定義"]
-        subgraph component["component/"]
-            atom["atom/<br>最小単位"]
-            molecule["molecule/<br>複合コンポーネント"]
-        end
-        content["content/<br>Animation Tool"]
-    end
+```
+ui/
+├── animation/                 # アニメーション定義
+├── component/
+│   ├── atom/                  # 最小単位
+│   └── molecule/              # 複合コンポーネント
+└── content/                   # Animation Tool
 ```
 
 ## アトミックデザインの階層 / Atomic Design Hierarchy

@@ -19,37 +19,28 @@ The Infrastructure layer is responsible for interactions with the outside of the
 
 ## ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph infrastructure["infrastructure/"]
-        subgraph repository["repository/"]
-            home["HomeTextRepository.ts"]
-        end
-    end
+```
+infrastructure/
+└── repository/
+    └── HomeTextRepository.ts
 ```
 
 将来的に以下のような拡張も可能です:
 
 Future extensions are possible, such as:
 
-```mermaid
-graph LR
-    subgraph infrastructure["infrastructure/"]
-        subgraph repository["repository/<br>データアクセス層"]
-            home["HomeTextRepository.ts"]
-            user["UserRepository.ts"]
-            config["ConfigRepository.ts"]
-        end
-        subgraph entity["entity/<br>DBエンティティ"]
-            userEntity["UserEntity.ts"]
-        end
-        subgraph dto["dto/<br>データ転送"]
-            apiDto["ApiResponseDto.ts"]
-        end
-        subgraph external["external/<br>外部サービス"]
-            analytics["AnalyticsService.ts"]
-        end
-    end
+```
+infrastructure/
+├── repository/                # データアクセス層
+│   ├── HomeTextRepository.ts
+│   ├── UserRepository.ts
+│   └── ConfigRepository.ts
+├── entity/                    # DBエンティティ
+│   └── UserEntity.ts
+├── dto/                       # データ転送
+│   └── ApiResponseDto.ts
+└── external/                  # 外部サービス
+    └── AnalyticsService.ts
 ```
 
 ## Repository Pattern

@@ -20,42 +20,31 @@ The Domain layer holds the core business rules of the application. This layer ha
 
 ## ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph domain["domain/"]
-        subgraph callback["callback/"]
-            subgraph Background["Background/"]
-                bg["Background.ts"]
-                subgraph service["service/"]
-                    draw["BackgroundDrawService.ts"]
-                    scale["BackgroundChangeScaleService.ts"]
-                end
-            end
-        end
-    end
+```
+domain/
+└── callback/
+    └── Background/
+        ├── Background.ts
+        └── service/
+            ├── BackgroundDrawService.ts
+            └── BackgroundChangeScaleService.ts
 ```
 
 将来的に以下のような拡張も可能です:
 
 Future extensions are possible, such as:
 
-```mermaid
-graph LR
-    subgraph domain["domain/"]
-        subgraph callback["callback/<br>コールバック処理"]
-            bg["Background/"]
-        end
-        subgraph service["service/<br>ドメインサービス"]
-            validation["ValidationService.ts"]
-            calculation["CalculationService.ts"]
-        end
-        subgraph entity["entity/<br>エンティティ"]
-            user["User.ts"]
-        end
-        subgraph value["value-object/<br>値オブジェクト"]
-            email["Email.ts"]
-        end
-    end
+```
+domain/
+├── callback/                  # コールバック処理
+│   └── Background/
+├── service/                   # ドメインサービス
+│   ├── ValidationService.ts
+│   └── CalculationService.ts
+├── entity/                    # エンティティ
+│   └── User.ts
+└── value-object/              # 値オブジェクト
+    └── Email.ts
 ```
 
 ## ドメインの概念 / Domain Concepts
