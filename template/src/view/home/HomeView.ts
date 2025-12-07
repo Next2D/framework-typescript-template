@@ -9,17 +9,16 @@ import { PointerEvent, Event } from "@next2d/events";
  * @class
  * @extends {View}
  */
-export class HomeView extends View
+export class HomeView extends View<HomeViewModel>
 {
     /**
      * @param {HomeViewModel} vm
      * @constructor
      * @public
      */
-    constructor (
-        private readonly vm: HomeViewModel
-    ) {
-        super();
+    constructor (vm: HomeViewModel)
+    {
+        super(vm);
     }
 
     /**

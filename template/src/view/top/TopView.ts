@@ -9,17 +9,16 @@ import { TopContent } from "@/ui/content/TopContent";
  * @class
  * @extends {View}
  */
-export class TopView extends View
+export class TopView extends View<TopViewModel>
 {
     /**
      * @param {TopViewModel} vm
      * @constructor
      * @public
      */
-    constructor (
-        private readonly vm: TopViewModel
-    ) {
-        super();
+    constructor (vm: TopViewModel)
+    {
+        super(vm);
     }
 
     /**
