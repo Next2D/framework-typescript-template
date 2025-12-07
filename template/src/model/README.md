@@ -245,13 +245,10 @@ Integrates with external systems (APIs, databases, etc.). Implements data access
 
 ### ディレクトリ構造 / Directory Structure
 
-```mermaid
-graph LR
-    subgraph infrastructure["infrastructure/"]
-        subgraph repository["repository/"]
-            repo["HomeTextRepository.ts<br>Home画面テキストデータ"]
-        end
-    end
+```
+infrastructure/
+└── repository/
+    └── HomeTextRepository.ts   # Home画面テキストデータ
 ```
 
 ### 実装例 / Implementation Example
