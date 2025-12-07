@@ -22,7 +22,10 @@ jobs:
         with:
           node-version: 24
           registry-url: "https://registry.npmjs.org"
-      - run: cd template && npx eslint ./src/**/*.ts
+      - run: npm install -D eslint-plugin-unused-imports
+          working-directory: ./template
+      - run: npx eslint ./src/**/*.ts
+          working-directory: ./template
 
   windows-browser-test:
     runs-on: windows-latest
@@ -35,5 +38,8 @@ jobs:
         with:
           node-version: 24
           registry-url: "https://registry.npmjs.org"
-      - run: cd template && npx eslint ./src/**/*.ts
+      - run: npm install -D eslint-plugin-unused-imports
+          working-directory: ./template
+      - run: npx eslint ./src/**/*.ts
+          working-directory: ./template
     
