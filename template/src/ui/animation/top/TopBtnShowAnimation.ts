@@ -9,9 +9,9 @@ import { Event } from "@next2d/events";
  * @class
  * @public
  */
-export class TopBtnEntranceAnimation {
+export class TopBtnShowAnimation {
 
-    private readonly _entranceJob: Job;
+    private readonly _job: Job;
 
     /**
      * @param {TopBtnMolecule} sprite
@@ -27,7 +27,7 @@ export class TopBtnEntranceAnimation {
         // アニメーションの初期値に設定
         sprite.alpha = 0;
 
-        this._entranceJob = Tween.add(sprite,
+        this._job = Tween.add(sprite,
             {
                 "alpha": 0
             },
@@ -37,7 +37,7 @@ export class TopBtnEntranceAnimation {
         );
 
         // 終了アニメーションが完了したら、完了イベントを発行
-        this._entranceJob.addEventListener(Event.COMPLETE, (): void =>
+        this._job.addEventListener(Event.COMPLETE, (): void =>
         {
             callback();
         });
@@ -51,6 +51,6 @@ export class TopBtnEntranceAnimation {
      * @public
      */
     start(): void {
-        this._entranceJob.start();
+        this._job.start();
     }
 }

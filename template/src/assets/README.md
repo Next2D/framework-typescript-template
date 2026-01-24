@@ -15,7 +15,7 @@ Place static assets that you want to include in the bundle at build time. You ca
 ### 画像のインポート / Importing Images
 
 ```typescript
-import logoImage from "@/assets/logo.png";
+import logoImage from "@/assets/logo.png?inline";
 
 // logoImageはビルド時に解決されたURLになります
 // logoImage will be a resolved URL at build time

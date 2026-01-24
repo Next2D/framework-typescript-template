@@ -1,6 +1,6 @@
 import type { IDraggable } from "@/interface/IDraggable";
 import { HomeContent } from "@/ui/content/HomeContent";
-import { ButtonAtom } from "../atom/ButtonAtom";
+import { ButtonAtom } from "@/ui/component/atom/ButtonAtom";
 
 /**
  * @description Home画面のボタン分子

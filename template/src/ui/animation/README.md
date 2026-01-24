@@ -15,7 +15,7 @@ Separating animation definitions from components improves code reusability and m
 ```
 animation/
 └── top/
-    └── TopBtnEntranceAnimation.ts
+    └── TopBtnShowAnimation.ts
 ```
 
 画面ごとにサブディレクトリを作成し、その中にアニメーション定義ファイルを配置します。
@@ -24,7 +24,7 @@ Create subdirectories for each screen and place animation definition files withi
 
 ## アニメーションの種類 / Animation Types
 
-### 入場アニメーション / Entrance Animation
+### 登場アニメーション / Show Animation
 
 画面表示時のアニメーションです。
 
@@ -44,39 +44,65 @@ Animation in response to user actions.
 
 ## 実装例 / Implementation Example
 
-### TopBtnEntranceAnimation.ts
+### TopBtnShowAnimation.ts
 
 ```typescript
 import type { TopBtnMolecule } from "@/ui/component/molecule/TopBtnMolecule";
-import { Tween } from "@next2d/framework";
+import { Tween, Easing, type Job } from "@next2d/ui";
+import { Event } from "@next2d/events";
 
 /**
- * @description Topボタンの入場アニメーション
- *              Entrance animation for Top button
+ * @description Topボタンの登場アニメーション
+ *              Top Button Entrance Animation
  *
- * @param  {TopBtnMolecule} target
- * @param  {() => void} callback
- * @return {void}
+ * @class
+ * @public
  */
-export const playEntrance = (
-    target: TopBtnMolecule,
-    callback: () => void
-): void => {
-    // 初期状態
-    target.alpha = 0;
-    target.scaleX = 0.5;
-    target.scaleY = 0.5;
+export class TopBtnShowAnimation {
 
-    // アニメーション
-    Tween.to(target, {
-        alpha: 1,
-        scaleX: 1,
-        scaleY: 1,
-        duration: 0.5,
-        ease: "easeOutBack",
-        onComplete: callback
-    });
-};
+    private readonly _job: Job;
+
+    /**
+     * @param {TopBtnMolecule} sprite
+     * @param {() => void} callback
+     * @constructor
+     * @public
+     */
+    constructor(
+        sprite: TopBtnMolecule,
+        callback: () => void
+    ) {
+
+        // アニメーションの初期値に設定
+        sprite.alpha = 0;
+
+        this._job = Tween.add(sprite,
+            {
+                "alpha": 0
+            },
+            {
+                "alpha": 1
+            }, 0.5, 1, Easing.inQuad
+        );
+
+        // 終了アニメーションが完了したら、完了イベントを発行
+        this._job.addEventListener(Event.COMPLETE, (): void =>
+        {
+            callback();
+        });
+    }
+
+    /**
+     * @description アニメーション開始
+     *              Start animation
+     *
+     * @method
+     * @public
+     */
+    start(): void {
+        this._job.start();
+    }
+}
 ```
 
 ## 設計原則 / Design Principles
@@ -89,15 +115,15 @@ Separate animation logic from components.
 
 ```typescript
 // ✅ 良い例: アニメーションを別ファイルに分離
-// animation/top/TopBtnEntranceAnimation.ts
-export const playEntrance = (target, callback) => { ... };
+// animation/top/TopBtnShowAnimation.ts
+export class TopBtnShowAnimation { ... }
 
 // component/molecule/TopBtnMolecule.ts
-import { playEntrance } from "@/ui/animation/top/TopBtnEntranceAnimation";
+import { TopBtnShowAnimation } from "@/ui/animation/top/TopBtnShowAnimation";
 
 export class TopBtnMolecule extends ButtonAtom {
-    playEntrance(callback: () => void): void {
-        playEntrance(this, callback);
+    playShow(callback: () => void): void {
+        new TopBtnShowAnimation(this, callback).start();
     }
 }
 ```
@@ -109,11 +135,26 @@ export class TopBtnMolecule extends ButtonAtom {
 Make the same animation usable across multiple components.
 
 ```typescript
-// ✅ 良い例: 汎用的なフェードインアニメーション
-export const fadeIn = (target: DisplayObject, duration: number = 0.3): void => {
-    target.alpha = 0;
-    Tween.to(target, { alpha: 1, duration });
-};
+// ✅ 良い例: 汎用的なフェードインアニメーションクラス
+import { Tween, Easing, type Job } from "@next2d/ui";
+import type { Sprite } from "@next2d/display";
+import { Event } from "@next2d/events";
+
+export class FadeInAnimation {
+    private readonly _job: Job;
+
+    constructor(target: Sprite, callback?: () => void) {
+        target.alpha = 0;
+        this._job = Tween.add(target, { "alpha": 0 }, { "alpha": 1 }, 0.3, 1, Easing.linear);
+        if (callback) {
+            this._job.addEventListener(Event.COMPLETE, callback);
+        }
+    }
+
+    start(): void {
+        this._job.start();
+    }
+}
 ```
 
 ### 3. コールバック対応 / Callback Support
@@ -123,15 +164,24 @@ export const fadeIn = (target: DisplayObject, duration: number = 0.3): void => {
 Support callbacks for when animation completes.
 
 ```typescript
-export const playEntrance = (
-    target: DisplayObject,
-    callback?: () => void
-): void => {
-    Tween.to(target, {
-        // ...
-        onComplete: callback
-    });
-};
+import { Tween, Easing, type Job } from "@next2d/ui";
+import { Event } from "@next2d/events";
+
+export class ExampleAnimation {
+    private readonly _job: Job;
+
+    constructor(target: Sprite, callback?: () => void) {
+        this._job = Tween.add(target, { "alpha": 0 }, { "alpha": 1 }, 0.5, 1, Easing.outQuad);
+        
+        if (callback) {
+            this._job.addEventListener(Event.COMPLETE, callback);
+        }
+    }
+
+    start(): void {
+        this._job.start();
+    }
+}
 ```
 
 ## 新しいアニメーションの追加 / Adding New Animations
@@ -146,40 +196,71 @@ export const playEntrance = (
 ### テンプレート / Template
 
 ```typescript
-import type { DisplayObject } from "@next2d/display";
-import { Tween } from "@next2d/framework";
+import type { Sprite } from "@next2d/display";
+import { Tween, Easing, type Job } from "@next2d/ui";
+import { Event } from "@next2d/events";
 
 /**
  * @description [アニメーションの説明]
  *              [Animation description]
  *
- * @param  {DisplayObject} target - アニメーション対象
- * @param  {() => void} callback - 完了時コールバック
- * @return {void}
+ * @class
+ * @public
  */
-export const yourAnimation = (
-    target: DisplayObject,
-    callback?: () => void
-): void => {
-    // 初期状態設定
-    target.alpha = 0;
+export class YourAnimation {
 
-    // アニメーション実行
-    Tween.to(target, {
-        alpha: 1,
-        duration: 0.5,
-        ease: "easeOutQuad",
-        onComplete: callback
-    });
-};
+    private readonly _job: Job;
+
+    /**
+     * @param {Sprite} sprite - アニメーション対象
+     * @param {() => void} callback - 完了時コールバック
+     * @constructor
+     * @public
+     */
+    constructor(
+        sprite: Sprite,
+        callback?: () => void
+    ) {
+
+        // 初期状態設定
+        sprite.alpha = 0;
+
+        // アニメーション設定
+        this._job = Tween.add(sprite,
+            {
+                "alpha": 0
+            },
+            {
+                "alpha": 1
+            }, 0.5, 1, Easing.outQuad
+        );
+
+        // 完了時コールバック
+        if (callback) {
+            this._job.addEventListener(Event.COMPLETE, callback);
+        }
+    }
+
+    /**
+     * @description アニメーション開始
+     *              Start animation
+     *
+     * @method
+     * @public
+     */
+    start(): void {
+        this._job.start();
+    }
+}
 ```
 
 ## ベストプラクティス / Best Practices
 
 1. **分離** - アニメーションロジックをコンポーネントから分離
-2. **命名** - `{Component}{Action}Animation.ts` の形式で命名
-3. **コールバック** - 完了時の処理をサポート
-4. **再利用** - 汎用的なアニメーションは共通化
+2. **命名** - `{Component}{Action}Animation.ts` の形式で命名（例: TopBtnShowAnimation.ts）
+3. **コールバック** - Event.COMPLETEで完了時の処理をサポート
+4. **再利用** - 汎用的なアニメーションクラスは共通化
+5. **クラスベース** - Jobインスタンスを保持し、start()メソッドで開始
 
 ## 関連ドキュメント / Related Documentation
 
