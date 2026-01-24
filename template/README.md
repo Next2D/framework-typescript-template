@@ -17,6 +17,7 @@ This project was bootstrapped with [Create Next2D App](https://github.com/Next2D
 - [ユニットテスト / Unit Test](#ユニットテスト--unit-test)
 - [ビルド / Build](#ビルド--build)
 - [ディレクトリ構成 / Directory Structure](#ディレクトリ構成--directory-structure)
+- [📚 詳細ドキュメント / Detailed Documentation](#-詳細ドキュメント--detailed-documentation)
 - [ライセンス / License](#ライセンス--license)
 
 ---
@@ -229,6 +230,46 @@ src/
 各ディレクトリの詳細は、ディレクトリ内の `README.md` を参照してください。
 
 See the `README.md` in each directory for details.
+
+---
+
+## 📚 詳細ドキュメント / Detailed Documentation
+
+各ディレクトリには、実装ガイドとなるREADME.mdが配置されています。AIエージェントやコード生成ツールは、これらのドキュメントを参照することで、アーキテクチャに沿った実装が可能です。
+
+Each directory contains a README.md that serves as an implementation guide. AI agents and code generation tools can reference these documents to implement code that follows the architecture.
+
+### アーキテクチャ層 / Architecture Layers
+
+| ドキュメント / Document | 説明 / Description |
+|------------------------|-------------------|
+| [src/model/README.md](./src/model/README.md) | Model層全体の概要、3層構造の説明 |
+| [src/model/application/README.md](./src/model/application/README.md) | Application層：UseCaseパターンの実装ガイド |
+| [src/model/domain/README.md](./src/model/domain/README.md) | Domain層：コアビジネスロジックの実装ガイド |
+| [src/model/infrastructure/README.md](./src/model/infrastructure/README.md) | Infrastructure層：Repositoryパターンの実装ガイド |
+
+### UIコンポーネント / UI Components
+
+| ドキュメント / Document | 説明 / Description |
+|------------------------|-------------------|
+| [src/ui/README.md](./src/ui/README.md) | UI層全体の概要、アトミックデザイン階層 |
+| [src/ui/component/README.md](./src/ui/component/README.md) | Atom/Molecule/Pageコンポーネントの実装ガイド |
+| [src/ui/content/README.md](./src/ui/content/README.md) | Animation Toolコンテンツの実装ガイド |
+| [src/ui/animation/README.md](./src/ui/animation/README.md) | アニメーション定義の実装ガイド |
+
+### View/ViewModel & 設定 / View/ViewModel & Configuration
+
+| ドキュメント / Document | 説明 / Description |
+|------------------------|-------------------|
+| [src/view/README.md](./src/view/README.md) | View/ViewModelのMVVMパターン実装ガイド |
+| [src/config/README.md](./src/config/README.md) | 設定ファイル（stage.json, config.json, routing.json）の詳細 |
+| [src/interface/README.md](./src/interface/README.md) | インターフェース定義と型安全性のガイド |
+
+### 静的アセット / Static Assets
+
+| ドキュメント / Document | 説明 / Description |
+|------------------------|-------------------|
+| [src/assets/README.md](./src/assets/README.md) | 画像・JSONなど静的ファイルの管理ガイド |
 
 ---
 

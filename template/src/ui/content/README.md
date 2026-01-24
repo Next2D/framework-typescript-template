@@ -68,23 +68,10 @@ export class HomeContent extends MovieClipContent implements IDraggable
         return "HomeContent";  // Animation Toolで設定したシンボル名
     }
 
-    /**
-     * @description ドラッグを開始
-     *              Start dragging
-     */
-    startDrag (): void
-    {
-        // ドラッグ処理
-    }
-
-    /**
-     * @description ドラッグを停止
-     *              Stop dragging
-     */
-    stopDrag (): void
-    {
-        // ドラッグ停止処理
-    }
+    // IDraggableのメソッド(startDrag/stopDrag)は
+    // MovieClipContentの親クラス(MovieClip)から継承されます
+    // The IDraggable methods (startDrag/stopDrag) are inherited
+    // from MovieClipContent's parent class (MovieClip)
 }
 ```
 
@@ -154,8 +141,7 @@ Implement interfaces as needed to integrate with the business logic layer.
 
 ```typescript
 export class HomeContent extends MovieClipContent implements IDraggable {
-    startDrag(): void { ... }
-    stopDrag(): void { ... }
+    // IDraggableメソッドはMovieClipContentの親クラスから継承
 }
 ```
 

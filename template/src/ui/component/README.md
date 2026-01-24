@@ -11,9 +11,16 @@ component/
 ├── atom/                      # 最小単位
 │   ├── ButtonAtom.ts
 │   └── TextAtom.ts
-└── molecule/                  # 複合コンポーネント
-    ├── HomeBtnMolecule.ts
-    └── TopBtnMolecule.ts
+├── molecule/                  # 複合コンポーネント
+│   ├── HomeBtnMolecule.ts
+│   └── TopBtnMolecule.ts
+├── organism/                  # 複数Moleculeの組み合わせ（将来の拡張用）
+├── page/                      # ページコンポーネント
+│   ├── home/
+│   │   └── HomePage.ts
+│   └── top/
+│       └── TopPage.ts
+└── template/                  # ページテンプレート（将来の拡張用）
 ```
 
 ## アトミックデザイン階層 / Atomic Design Hierarchy
@@ -33,8 +40,29 @@ The most basic UI elements. The smallest components that cannot be divided furth
 
 Components with more complex functionality, combining multiple Atoms.
 
-- `HomeBtnMolecule` - Home画面用のボタン（ドラッグ機能付き）
+- `HomeBtnMolecule` - Home画面用のボタン（ドラッグ機能付き、`IDraggable`は内部の`HomeContent`経由で提供）
 - `TopBtnMolecule` - Top画面用のボタン（アニメーション付き）
+
+### Organism (有機体) - 将来の拡張用
+
+複数のMoleculeを組み合わせた、より大きな機能単位のコンポーネントです。現在は`.gitkeep`のみで、必要に応じて実装します。
+
+Larger functional unit components combining multiple Molecules. Currently contains only `.gitkeep`, to be implemented as needed.
+
+### Template (テンプレート) - 将来の拡張用
+
+ページのレイアウト構造を定義するテンプレートです。現在は`.gitkeep`のみで、必要に応じて実装します。
+
+Templates that define page layout structures. Currently contains only `.gitkeep`, to be implemented as needed.
+
+### Page (ページ)
+
+画面全体を構成するコンポーネントです。ViewからPageを配置し、PageがMoleculeやAtomを組み合わせて画面を構築します。
+
+Components that compose entire screens. Views place Pages, and Pages combine Molecules and Atoms to build screens.
+
+- `HomePage` - Home画面のページコンポーネント
+- `TopPage` - Top画面のページコンポーネント
 
 ## 設計原則 / Design Principles
 
@@ -61,10 +89,10 @@ export class TextAtom extends TextField {
 Depend on abstractions, not concretions.
 
 ```typescript
-// ✅ 良い例
-export class HomeBtnMolecule implements IDraggable {
-    startDrag(): void { ... }
-    stopDrag(): void { ... }
+// ✅ 良い例: IDraggableを実装し、内部のContentに委譲
+export class HomeBtnMolecule extends ButtonAtom implements IDraggable {
+    private readonly homeContent: HomeContent;
+    // IDraggableメソッドはMovieClipContent(HomeContent)の親クラスから継承
 }
 ```
 

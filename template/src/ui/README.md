@@ -11,7 +11,10 @@ ui/
 ├── animation/                 # アニメーション定義
 ├── component/
 │   ├── atom/                  # 最小単位
-│   └── molecule/              # 複合コンポーネント
+│   ├── molecule/              # 複合コンポーネント
+│   ├── organism/              # 複数Moleculeの組み合わせ（将来の拡張用）
+│   ├── page/                  # ページコンポーネント
+│   └── template/              # ページテンプレート（将来の拡張用）
 └── content/                   # Animation Tool
 ```
 
@@ -83,15 +86,13 @@ export class HomeBtnMolecule extends ButtonAtom implements IDraggable {
         this.homeContent = new HomeContent();
         this.addChild(this.homeContent);
     }
-
-    startDrag(): void { ... }
-    stopDrag(): void { ... }
+    // IDraggableメソッド(startDrag/stopDrag)はMovieClipContentの親クラスから継承
 }
 ```
 
 **特徴 / Features:**
 - `ButtonAtom` を継承
-- `IDraggable` インターフェースを実装
+- `IDraggable` インターフェースを実装（メソッドは`MovieClipContent`親クラスから継承）
 - ドラッグ&ドロップ機能を提供
 
 #### component/molecule/TopBtnMolecule.ts
@@ -195,10 +196,10 @@ export class TextAtom extends TextField {
 Depend on abstractions, not concretions.
 
 ```typescript
-// ✅ 良い例: インターフェースを実装
+// ✅ 良い例: インターフェースを実装し、内部のContentに委譲
 export class HomeBtnMolecule extends ButtonAtom implements IDraggable {
-    startDrag(): void { ... }
-    stopDrag(): void { ... }
+    private readonly homeContent: HomeContent;
+    // IDraggableメソッド(startDrag/stopDrag)はMovieClipContentの親クラスから継承
 }
 ```
 

@@ -19,8 +19,8 @@ model/
 │           └── NavigateToViewUseCase.ts
 ├── domain/                                     # ドメイン層
 │   └── callback/
+│       ├── Background.ts                       # コールバッククラス本体
 │       └── Background/
-│           ├── Background.ts
 │           └── service/
 │               ├── BackgroundDrawService.ts
 │               └── BackgroundChangeScaleService.ts
