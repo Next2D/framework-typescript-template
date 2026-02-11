@@ -37,14 +37,13 @@ export default defineConfig({
     },
     "resolve": {
         "alias": {
-            "@": path.resolve(process.cwd(), "./src")
+            "@": path.resolve(__dirname, "src")
         }
     },
     "test": {
         "globals": true,
         "environment": "jsdom",
         "setupFiles": [
-            "test.setup.ts",
             "@vitest/web-worker",
             "vitest-webgl-canvas-mock"
         ],

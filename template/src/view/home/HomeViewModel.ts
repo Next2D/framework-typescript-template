@@ -1,43 +1,104 @@
-import { View, ViewModel } from "@next2d/framework";
-import { execute as homeButtonTemplate } from "@/model/ui/component/template/home/HomeButtonTemplate";
-import { execute as homeTextTemplate } from "@/model/ui/component/template/home/HomeTextTemplate";
+import type { IDraggable } from "@/interface/IDraggable";
+import type { ITextField } from "@/interface/ITextField";
+import { ViewModel, app } from "@next2d/framework";
+import type { PointerEvent, Event } from "@next2d/events";
+import { StartDragUseCase } from "@/model/application/home/usecase/StartDragUseCase";
+import { StopDragUseCase } from "@/model/application/home/usecase/StopDragUseCase";
+import { CenterTextFieldUseCase } from "@/model/application/home/usecase/CenterTextFieldUseCase";
+import { config } from "@/config/Config";
 
 /**
  * @class
  * @extends {ViewModel}
  */
-export class HomeViewModel extends ViewModel
-{
+export class HomeViewModel extends ViewModel {
+
+    private readonly startDragUseCase: StartDragUseCase;
+    private readonly stopDragUseCase: StopDragUseCase;
+    private readonly centerTextFieldUseCase: CenterTextFieldUseCase;
+    private homeText: string = "";
+
     /**
-     * @param  {View} view
-     * @return {Promise<View>}
-     * @method
+     * @constructor
      * @public
      */
-    async unbind (view: View): Promise<View>
+    constructor ()
     {
-        return super.unbind(view);
+        super();
+        this.startDragUseCase = new StartDragUseCase();
+        this.stopDragUseCase = new StopDragUseCase();
+        this.centerTextFieldUseCase = new CenterTextFieldUseCase();
     }
 
     /**
-     * @param  {View} view
      * @return {Promise<void>}
+     * @method
+     * @override
+     * @public
+     */
+    async initialize (): Promise<void>
+    {
+        const response = app.getResponse();
+        this.homeText = response.has("HomeText")
+            ? (response.get("HomeText") as { word: string }).word
+            : "";
+    }
+
+    /**
+     * @description ホームテキストを取得
+     *              Get home text
+     *
+     * @return {string}
      * @method
      * @public
      */
-    async bind (view: View): Promise<void>
+    getHomeText (): string
     {
-        /**
-         * アニメーションをAnimation ToolのJSONから生成
-         * Generate animation from Animation Tool's JSON
-         */
-        const homeContent = homeButtonTemplate();
-        view.addChild(homeContent);
+        return this.homeText;
+    }
 
-        /**
-         * Hello, Worldのテキストを生成
-         * Generate Hello, World text
-         */
-        view.addChild(homeTextTemplate(homeContent));
+    /**
+     * @description ホームコンテンツのポインターダウン時の処理
+     *              Handle when home content is pointer down
+     *
+     * @param  {PointerEvent} event
+     * @return {void}
+     * @method
+     * @public
+     */
+    homeContentPointerDownEvent (event: PointerEvent): void
+    {
+        const target = event.currentTarget as unknown as IDraggable;
+        this.startDragUseCase.execute(target);
+    }
+
+    /**
+     * @description ホームコンテンツのポインターアップ時の処理
+     *              Handle when home content is pointer up
+     *
+     * @param  {PointerEvent} event
+     * @return {void}
+     * @method
+     * @public
+     */
+    homeContentPointerUpEvent (event: PointerEvent): void
+    {
+        const target = event.currentTarget as unknown as IDraggable;
+        this.stopDragUseCase.execute(target);
+    }
+
+    /**
+     * @description ホームテキストの変更時の処理
+     *              Handle when home text is changed
+     *
+     * @param  {Event} event
+     * @return {void}
+     * @method
+     * @public
+     */
+    homeTextChangeEvent (event: Event): void
+    {
+        const textField = event.currentTarget as unknown as ITextField;
+        this.centerTextFieldUseCase.execute(textField, config.stage.width);
     }
 }

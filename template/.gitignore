@@ -26,3 +26,4 @@ dist-ssr
 src/Packages.ts
 src/config/Config.ts
 electron/resources
+electron/package-lock.json

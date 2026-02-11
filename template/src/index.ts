@@ -1,6 +1,5 @@
 "use strict";
 
-import type { IConfig } from "@/interface/IConfig";
 import { app } from "@next2d/framework";
 import { config } from "@/config/Config";
 import { packages } from "@/Packages";
@@ -16,7 +15,7 @@ const boot = async (event: Event | null = null): Promise<void> =>
         event.target.removeEventListener("DOMContentLoaded", boot);
     }
 
-    await app.initialize(config as IConfig, packages).run();
+    await app.initialize(config, packages).run();
     await app.gotoView();
 };
 
