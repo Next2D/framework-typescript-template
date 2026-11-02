@@ -3,4 +3,11 @@
 .gitignore
 template/ios
 template/android
+template/xbox
+template/dist
 template/package.json
+template/package-lock.json
+template/src/Packages.js
+template/src/Packages.ts
+template/src/config/Config.js
+template/src/config/Config.ts

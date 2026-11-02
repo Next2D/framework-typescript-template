@@ -13,7 +13,7 @@ Next2D Frameworkを使用したTypeScriptプロジェクトテンプレート。
 
 ## Requirements
 
-- Node.js 22.x以上
+- Node.js 22.12以上
 - npm 10.x以上
 - iOS: Xcode 14以上 (iOS/Androidビルド時のみ)
 - Android: Android Studio, JDK 21以上 (iOS/Androidビルド時のみ)
@@ -78,7 +78,9 @@ src/
 └── assets/                    # 静的ファイル (画像, JSON)
 
 @types/                        # グローバル型定義 (.d.ts)
-electron/                      # Electron設定 (デスクトップビルド用)
+capacitor.config.json          # iOS / Android設定 (Capacitor SDKはbuilderが管理)
+electron.config.json           # Electron / Steam設定 (ホストはbuilderが生成)
+MicrosoftGame.config           # Xbox (GDK) 設定 (xbox/ ホストはbuilderが生成)
 file/                          # Animation Tool n2dファイル
 mock/                          # 開発用モックデータ (API, Content, 画像)
 ```
