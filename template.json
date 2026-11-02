@@ -7,7 +7,12 @@
       "@eslint/js": "*",
       "typescript": "*",
       "eslint": "*",
-      "eslint-plugin-unused-imports": "*"
+      "eslint-plugin-unused-imports": "*",
+      "globals": "*"
+    },
+    "scripts": {
+      "lint": "eslint src",
+      "typecheck": "npx @next2d/vite-plugin-next2d-auto-loader && tsc --noEmit"
     }
   }
 }

@@ -9,10 +9,11 @@ export default defineConfig({
     "build": {
         "outDir": "dist",
         "target": "esnext",
+        "chunkSizeWarningLimit": 1024,
         "modulePreload": {
             "polyfill": false
         },
-        "rollupOptions": {
+        "rolldownOptions": {
             "output": {
                 "entryFileNames": "assets/js/app.js"
             }
@@ -37,12 +38,18 @@ export default defineConfig({
     },
     "resolve": {
         "alias": {
-            "@": path.resolve(__dirname, "src")
+            "@": path.resolve(import.meta.dirname, "src")
         }
     },
     "test": {
         "globals": true,
         "environment": "jsdom",
+        "server": {
+            "deps": {
+                // 公開版の @next2d/* は拡張子なしの ESM import を含むため Vite で変換する
+                "inline": [/\/node_modules\/@next2d\//]
+            }
+        },
         "setupFiles": [
             "@vitest/web-worker",
             "vitest-webgl-canvas-mock"

@@ -1,0 +1,34 @@
+{
+  "appId": "app.example.appId",
+  "appName": "Example-Product-Name",
+  "executableName": "example-product-name",
+  "companyName": "Example Company",
+  "icons": {
+    "windows": "src/assets/icons/icon.ico",
+    "macos": "src/assets/icons/icon.icns",
+    "linux": "src/assets/icons/icon.png"
+  },
+  "architectures": {
+    "windows": "x64",
+    "macos": "universal",
+    "linux": "x64"
+  },
+  "window": {
+    "width": 1280,
+    "height": 720,
+    "fullscreen": false
+  },
+  "steam": {
+    "appId": null,
+    "branch": "internal",
+    "depots": {
+      "windows": null,
+      "macos": null,
+      "linux": null
+    }
+  },
+  "macos": {
+    "sign": false,
+    "notarize": false
+  }
+}
